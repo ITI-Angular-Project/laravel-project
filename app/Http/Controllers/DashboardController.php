@@ -11,7 +11,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('pages.dashboard');
+        return view('pages.dashboard.home');
     }
 
     /**
@@ -64,14 +64,14 @@ class DashboardController extends Controller
 
     public function jobs()
     {
-        return view('pages.jobs');
+        return view('pages.dashboard.jobs');
     }
     public function applications()
     {
-        return view('pages.applications');
+        return view('pages.dashboard.applications');
     }
     public function profile()
     {
-        return view('pages.profile');
+        return view('pages.dashboard.profile');
     }
 }
