@@ -18,6 +18,11 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      * @var list<string>
      */
+
+    public const ROLE_ADMIN     = 'admin';
+    public const ROLE_EMPLOYER  = 'employer';
+    public const ROLE_CANDIDATE = 'candidate';
+    public const ROLE_DEMO      = 'demo';
     protected $fillable = [
         'name',
         'email',
@@ -50,9 +55,16 @@ class User extends Authenticatable implements MustVerifyEmail
             'password' => 'hashed',
         ];
     }
-
     public function company()
     {
         return $this->hasOne(Company::class, 'employer_id');
+    }
+    public function hasRole(string|array $roles): bool
+    {
+        if (is_array($roles)) {
+            return in_array($this->role, $roles);
+        }
+        return $this->role === $roles;
+
     }
 }
