@@ -26,6 +26,21 @@
 
             <!-- Right: Auth / User Dropdown (desktop) -->
             <div class="hidden sm:flex items-center space-x-4">
+                <button type="button" @click="$store.theme.toggle()"
+                    class="p-2 rounded-lg border border-white/30 text-white bg-white/10 hover:bg-white/20 transition-all duration-200"
+                    :aria-pressed="$store.theme.dark.toString()" aria-label="{{ __('Toggle dark mode') }}">
+                    <svg x-show="!$store.theme.dark" x-cloak xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M12 3v2m0 14v2m9-9h-2M5 12H3m15.364-6.364-1.414 1.414M7.05 16.95l-1.414 1.414m0-12.728 1.414 1.414m9.9 9.9 1.414 1.414M12 8a4 4 0 100 8 4 4 0 000-8z" />
+                    </svg>
+                    <svg x-show="$store.theme.dark" x-cloak xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z" />
+                    </svg>
+                </button>
+
                 @guest
                     <a href="{{ route('login') }}" class="text-white hover:text-yellow-300 font-medium transition-colors duration-200">
                         {{ __('Login') }}
@@ -79,6 +94,25 @@
             <x-nav-link :href="route('home')" :active="request()->routeIs('home')" class="block w-full text-white hover:bg-white/20 rounded-lg transition-all duration-200 !border-l-0 !border-transparent">
                 {{ __('Home') }}
             </x-nav-link>
+
+            <button type="button" @click="$store.theme.toggle()"
+                class="flex items-center w-full px-3 py-2 rounded-lg text-base font-medium text-white hover:bg-white/20 transition-all duration-200"
+                :aria-pressed="$store.theme.dark.toString()">
+                <svg x-show="!$store.theme.dark" x-cloak xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                    viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M12 3v2m0 14v2m9-9h-2M5 12H3m15.364-6.364-1.414 1.414M7.05 16.95l-1.414 1.414m0-12.728 1.414 1.414m9.9 9.9 1.414 1.414M12 8a4 4 0 100 8 4 4 0 000-8z" />
+                </svg>
+                <svg x-show="$store.theme.dark" x-cloak xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                    viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z" />
+                </svg>
+                <span class="ml-3">
+                    <span x-show="!$store.theme.dark" x-cloak>{{ __('Dark mode') }}</span>
+                    <span x-show="$store.theme.dark" x-cloak>{{ __('Light mode') }}</span>
+                </span>
+            </button>
 
             @auth
                 <x-nav-link :href="route('dashboard.home')" :active="request()->routeIs('dashboard')" class="block w-full text-white hover:bg-white/20 rounded-lg transition-all duration-200 !border-l-0 !border-transparent">

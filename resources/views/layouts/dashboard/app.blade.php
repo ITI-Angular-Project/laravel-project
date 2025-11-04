@@ -10,6 +10,37 @@
 
     @vite('resources/css/app.css')
     <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+
+    <style>
+        [x-cloak] {
+            display: none !important;
+        }
+    </style>
+    <script>
+        (() => {
+            try {
+                const storedTheme = localStorage.getItem('theme');
+                const legacyTheme = localStorage.getItem('darkMode');
+                let shouldUseDark = false;
+
+                if (storedTheme === 'dark' || storedTheme === 'light') {
+                    shouldUseDark = storedTheme === 'dark';
+                } else if (legacyTheme !== null) {
+                    shouldUseDark = legacyTheme === 'true';
+                    localStorage.setItem('theme', shouldUseDark ? 'dark' : 'light');
+                    localStorage.removeItem('darkMode');
+                } else {
+                    shouldUseDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                }
+
+                document.documentElement.classList.toggle('dark', shouldUseDark);
+                document.documentElement.style.colorScheme = shouldUseDark ? 'dark' : 'light';
+            } catch (error) {
+                document.documentElement.classList.remove('dark');
+                document.documentElement.style.colorScheme = 'light';
+            }
+        })();
+    </script>
 </head>
 
 <body :class="{ 'dark': darkMode }"
@@ -139,14 +170,49 @@
                     </button>
                 </div>
                 <nav class="mt-4 space-y-2">
+                    <!-- Dashboard -->
                     <a href="{{ route('dashboard.home') }}"
-                        class="block px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">🏠 Dashboard</a>
+                        class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">
+                        <svg class="h-5 w-5 opacity-80" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0h6" />
+                        </svg>
+                        <span>Dashboard</span>
+                    </a>
+
+                    <!-- Jobs -->
                     <a href="{{ route('dashboard.jobs') }}"
-                        class="block px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">💼 Jobs</a>
+                        class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">
+                        <svg class="h-5 w-5 opacity-80" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 7a2 2 0 012-2h12a2 2 0 012 2v3H4V7zm0 3v7a2 2 0 002 2h12a2 2 0 002-2v-7" />
+                        </svg>
+                        <span>Jobs</span>
+                    </a>
+
+                    <!-- Applications -->
                     <a href="{{ route('dashboard.applications') }}"
-                        class="block px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">📥 Applications</a>
+                        class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">
+                        <svg class="h-5 w-5 opacity-80" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8m-18 8h18" />
+                        </svg>
+                        <span>Applications</span>
+                    </a>
+
+                    <!-- Profile -->
                     <a href="{{ route('dashboard.profile') }}"
-                        class="block px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">👤 Profile</a>
+                        class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">
+                        <svg class="h-5 w-5 opacity-80" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 12a5 5 0 100-10 5 5 0 000 10zm-7 9a7 7 0 0114 0" />
+                        </svg>
+                        <span>Profile</span>
+                    </a>
                 </nav>
             </aside>
         </div>
@@ -176,10 +242,20 @@
 
                     <!-- Actions -->
                     <div class="flex items-center gap-2">
-                        <button @click="toggleTheme()" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
-                            :aria-label="darkMode ? 'Switch to light mode' : 'Switch to dark mode'">
-                            <span x-show="!darkMode" aria-hidden="true">🌙</span>
-                            <span x-show="darkMode" aria-hidden="true">☀️</span>
+                        <button @click="toggleTheme()"
+                            class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-900/0"
+                            :aria-label="darkMode ? 'Switch to light mode' : 'Switch to dark mode'"
+                            :aria-pressed="darkMode.toString()">
+                            <svg x-show="!darkMode" x-cloak xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+                                fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M12 3v2m0 14v2m9-9h-2M5 12H3m15.364-6.364-1.414 1.414M7.05 16.95l-1.414 1.414m0-12.728 1.414 1.414m9.9 9.9 1.414 1.414M12 8a4 4 0 100 8 4 4 0 000-8z" />
+                            </svg>
+                            <svg x-show="darkMode" x-cloak xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+                                fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z" />
+                            </svg>
                         </button>
 
                         <!-- Notifications -->
@@ -251,7 +327,7 @@
             <!-- Footer -->
             <footer class="border-t border-gray-200/80 dark:border-gray-800 py-4">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-sm text-gray-500 dark:text-gray-400">
-                    © {{ date('Y') }} HireOn. All rights reserved.
+                    &copy; {{ date('Y') }} HireOn. All rights reserved.
                 </div>
             </footer>
         </div>
@@ -264,32 +340,60 @@
                 hoverOpen: false, // NEW: temporary expand on hover
                 mobileMenuOpen: false,
                 darkMode: false,
+                hasStoredTheme: false,
+                mediaQuery: null,
                 init() {
                     // Sidebar state persistence
                     const savedSidebar = localStorage.getItem('sidebarOpen');
                     this.sidebarOpen = savedSidebar !== null ? savedSidebar === 'true' : true;
 
                     // Theme: prefer saved, else prefers-color-scheme
-                    const savedTheme = localStorage.getItem('darkMode');
-                    if (savedTheme === null) {
-                        this.darkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                    } else {
-                        this.darkMode = savedTheme === 'true';
-                    }
-                    document.documentElement.classList.toggle('dark', this.darkMode);
+                    const storedTheme = localStorage.getItem('theme');
+                    const legacyTheme = localStorage.getItem('darkMode');
 
-                    // Sync on change
-                    this.$watch('darkMode', value => {
-                        document.documentElement.classList.toggle('dark', value);
-                        localStorage.setItem('darkMode', value);
-                    });
+                    if (storedTheme === 'dark' || storedTheme === 'light') {
+                        this.darkMode = storedTheme === 'dark';
+                        this.hasStoredTheme = true;
+                    } else if (legacyTheme !== null) {
+                        this.darkMode = legacyTheme === 'true';
+                        this.hasStoredTheme = true;
+                        localStorage.setItem('theme', this.darkMode ? 'dark' : 'light');
+                        localStorage.removeItem('darkMode');
+                    } else {
+                        this.darkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                    }
+                    this.applyTheme();
+
                     this.$watch('sidebarOpen', value => localStorage.setItem('sidebarOpen', value));
+
+                    this.mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+                    const syncSystemPreference = event => {
+                        if (this.hasStoredTheme) {
+                            return;
+                        }
+
+                        this.darkMode = event.matches;
+                        this.applyTheme();
+                    };
+
+                    if (typeof this.mediaQuery.addEventListener === 'function') {
+                        this.mediaQuery.addEventListener('change', syncSystemPreference);
+                    } else if (typeof this.mediaQuery.addListener === 'function') {
+                        this.mediaQuery.addListener(syncSystemPreference);
+                    }
                 },
                 toggleTheme() {
                     this.darkMode = !this.darkMode;
+                    this.hasStoredTheme = true;
+                    this.applyTheme();
+                    localStorage.setItem('theme', this.darkMode ? 'dark' : 'light');
                 },
                 toggleSidebar() {
                     this.sidebarOpen = !this.sidebarOpen;
+                },
+                applyTheme() {
+                    document.documentElement.classList.toggle('dark', this.darkMode);
+                    document.documentElement.style.colorScheme = this.darkMode ? 'dark' : 'light';
                 }
             }
         }
