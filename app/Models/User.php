@@ -55,12 +55,16 @@ class User extends Authenticatable implements MustVerifyEmail
             'password' => 'hashed',
         ];
     }
-
+    public function company()
+    {
+        return $this->hasOne(Company::class, 'employer_id');
+    }
     public function hasRole(string|array $roles): bool
     {
         if (is_array($roles)) {
             return in_array($this->role, $roles);
         }
         return $this->role === $roles;
+
     }
 }
