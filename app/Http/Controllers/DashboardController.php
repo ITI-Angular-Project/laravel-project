@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Models\Job;
 class DashboardController extends Controller
 {
     /**
@@ -11,7 +11,10 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('pages.dashboard.home');
+        $recentJobs = Job::latest()->take(5)->get();
+
+        // رجّع الصفحة ومعاها البيانات
+        return view('pages.dashboard.home', compact('recentJobs'));
     }
 
     /**

@@ -99,7 +99,7 @@
                 </a>
 
                 <!-- Jobs -->
-                <a href="{{ route('dashboard.jobs') }}"
+                <a href="{{ route('jobs.index') }}"
                     class="group relative flex items-center gap-3 mx-2 px-3 py-2 rounded-xl transition {{ $active('dashboard.jobs') }}"
                     :class="(sidebarOpen || hoverOpen) ? 'justify-start' : 'justify-center'"
                     :title="!(sidebarOpen || hoverOpen) ? 'Jobs' : ''">
@@ -182,7 +182,7 @@
                     </a>
 
                     <!-- Jobs -->
-                    <a href="{{ route('dashboard.jobs') }}"
+                    <a href="{{ route('jobs.index') }}"
                         class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">
                         <svg class="h-5 w-5 opacity-80" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             aria-hidden="true">
