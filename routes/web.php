@@ -15,4 +15,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::view('/dashboard', 'pages.dashboard')->name('dashboard');
+Route::view('/jobs', 'pages.jobs')->name('jobs');
+Route::view('/applications', 'pages.applications')->name('applications');
+Route::view('/profile', 'pages.profile')->name('profile');
+
+
+
+
 require __DIR__.'/auth.php';
