@@ -11,7 +11,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('dashboard');
+        return view('pages.dashboard');
     }
 
     /**
@@ -60,5 +60,18 @@ class DashboardController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function jobs()
+    {
+        return view('pages.jobs');
+    }
+    public function applications()
+    {
+        return view('pages.applications');
+    }
+    public function profile()
+    {
+        return view('pages.profile');
     }
 }

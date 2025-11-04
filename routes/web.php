@@ -7,7 +7,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('/dashboard', [DashboardController::class, 'index'] )->middleware(['auth', 'verified'])->name('dashboard');
+Route::prefix('/dashboard')->controller(DashboardController::class)->name('dashboard.')->middleware(['auth', 'verified'])->group(function () {
+    Route::get('', 'index')->name('home');
+    Route::get('/jobs', 'jobs')->name('jobs');
+    Route::get('/applications', 'applications')->name('applications');
+    Route::get('/profile', 'profile')->name('profile');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -15,12 +20,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::view('/dashboard', 'pages.dashboard')->name('dashboard');
-Route::view('/jobs', 'pages.jobs')->name('jobs');
-Route::view('/applications', 'pages.applications')->name('applications');
-Route::view('/profile', 'pages.profile')->name('profile');
 
 
 
-
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

@@ -29,10 +29,10 @@
         </div>
 
         <ul class="space-y-4">
-            <li><a href="{{ route('dashboard') }}" class="flex items-center gap-2 hover:text-blue-500 transition">🏠 <span x-show="sidebarOpen" class="transition-opacity duration-300">Dashboard</span></a></li>
-            <li><a href="{{ route('jobs') }}" class="flex items-center gap-2 hover:text-blue-500 transition">💼 <span x-show="sidebarOpen" class="transition-opacity duration-300">Jobs</span></a></li>
-            <li><a href="{{ route('applications') }}" class="flex items-center gap-2 hover:text-blue-500 transition">📥 <span x-show="sidebarOpen" class="transition-opacity duration-300">Applications</span></a></li>
-            <li><a href="{{ route('profile') }}" class="flex items-center gap-2 hover:text-blue-500 transition">👤 <span x-show="sidebarOpen" class="transition-opacity duration-300">Profile</span></a></li>
+            <li><a href="{{ route('dashboard.home') }}" class="flex items-center gap-2 hover:text-blue-500 transition">🏠 <span x-show="sidebarOpen" class="transition-opacity duration-300">Dashboard</span></a></li>
+            <li><a href="{{ route('dashboard.jobs') }}" class="flex items-center gap-2 hover:text-blue-500 transition">💼 <span x-show="sidebarOpen" class="transition-opacity duration-300">Jobs</span></a></li>
+            <li><a href="{{ route('dashboard.applications') }}" class="flex items-center gap-2 hover:text-blue-500 transition">📥 <span x-show="sidebarOpen" class="transition-opacity duration-300">Applications</span></a></li>
+            <li><a href="{{ route('dashboard.profile') }}" class="flex items-center gap-2 hover:text-blue-500 transition">👤 <span x-show="sidebarOpen" class="transition-opacity duration-300">Profile</span></a></li>
         </ul>
     </aside>
 
@@ -74,10 +74,10 @@
             @click.outside="mobileMenuOpen = false">
 
             <ul class="space-y-4">
-                <li><a href="{{ route('dashboard') }}" class="block">🏠 Dashboard</a></li>
-                <li><a href="{{ route('jobs') }}" class="block">💼 Jobs</a></li>
-                <li><a href="{{ route('applications') }}" class="block">📥 Applications</a></li>
-                <li><a href="{{ route('profile') }}" class="block">👤 Profile</a></li>
+                <li><a href="{{ route('dashboard.home') }}" class="block">🏠 Dashboard</a></li>
+                <li><a href="{{ route('dashboard.jobs') }}" class="block">💼 Jobs</a></li>
+                <li><a href="{{ route('dashboard.applications') }}" class="block">📥 Applications</a></li>
+                <li><a href="{{ route('dashboard.profile') }}" class="block">👤 Profile</a></li>
             </ul>
         </nav>
 
