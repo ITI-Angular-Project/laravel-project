@@ -3,11 +3,12 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::prefix('/dashboard')->controller(DashboardController::class)->name('dashboard.')->middleware(['auth', 'verified'])->group(function () {
+Route::prefix('/dashboard')->controller(DashboardController::class)->name('dashboard.')->middleware(['auth', 'verified', 'role:'. implode(',', [User::ROLE_ADMIN, User::ROLE_EMPLOYER])])->group(function () {
     Route::get('', 'index')->name('home');
     Route::get('/jobs', 'jobs')->name('jobs');
     Route::get('/applications', 'applications')->name('applications');
