@@ -54,7 +54,11 @@
 
         <!-- Page Content -->
         <main class="flex-grow">
-            {{ $slot }}
+            @if (isset($slot))
+                {{ $slot }}
+            @else
+                @yield('content')
+            @endif
         </main>
 
         <!-- Global Footer -->

@@ -13,12 +13,12 @@
 
             <!-- Links -->
             <nav class="flex justify-center items-center gap-6 mb-4 text-sm">
-                <a href="#"
+                <a href="{{ route('about') }}"
                     class="text-gray-700 hover:text-indigo-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 rounded px-1 dark:text-gray-300 dark:hover:text-yellow-300 transition">
                     About
                 </a>
                 <span class="text-gray-400 dark:text-gray-600">•</span>
-                <a href="#"
+                <a href="{{ route('contact.form') }}"
                     class="text-gray-700 hover:text-indigo-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 rounded px-1 dark:text-gray-300 dark:hover:text-yellow-300 transition">
                     Contact
                 </a>
