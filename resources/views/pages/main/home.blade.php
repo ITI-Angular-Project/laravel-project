@@ -46,7 +46,7 @@
 
                 <!-- Search Box -->
                 <div class="max-w-4xl mx-auto mt-10 animate-fade-in-up" style="animation-delay: 0.4s;">
-                    <form action="{{ route('dashboard.jobs') }}" method="GET"
+                    <form action="{{ route('dashboard.home') }}" method="GET"
                         class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-6 space-y-4 border border-gray-200 dark:border-gray-700">
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <!-- Keywords Input -->
@@ -223,7 +223,7 @@
             <!-- Category Grid -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 <!-- Technology Category -->
-                <a href="{{ route('dashboard.jobs', ['category' => 'technology']) }}"
+                <a href="{{ route('dashboard.home', ['category' => 'technology']) }}"
                     class="group relative bg-white dark:bg-gray-900 rounded-2xl p-8 border-2 border-gray-200 dark:border-gray-700 hover:border-indigo-500 dark:hover:border-indigo-400 transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
                     <div class="flex flex-col items-center text-center space-y-4">
                         <!-- Icon Container -->
@@ -251,7 +251,7 @@
                 </a>
 
                 <!-- Insurance Category -->
-                <a href="{{ route('dashboard.jobs', ['category' => 'insurance']) }}"
+                <a href="{{ route('dashboard.home', ['category' => 'insurance']) }}"
                     class="group relative bg-white dark:bg-gray-900 rounded-2xl p-8 border-2 border-gray-200 dark:border-gray-700 hover:border-purple-500 dark:hover:border-purple-400 transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
                     <div class="flex flex-col items-center text-center space-y-4">
                         <div
@@ -275,7 +275,7 @@
                 </a>
 
                 <!-- Banking Category -->
-                <a href="{{ route('dashboard.jobs', ['category' => 'banking']) }}"
+                <a href="{{ route('dashboard.home', ['category' => 'banking']) }}"
                     class="group relative bg-white dark:bg-gray-900 rounded-2xl p-8 border-2 border-gray-200 dark:border-gray-700 hover:border-blue-500 dark:hover:border-blue-400 transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
                     <div class="flex flex-col items-center text-center space-y-4">
                         <div
@@ -299,7 +299,7 @@
                 </a>
 
                 <!-- Automotive Category -->
-                <a href="{{ route('dashboard.jobs', ['category' => 'automotive']) }}"
+                <a href="{{ route('dashboard.home', ['category' => 'automotive']) }}"
                     class="group relative bg-white dark:bg-gray-900 rounded-2xl p-8 border-2 border-gray-200 dark:border-gray-700 hover:border-red-500 dark:hover:border-red-400 transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
                     <div class="flex flex-col items-center text-center space-y-4">
                         <div
@@ -323,7 +323,7 @@
                 </a>
 
                 <!-- Marketing Category -->
-                <a href="{{ route('dashboard.jobs', ['category' => 'marketing']) }}"
+                <a href="{{ route('dashboard.home', ['category' => 'marketing']) }}"
                     class="group relative bg-white dark:bg-gray-900 rounded-2xl p-8 border-2 border-gray-200 dark:border-gray-700 hover:border-green-500 dark:hover:border-green-400 transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
                     <div class="flex flex-col items-center text-center space-y-4">
                         <div
@@ -347,7 +347,7 @@
                 </a>
 
                 <!-- Government Category -->
-                <a href="{{ route('dashboard.jobs', ['category' => 'government']) }}"
+                <a href="{{ route('dashboard.home', ['category' => 'government']) }}"
                     class="group relative bg-white dark:bg-gray-900 rounded-2xl p-8 border-2 border-gray-200 dark:border-gray-700 hover:border-amber-500 dark:hover:border-amber-400 transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
                     <div class="flex flex-col items-center text-center space-y-4">
                         <div
@@ -405,7 +405,7 @@
             <!-- Jobs Grid -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 <!-- Job Card 1 - Web Developer -->
-                <a href="{{ route('dashboard.jobs', 1) }}"
+                <a href="{{ route('dashboard.home', 1) }}"
                     class="group bg-gray-50 dark:bg-gray-800 rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-700 hover:border-indigo-500 dark:hover:border-indigo-400 transition-all duration-300 hover:shadow-xl hover:-translate-y-2">
                     <!-- Job Image -->
                     <div class="relative h-48 overflow-hidden bg-gradient-to-br from-indigo-500 to-purple-600">
@@ -451,7 +451,7 @@
                 </a>
 
                 <!-- Job Card 2 - Graphic Design -->
-                <a href="{{ route('dashboard.jobs', 2) }}"
+                <a href="{{ route('dashboard.home', 2) }}"
                     class="group bg-gray-50 dark:bg-gray-800 rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-700 hover:border-purple-500 dark:hover:border-purple-400 transition-all duration-300 hover:shadow-xl hover:-translate-y-2">
                     <!-- Job Image -->
                     <div class="relative h-48 overflow-hidden bg-gradient-to-br from-purple-500 to-pink-600">
@@ -497,7 +497,7 @@
                 </a>
 
                 <!-- Job Card 3 - UI/UX Design -->
-                <a href="{{ route('dashboard.jobs', 3) }}"
+                <a href="{{ route('dashboard.home', 3) }}"
                     class="group bg-gray-50 dark:bg-gray-800 rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-700 hover:border-blue-500 dark:hover:border-blue-400 transition-all duration-300 hover:shadow-xl hover:-translate-y-2">
                     <!-- Job Image -->
                     <div class="relative h-48 overflow-hidden bg-gradient-to-br from-blue-500 to-cyan-600">
@@ -543,7 +543,7 @@
                 </a>
 
                 <!-- Job Card 4 - Mobile Apps -->
-                <a href="{{ route('dashboard.jobs', 4) }}"
+                <a href="{{ route('dashboard.home', 4) }}"
                     class="group bg-gray-50 dark:bg-gray-800 rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-700 hover:border-green-500 dark:hover:border-green-400 transition-all duration-300 hover:shadow-xl hover:-translate-y-2">
                     <!-- Job Image -->
                     <div class="relative h-48 overflow-hidden bg-gradient-to-br from-green-500 to-emerald-600">
@@ -591,7 +591,7 @@
 
             <!-- View All Jobs Button -->
             <div class="text-center mt-12">
-                <a href="{{ route('dashboard.jobs') }}"
+                <a href="{{ route('dashboard.home') }}"
                     class="inline-flex items-center px-8 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-500 dark:to-purple-500 text-white font-semibold rounded-xl hover:from-indigo-700 hover:to-purple-700 dark:hover:from-indigo-600 dark:hover:to-purple-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-900 transform hover:scale-105 transition-all duration-200 shadow-lg">
                     View All Jobs
                     <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -809,7 +809,7 @@
 
             <!-- View All Jobs Button -->
             <div class="text-center mt-12">
-                <a href="{{ route('dashboard.jobs') }}"
+                <a href="{{ route('dashboard.home') }}"
                     class="inline-flex items-center px-8 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-500 dark:to-purple-500 text-white font-semibold rounded-xl hover:from-indigo-700 hover:to-purple-700 dark:hover:from-indigo-600 dark:hover:to-purple-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800 transform hover:scale-105 transition-all duration-200 shadow-lg">
                     View All Jobs
                     <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">

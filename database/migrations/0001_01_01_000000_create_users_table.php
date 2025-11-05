@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('email', 255)->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password', 255);
-            $table->enum('role', ['admin', 'employer', 'candidate'])->default('candidate');
+            $table->enum('role', ['admin', 'employer', 'candidate', 'demo'])->default('candidate');
             $table->string('phone', 30)->nullable();
             $table->string('linkedin_url', 255)->nullable();
             $table->string('resume_path', 255)->nullable();

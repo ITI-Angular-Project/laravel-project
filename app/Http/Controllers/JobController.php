@@ -17,7 +17,8 @@ class JobController extends Controller
     {
         $user = Auth::user();
 
-        $jobs= Job::paginate(5);
+
+        $jobs = Job::paginate(5);
         // if ($user->company) {
         //     // عرض الوظائف التابعة لشركة المستخدم
         //     $jobs = Job::where('company_id', $user->company->id)
@@ -27,7 +28,7 @@ class JobController extends Controller
         //     $jobs = collect();
         // }
 
-        return view('pages.jobs.jobs', compact('jobs'));
+        return view('pages.dashboard.jobs.jobs', compact('jobs'));
     }
 
     /**
@@ -36,7 +37,7 @@ class JobController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view('pages.jobs.create-job', compact('categories'));
+        return view('pages.dashboard.jobs.create-job', compact('categories'));
     }
 
     /**
@@ -95,7 +96,7 @@ class JobController extends Controller
             abort(403, 'Unauthorized action.');
         }
 
-        return view('pages.jobs.show-job', compact('job'));
+        return view('pages.dashboard.jobs.show-job', compact('job'));
     }
 
     /**
@@ -115,7 +116,7 @@ class JobController extends Controller
         $companies = Company::all();
         $categories = Category::all();
 
-        return view('pages.jobs.edit-job', compact('job', 'companies', 'categories'));
+        return view('pages.dashboard.jobs.edit-job', compact('job', 'companies', 'categories'));
     }
 
 
