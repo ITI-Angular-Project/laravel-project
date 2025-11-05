@@ -18,6 +18,10 @@
                         class="text-sm font-medium text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors duration-200 !border-l-0 !border-b !border-transparent">
                         {{ __('Home') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('jobs')" :active="request()->routeIs('jobs')"
+                        class="text-sm font-medium text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors duration-200 !border-l-0 !border-b !border-transparent">
+                        {{ __('jobs') }}
+                    </x-nav-link>
 
                     @auth
                         <x-nav-link :href="route('dashboard.home')" :active="request()->routeIs('dashboard')"
@@ -33,12 +37,12 @@
                 <button type="button" @click="$store.theme.toggle()"
                     class="p-2 rounded-lg border border-gray-200/80 dark:border-gray-700 text-gray-600 dark:text-gray-200 bg-white/70 dark:bg-gray-800/70 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-200"
                     :aria-pressed="$store.theme.dark.toString()" aria-label="{{ __('Toggle dark mode') }}">
-                    <svg x-show="!$store.theme.dark" x-cloak xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+                    <svg x-show="store.theme.dark" x-cloak xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
                         fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round"
                             d="M12 3v2m0 14v2m9-9h-2M5 12H3m15.364-6.364-1.414 1.414M7.05 16.95l-1.414 1.414m0-12.728 1.414 1.414m9.9 9.9 1.414 1.414M12 8a4 4 0 100 8 4 4 0 000-8z" />
                     </svg>
-                    <svg x-show="$store.theme.dark" x-cloak xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                    <svg x-show="!$store.theme.dark" x-cloak xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
                         viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round"
                             d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z" />
