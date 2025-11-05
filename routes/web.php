@@ -6,12 +6,12 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\UserController;
 use App\Models\User;
-
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ContactController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::prefix('/dashboard')->controller(DashboardController::class)->name('dashboard.')->middleware(['auth', 'verified', 'role:'. implode(',', [User::ROLE_ADMIN, User::ROLE_EMPLOYER])])->group(function () {
+Route::prefix('/dashboard')->controller(DashboardController::class)->name('dashboard.')->middleware(['auth', 'verified', 'role:' . implode(',', [User::ROLE_ADMIN, User::ROLE_EMPLOYER])])->group(function () {
     Route::get('', 'index')->name('home');
     Route::get('/jobs', 'jobs')->name('jobs');
     Route::get('/applications', 'applications')->name('applications');
@@ -34,5 +34,13 @@ Route::middleware('auth')->group(function () {
 });
 
 
+Route::get('about-us', function () {
+    return view('pages.main.about-us');
+})->name('about');
+
+
+
+Route::get('/contact', [ContactController::class, 'showForm'])->name('contact.form');
+Route::post('/contact', [ContactController::class, 'sendEmail'])->name('contact.send');
 
 require __DIR__ . '/auth.php';
