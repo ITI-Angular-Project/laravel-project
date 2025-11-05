@@ -65,6 +65,5 @@ class User extends Authenticatable implements MustVerifyEmail
             return in_array($this->role, $roles);
         }
         return $this->role === $roles;
-
     }
 }
