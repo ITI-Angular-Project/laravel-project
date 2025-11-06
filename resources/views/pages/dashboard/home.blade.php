@@ -48,27 +48,22 @@
                 {{-- Job Views (simple SVG chart) --}}
                 <div class="lg:col-span-2 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-5">
                     <div class="flex items-center justify-between mb-4">
-                        <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">Job Views</h3>
-                        <div class="text-xs text-gray-500 dark:text-gray-400">Last 14 days</div>
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">Job Views</h3>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Last 14 days</p>
+                        </div>
+                        <div class="text-xs text-gray-400 dark:text-gray-500">Total: {{ $viewsChartTotal }}</div>
                     </div>
 
                     <div class="rounded-xl border border-gray-100 dark:border-gray-700 p-4">
-                        @php($max = max($viewsDaily ?: [0]))
-                        <div class="h-48 flex items-end gap-2">
-                            @foreach($viewsDaily as $date => $count)
-                                @php($h = $max > 0 ? intval(($count/$max)*100) : 0)
-                                <div class="flex-1 group">
-                                    <div class="mx-auto w-full rounded-t bg-emerald-500/70 group-hover:bg-emerald-600 transition-all" style="height: {{ max($h,4) }}%"></div>
-                                    <div class="mt-1 text-[10px] text-gray-500 dark:text-gray-400 text-center">{{ \Carbon\Carbon::parse($date)->format('D') }}</div>
-                                </div>
-                            @endforeach
-                        </div>
-                        <div class="mt-2 text-xs text-gray-500 dark:text-gray-400">Total views: {{ array_sum($viewsDaily) }}</div>
-                    </div>
+                        <canvas id="viewsChart" class="w-full h-48"></canvas>
+                        @if ($viewsChartTotal === 0)
+                            <p class="mt-3 text-center text-xs text-gray-500 dark:text-gray-400">No views recorded for this period yet.</p>
+                        @endif
+                </div>
                 </div>
 
                 {{-- Posted Jobs --}}
-                <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-5">
                 <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-5">
                     <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Posted Jobs</h3>
                     <div class="space-y-2">
@@ -94,3 +89,104 @@
         </div>
     </div>
 @endsection
+
+@once
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.6/dist/chart.umd.min.js"></script>
+@endonce
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const canvas = document.getElementById('viewsChart');
+        if (!canvas || typeof window.Chart === 'undefined') {
+            return;
+        }
+
+        const dataPoints = @json($viewsChartData);
+        const labels = @json($viewsChartLabels);
+        const rawDates = @json($viewsChartDates);
+        const breakdown = @json($viewsChartBreakdown);
+
+        const ctx = canvas.getContext('2d');
+        const gradientHeight = canvas.height || canvas.clientHeight || 200;
+        const gradient = ctx.createLinearGradient(0, 0, 0, gradientHeight);
+        gradient.addColorStop(0, 'rgba(16, 185, 129, 0.4)');
+        gradient.addColorStop(1, 'rgba(16, 185, 129, 0.05)');
+
+        const chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels,
+                datasets: [{
+                    label: 'Views',
+                    data: dataPoints,
+                    fill: true,
+                    backgroundColor: gradient,
+                    borderColor: '#10b981',
+                    borderWidth: 2,
+                    tension: 0.4,
+                    pointRadius: 3,
+                    pointHoverRadius: 4,
+                    pointBackgroundColor: '#10b981',
+                    pointBorderColor: '#064e3b'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        grid: {
+                            display: false
+                        },
+                        ticks: {
+                            color: '#6b7280',
+                            font: { size: 10 }
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: 'rgba(107, 114, 128, 0.12)'
+                        },
+                        ticks: {
+                            precision: 0,
+                            color: '#6b7280',
+                            font: { size: 10 }
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        intersect: false,
+                        mode: 'index',
+                        backgroundColor: 'rgba(17, 24, 39, 0.85)',
+                        titleColor: '#f9fafb',
+                        bodyColor: '#f9fafb',
+                        borderColor: 'rgba(55, 65, 81, 0.6)',
+                        borderWidth: 1,
+                        padding: 10,
+                        callbacks: {
+                            label: context => `Views: ${context.formattedValue}`,
+                            afterBody: context => {
+                                const dataIndex = context[0]?.dataIndex ?? 0;
+                                const dateKey = rawDates[dataIndex] ?? null;
+                                const jobs = dateKey ? breakdown[dateKey] ?? [] : [];
+                                if (!jobs.length) {
+                                    return 'No job views recorded';
+                                }
+                                return jobs.map(job => `• ${job.title}: ${job.count}`);
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        document.addEventListener('alpine:init', () => {
+            document.addEventListener('theme-changed', () => chart.update());
+        });
+    });
+</script>

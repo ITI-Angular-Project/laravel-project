@@ -72,15 +72,34 @@ class DashboardController extends Controller
 
         // Views chart (last 14 days)
         $viewsByDay = $viewsBaseQuery
+            ->with('job:id,title')
             ->where('created_at', '>=', $from)
             ->get()
             ->groupBy(fn($v) => Carbon::parse($v->created_at)->format('Y-m-d'));
 
         $viewsDaily = [];
+        $viewsBreakdown = [];
         for ($i = 0; $i < $days; $i++) {
             $date = $now->copy()->subDays($days - 1 - $i)->format('Y-m-d');
-            $viewsDaily[$date] = isset($viewsByDay[$date]) ? $viewsByDay[$date]->count() : 0;
+            $dayViews = $viewsByDay[$date] ?? collect();
+            $viewsDaily[$date] = $dayViews->count();
+
+            $viewsBreakdown[$date] = $dayViews->isNotEmpty()
+                ? $dayViews
+                    ->groupBy(fn($view) => optional($view->job)->title ?? 'Unknown Job')
+                    ->map(fn($items) => $items->count())
+                    ->sortDesc()
+                    ->take(5)
+                    ->map(fn($count, $title) => ['title' => $title, 'count' => $count])
+                    ->values()
+                    ->toArray()
+                : [];
         }
+
+        $viewsChartData   = array_values($viewsDaily);
+        $viewsChartLabels = array_map(fn ($date) => Carbon::parse($date)->format('D'), array_keys($viewsDaily));
+        $viewsChartTotal  = array_sum($viewsDaily);
+        $viewsChartDates  = array_keys($viewsDaily);
 
         return view('pages.dashboard.home', [
             'recentJobs'             => $recentJobs,
@@ -89,6 +108,11 @@ class DashboardController extends Controller
             'applicationsThisMonth'  => $applicationsThisMonth,
             'acceptedJobsThisMonth'  => $acceptedJobsThisMonth,
             'viewsDaily'             => $viewsDaily,
+            'viewsChartData'         => $viewsChartData,
+            'viewsChartLabels'       => $viewsChartLabels,
+            'viewsChartTotal'        => $viewsChartTotal,
+            'viewsChartDates'        => $viewsChartDates,
+            'viewsChartBreakdown'    => $viewsBreakdown,
         ]);
     }
 
