@@ -24,28 +24,37 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
 
-        User::factory(10)->create();
+        User::factory(200)->create();
+        User::factory()->create([
+            'name' => 'Ahmed Alaa',
+            'email' => 'ahmed.alla56756@gmail.com',
+            'password' => 'password',
+            'email_verified_at' => now(),
+            'role' => 'admin',
+            'phone' => '01207213250',
+            'linkedin_url' => 'https://www.linkedin.com/in/ahmed-alaa1144/',
+        ]);
 
 
-        Category::factory(5)->create();
+        Category::factory(10)->create();
 
 
-        Technology::factory(10)->create();
+        Technology::factory(20)->create();
 
 
-        Company::factory(5)->create();
+        Company::factory(10)->create();
 
 
-        Job::factory(20)->create();
+        Job::factory(200)->create();
 
 
-        Application::factory(50)->create();
+        Application::factory(500)->create();
 
 
-        Comment::factory(30)->create();
+        Comment::factory(300)->create();
 
 
-        JobView::factory(100)->create();
+        JobView::factory(200)->create();
 
 
         SavedJob::factory(20)->create();

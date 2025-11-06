@@ -19,8 +19,8 @@ class SavedJobFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => User::factory(),
-            'job_id' => Job::factory(),
+            'user_id' => User::all()->random()->id,
+            'job_id' => Job::all()->random()->id,
         ];
     }
 }

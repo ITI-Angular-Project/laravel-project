@@ -82,7 +82,7 @@ class JobController extends Controller
         $salaryRanges[] = round($maxSalary) . '+';
 
 
-        
+
 
 
 

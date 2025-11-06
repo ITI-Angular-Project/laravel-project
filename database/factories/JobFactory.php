@@ -19,8 +19,8 @@ class JobFactory extends Factory
     public function definition(): array
     {
         return [
-            'company_id' => Company::factory(),
-            'category_id' => Category::factory(),
+            'company_id' => Company::all()->random()->id,
+            'category_id' => Category::all()->random()->id,
             'title' => fake()->jobTitle(),
             'description' => fake()->paragraphs(3, true),
             'responsibilities' => fake()->optional()->paragraph(),

@@ -20,17 +20,17 @@
                     </x-nav-link>
                     <x-nav-link :href="route('jobs')" :active="request()->routeIs('jobs')"
                         class="text-sm font-medium text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors duration-200 !border-l-0 !border-b !border-transparent">
-                        {{ __('jobs') }}
+                        {{ __('Jobs') }}
                     </x-nav-link>
-                    
-                    <x-nav-link :href="route('about')" :active="request()->routeIs('home')"
+
+                    <x-nav-link :href="route('about')" :active="request()->routeIs('about')"
                         class="text-sm font-medium text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors duration-200 !border-l-0 !border-b !border-transparent">
                         {{ __('About') }}
                     </x-nav-link>
-                    {{-- <x-nav-link :href="route('contact')" :active="request()->routeIs('home')"
+                    <x-nav-link :href="route('contact.form')" :active="request()->routeIs('contact.form')"
                         class="text-sm font-medium text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors duration-200 !border-l-0 !border-b !border-transparent">
                         {{ __('Contact') }}
-                    </x-nav-link> --}}
+                    </x-nav-link>
                 </div>
             </div>
 

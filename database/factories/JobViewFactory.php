@@ -19,8 +19,8 @@ class JobViewFactory extends Factory
     public function definition(): array
     {
         return [
-            'job_id' => Job::factory(),
-            'user_id' => User::factory(),
+            'job_id' => Job::all()->random()->id,
+            'user_id' => User::all()->random()->id,
             'ip_address' => fake()->ipv4(),
             'user_agent' => fake()->userAgent(),
         ];
