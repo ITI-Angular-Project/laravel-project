@@ -13,8 +13,83 @@ class JobController extends Controller
     /**
      * عرض كل الوظائف الخاصة بالمستخدم الحالي (صاحب الشركة)
      */
-    public function index()
+    public function index(Request $request)
     {
+         if (request()->is('jobs')) {
+        // $jobs = Job::where('status', 'approved')->latest()->paginate(6);
+        // $jobs = Job::all();
+        $categories = Category::all();
+        $jobs = Job::query();
+
+        if ($request->category_id) {
+        $jobs->where('category_id', $request->category_id);
+        }
+
+        if ($request->keyword) {
+        $jobs->where('title', 'like', '%'.$request->keyword.'%');
+        }
+
+        if ($request->location) {
+        $jobs->whereHas('company', function($query) use ($request) {
+            $query->where('location', 'like', '%'.$request->location.'%');
+        });
+        }
+
+        if ($request->salary_range) {
+        if (str_contains($request->salary_range, '+')) {
+            $min = rtrim($request->salary_range, '+');
+            $jobs->where('salary_min', '>=', $min);
+        } elseif (str_contains($request->salary_range, '-')) {
+            [$min, $max] = explode('-', $request->salary_range);
+            $jobs->whereBetween('salary_min', [$min, $max]);
+        }
+       }
+
+       // Filter by date posted
+      if ($request->filled('date_posted')) {
+       $now = now();
+
+       switch ($request->date_posted) {
+          case '24h':
+              $jobs->where('created_at', '>=', $now->subDay());
+              break;
+
+          case '7d':
+              $jobs->where('created_at', '>=', $now->subDays(7));
+              break;
+
+          case '30d':
+              $jobs->where('created_at', '>=', $now->subDays(30));
+              break;
+       }
+     }
+     $jobs = $jobs->get();
+
+
+        // $jobs = $jobs->paginate(12)->withQueryString();
+
+
+        $minSalary = Job::min('salary_min');
+        $maxSalary = Job::max('salary_max');
+
+        $rangeStep = ($maxSalary - $minSalary) / 4;
+        $salaryRanges = [];
+        for ($i = 0; $i < 4; $i++) {
+            $start = round($minSalary + $rangeStep * $i);
+            $end = round($minSalary + $rangeStep * ($i + 1));
+            $salaryRanges[] = "{$start}-{$end}";
+        }
+        $salaryRanges[] = round($maxSalary) . '+';
+
+
+        
+
+
+
+        return view('pages.main.jobs', compact('jobs', 'categories', 'salaryRanges'));
+    }
+
+
         $user = Auth::user();
 
 
