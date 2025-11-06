@@ -32,7 +32,7 @@ class HomeController extends Controller
 
             $featuredJobs = $featuredJobs->merge($fallbackJobs)->unique('id')->take(5)->values();
         }
-        $featuredJobs = $featuredJobs->take(5)->values();
+        $featuredJobs = $featuredJobs->take(4)->values();
 
         $latestJobs = (clone $approvedJobsQuery)
             ->latest()

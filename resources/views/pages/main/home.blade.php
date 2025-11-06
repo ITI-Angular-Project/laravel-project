@@ -22,6 +22,16 @@
             opacity: 1;
             transform: translateY(0);
         }
+
+        @keyframes float-slow {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-12px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .hero-floating {
+            animation: float-slow 8s ease-in-out infinite;
+        }
     </style>
 
     <div class="bg-gradient-to-b from-white via-slate-50 to-white text-slate-900 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 dark:text-white">
@@ -52,7 +62,7 @@
                     </h1>
                     <p class="text-base text-white/80 sm:text-lg" x-text="slides[active]?.subtitle"></p>
 
-                    <div class="rounded-3xl bg-white/80 p-6 shadow-xl backdrop-blur-lg dark:bg-white/10">
+                    <div class="hero-floating rounded-3xl bg-white/80 p-6 shadow-xl backdrop-blur-lg dark:bg-white/10">
                         <form action="{{ route('jobs') }}" method="GET"
                             class="grid gap-4 md:grid-cols-[2fr_1.5fr_1.5fr_auto]">
                             <label class="flex flex-col gap-2 text-sm text-white/80">
@@ -105,7 +115,7 @@
                 <div class="mt-12 flex items-center gap-3">
                     <template x-for="(slide, index) in slides" :key="index">
                         <span class="h-2 flex-1 rounded-full bg-white/20 transition"
-                            :class="active === index ? 'bg-emerald-400' : ''"></span>
+                            :class="active === index ? 'bg-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.7)]' : ''"></span>
                     </template>
                 </div>
             </div>
@@ -309,9 +319,10 @@
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('in-view');
+                        observer.unobserve(entry.target);
                     }
                 });
-            }, { threshold: 0.15 });
+            }, { threshold: 0.2, rootMargin: '0px 0px -5% 0px' });
 
             document.querySelectorAll('.animate-fade-in-up').forEach(el => observer.observe(el));
         });
