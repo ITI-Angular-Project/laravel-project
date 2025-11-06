@@ -5,69 +5,64 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Job;
 use App\Models\Company;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class JobController extends Controller
 {
     /**
-     * عرض كل الوظائف الخاصة بالمستخدم الحالي (صاحب الشركة)
+     * عرض الوظائف في الموقع الرئيسي
      */
     public function index(Request $request)
     {
-         if (request()->is('jobs')) {
-        // $jobs = Job::where('status', 'approved')->latest()->paginate(6);
-        // $jobs = Job::all();
         $categories = Category::all();
-        $jobs = Job::query();
+        $jobs = Job::where('status', 'approved')->latest();
 
         if ($request->category_id) {
-        $jobs->where('category_id', $request->category_id);
+            $jobs->where('category_id', $request->category_id);
         }
 
         if ($request->keyword) {
-        $jobs->where('title', 'like', '%'.$request->keyword.'%');
+            $jobs->where('title', 'like', '%'.$request->keyword.'%');
         }
 
         if ($request->location) {
-        $jobs->whereHas('company', function($query) use ($request) {
-            $query->where('location', 'like', '%'.$request->location.'%');
-        });
+            $jobs->whereHas('company', function($query) use ($request) {
+                $query->where('location', 'like', '%'.$request->location.'%');
+            });
         }
 
         if ($request->salary_range) {
-        if (str_contains($request->salary_range, '+')) {
-            $min = rtrim($request->salary_range, '+');
-            $jobs->where('salary_min', '>=', $min);
-        } elseif (str_contains($request->salary_range, '-')) {
-            [$min, $max] = explode('-', $request->salary_range);
-            $jobs->whereBetween('salary_min', [$min, $max]);
+            if (str_contains($request->salary_range, '+')) {
+                $min = rtrim($request->salary_range, '+');
+                $jobs->where('salary_min', '>=', $min);
+            } elseif (str_contains($request->salary_range, '-')) {
+                [$min, $max] = explode('-', $request->salary_range);
+                $jobs->whereBetween('salary_min', [$min, $max]);
+            }
         }
-       }
 
-       // Filter by date posted
-      if ($request->filled('date_posted')) {
-       $now = now();
+        // Filter by date posted
+        if ($request->filled('date_posted')) {
+            $now = now();
 
-       switch ($request->date_posted) {
-          case '24h':
-              $jobs->where('created_at', '>=', $now->subDay());
-              break;
+            switch ($request->date_posted) {
+                case '24h':
+                    $jobs->where('created_at', '>=', $now->subDay());
+                    break;
 
-          case '7d':
-              $jobs->where('created_at', '>=', $now->subDays(7));
-              break;
+                case '7d':
+                    $jobs->where('created_at', '>=', $now->subDays(7));
+                    break;
 
-          case '30d':
-              $jobs->where('created_at', '>=', $now->subDays(30));
-              break;
-       }
-     }
-     $jobs = $jobs->get();
+                case '30d':
+                    $jobs->where('created_at', '>=', $now->subDays(30));
+                    break;
+            }
+        }
 
-
-        // $jobs = $jobs->paginate(12)->withQueryString();
-
+        $jobs = $jobs->paginate(12)->withQueryString();
 
         $minSalary = Job::min('salary_min');
         $maxSalary = Job::max('salary_max');
@@ -81,28 +76,25 @@ class JobController extends Controller
         }
         $salaryRanges[] = round($maxSalary) . '+';
 
-
-
-
-
-
         return view('pages.main.jobs', compact('jobs', 'categories', 'salaryRanges'));
     }
 
+    /**
+     * عرض كل الوظائف الخاصة بالمستخدم الحالي (صاحب الشركة)
+     */
+    public function dashboardIndex(Request $request)
+    {
+        $user = User::find(Auth::id());
 
-        $user = Auth::user();
+        if($user->hasRole('admin')) {
+            $jobsQuery = Job::query();
+        }else {
+            if (!$user->company) {
+                return redirect(route('dashboard.home'))->with('error', 'You must create a company profile to view jobs.');
+            }
+            $jobsQuery = Job::where('company_id', $user->company?->id);
+        }
 
-
-        $jobs = Job::orderBy('created_at', 'desc')->paginate(5);
-        // if ($user->company) {
-        //     // عرض الوظائف التابعة لشركة المستخدم
-        //     $jobs = Job::where('company_id', $user->company->id)
-        //         ->orderBy('created_at', 'desc')
-        //         ->paginate(5);
-        // } else {
-        //     $jobs = collect();
-        // }
-        $jobsQuery = Job::query();
         if ($request->filled('search')) {
             $search = $request->search;
             $jobsQuery->where(function ($query) use ($search) {
@@ -118,7 +110,6 @@ class JobController extends Controller
 
         // ترتيب وعمل paginate
         $jobs = $jobsQuery->orderBy('created_at', 'desc')->paginate(5)->withQueryString();
-
 
         return view('pages.dashboard.jobs.jobs', compact('jobs'));
     }

@@ -69,7 +69,7 @@
                                     class="border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/40 transition-colors duration-500">
                                     <td
                                         class="py-2 font-medium text-gray-900 dark:text-gray-100 transition-colors duration-500">
-                                        <a href="{{ route('jobs.show', $job->id) }}"
+                                        <a href="{{ route('dashboard.jobs.show', $job->id) }}"
                                             class="hover:text-blue-600 transition-colors duration-300">
                                             {{ $job->title }}
                                         </a>
@@ -110,7 +110,7 @@
 
                     <div class="flex flex-col sm:flex-row gap-3">
                         {{-- Add Job --}}
-                        <a href="{{ route('jobs.create') }}"
+                        <a href="{{ route('dashboard.jobs.create') }}"
                             class="group inline-flex items-center gap-3 bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-700 hover:from-indigo-700 hover:via-purple-700 hover:to-indigo-800 text-white font-semibold py-3.5 px-6 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 hover:scale-[1.03] active:scale-[0.98] motion-safe:transition relative overflow-hidden">
                             <span
                                 class="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></span>

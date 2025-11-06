@@ -8,7 +8,7 @@
 
             <h2 class="text-3xl font-bold text-gray-800 dark:text-gray-100 tracking-tight">My Jobs</h2>
 
-            <form action="{{ route('jobs.index') }}" method="GET"
+            <form action="{{ route('dashboard.jobs.index') }}" method="GET"
                 class="flex flex-col sm:flex-row items-start sm:items-center gap-3 w-full sm:w-auto">
 
                 {{-- Search Bar --}}
@@ -36,7 +36,7 @@
                 </button>
 
                 {{-- New Job Button --}}
-                <a href="{{ route('jobs.create') }}"
+                <a href="{{ route('dashboard.jobs.create') }}"
                     class="ml-0 sm:ml-2 group inline-flex items-center gap-3 bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-700
                        hover:from-indigo-700 hover:via-purple-700 hover:to-indigo-800 text-white font-semibold
                        py-3.5 px-6 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 transform
@@ -59,7 +59,7 @@
                 px-4 py-3 rounded-xl shadow-lg animate-in slide-in-from-top duration-300 mb-6 flex items-center gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.707a1 1 0 00-1.414-1.414L9 10.586
-                                                     7.707 9.293a1 1 0 10-1.414 1.414L9 13.414l4.707-4.707z"
+                                                         7.707 9.293a1 1 0 10-1.414 1.414L9 13.414l4.707-4.707z"
                         clip-rule="evenodd" />
                 </svg>
                 {{ session('success') }}
@@ -89,10 +89,10 @@
                     <tbody class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700">
                         @foreach ($jobs as $job)
                             <tr class="group hover:bg-gradient-to-r hover:from-indigo-50/60 hover:to-purple-50/60
-                           dark:hover:from-indigo-900/10 dark:hover:to-purple-900/10 transition-all duration-300
+                           dark:hover:from-indigo-900/10 dark:hover:to-purple-900/10 transition-all
                            hover:shadow-lg hover:scale-[1.01] animate-in fade-in slide-in-from-left duration-500 cursor-pointer"
                                 style="animation-delay: {{ $loop->index * 50 }}ms"
-                                onclick="window.location='{{ route('jobs.show', $job->id) }}'">
+                                onclick="window.location='{{ route('dashboard.jobs.show', $job->id) }}'">
 
                                 <td class="px-6 py-4 text-gray-800 dark:text-gray-100 font-medium">{{ $job->title }}</td>
                                 <td class="px-6 py-4 capitalize text-gray-600 dark:text-gray-300">
@@ -107,16 +107,23 @@
                                 <td class="px-6 py-4 text-gray-600 dark:text-gray-300">
                                     {{ \Carbon\Carbon::parse($job->deadline)->format('Y-m-d') }}</td>
                                 <td class="px-6 py-4">
-                                    <span
-                                        class="px-3 py-1 rounded-full text-xs font-semibold
-                                     @if ($job->status == 'approved') bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-100
-                                     @elseif($job->status == 'pending') bg-yellow-100 dark:bg-yellow-800 text-yellow-800 dark:text-yellow-100
-                                     @else bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-100 @endif">
+                                    <span @class([
+                                        'px-3 py-1 rounded-full text-xs font-semibold',
+                                        'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-100' =>
+                                            $job->status === 'approved',
+                                        'bg-yellow-100 dark:bg-yellow-800 text-yellow-800 dark:text-yellow-100' =>
+                                            $job->status === 'pending',
+                                        'bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-100' => !in_array(
+                                            $job->status,
+                                            ['approved', 'pending']),
+                                    ])>
                                         {{ ucfirst($job->status) }}
                                     </span>
+
                                 </td>
                                 <td class="px-6 py-4 text-center flex justify-center gap-3">
-                                    <a href="{{ route('jobs.edit', $job->id) }}" onclick="event.stopPropagation()"
+                                    <a href="{{ route('dashboard.jobs.edit', $job->id) }}"
+                                        onclick="event.stopPropagation()"
                                         class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-gray-100 dark:bg-gray-800
                                           hover:bg-gray-200 dark:hover:bg-gray-700 text-indigo-600 dark:text-indigo-400
                                           transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-500/50
@@ -129,7 +136,7 @@
                                         </svg>
                                     </a>
 
-                                    <form action="{{ route('jobs.destroy', $job->id) }}" method="POST"
+                                    <form action="{{ route('dashboard.jobs.destroy', $job->id) }}" method="POST"
                                         onsubmit="event.stopPropagation(); return confirm('Are you sure you want to delete this job?');">
                                         @csrf
                                         @method('DELETE')

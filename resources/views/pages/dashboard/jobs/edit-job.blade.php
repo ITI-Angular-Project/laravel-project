@@ -5,7 +5,7 @@
 
     {{-- 🔙 زر العودة --}}
     <div class="mb-6">
-        <a href="{{ route('jobs.index') }}"
+        <a href="{{ route('dashboard.jobs.index') }}"
             class="text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1">
             ← Back to My Jobs
         </a>
@@ -16,7 +16,7 @@
 
         <h1 class="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-6">Edit Job</h1>
 
-        <form action="{{ route('jobs.update', $job->id) }}" method="POST">
+        <form action="{{ route('dashboard.jobs.update', $job->id) }}" method="POST">
             @csrf
             @method('PUT')
 
@@ -64,7 +64,7 @@
             {{-- Deadline --}}
             <div class="mb-4">
                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Deadline</label>
-                <input type="date" name="deadline" value="{{ old('deadline', $job->deadline->format('Y-m-d')) }}"
+                <input type="date" name="deadline" value="{{ old('deadline', $job->deadline?->format('Y-m-d')) }}"
                     class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-indigo-500">
             </div>
 
@@ -123,7 +123,7 @@
                     class="bg-green-600 hover:bg-green-700 text-white font-semibold px-5 py-2 rounded-lg transition">
                     Update Job
                 </button>
-                <a href="{{ route('jobs.index') }}"
+                <a href="{{ route('dashboard.jobs.index') }}"
                     class="bg-gray-300 hover:bg-gray-400 text-gray-900 font-semibold px-5 py-2 rounded-lg transition">
                     Cancel
                 </a>

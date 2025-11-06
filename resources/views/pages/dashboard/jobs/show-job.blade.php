@@ -5,7 +5,7 @@
 
     {{-- 🔙 Back Button --}}
     <div class="mb-6">
-        <a href="{{ route('jobs.index') }}"
+        <a href="{{ route('dashboard.jobs.index') }}"
             class="inline-flex items-center gap-2 text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200 transition">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
@@ -93,7 +93,7 @@
 
         {{-- Action Buttons --}}
         <div class="flex flex-col sm:flex-row gap-4 mt-12">
-            <a href="{{ route('jobs.edit', $job->id) }}"
+            <a href="{{ route('dashboard.jobs.edit', $job->id) }}"
                class="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-xl shadow-md transition transform hover:scale-105">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5h6M4 7h6m1 6h8m-8 4h6" />
@@ -101,7 +101,7 @@
                 Edit Job
             </a>
 
-            <form action="{{ route('jobs.destroy', $job->id) }}" method="POST" class="inline-block">
+            <form action="{{ route('dashboard.jobs.destroy', $job->id) }}" method="POST" class="inline-block">
                 @csrf
                 @method('DELETE')
                 <button type="submit"
