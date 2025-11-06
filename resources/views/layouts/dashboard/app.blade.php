@@ -316,7 +316,7 @@
                                 </svg>
                                 <span class="absolute -top-0.5 -right-0.5 h-2.5 w-2.5 rounded-full bg-red-500"></span>
                             </button>
-                            <div x-show="open" x-transition @click.outside="open=false"
+                            <div x-cloak x-show="open" x-transition @click.outside="open=false"
                                 class="absolute right-0 mt-2 w-80 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl shadow-xl overflow-hidden">
                                 <div
                                     class="px-4 py-2 text-sm font-medium border-b border-gray-200 dark:border-gray-800">
@@ -348,7 +348,7 @@
                                         d="M6 9l6 6 6-6" />
                                 </svg>
                             </button>
-                            <div x-show="open" x-transition:enter="transition ease-out duration-200"
+                            <div x-cloak x-show="open" x-transition:enter="transition ease-out duration-200"
                                 x-transition:enter-start="opacity-0 scale-95 translate-y-1"
                                 x-transition:enter-end="opacity-100 scale-100 translate-y-0"
                                 x-transition:leave="transition ease-in duration-150"
