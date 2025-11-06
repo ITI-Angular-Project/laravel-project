@@ -93,7 +93,7 @@ class JobController extends Controller
         $user = Auth::user();
 
 
-        $jobs = Job::paginate(5);
+        $jobs = Job::orderBy('created_at', 'desc')->paginate(5);
         // if ($user->company) {
         //     // عرض الوظائف التابعة لشركة المستخدم
         //     $jobs = Job::where('company_id', $user->company->id)
@@ -102,6 +102,23 @@ class JobController extends Controller
         // } else {
         //     $jobs = collect();
         // }
+        $jobsQuery = Job::query();
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $jobsQuery->where(function ($query) use ($search) {
+                $query->where('title', 'like', "%{$search}%")
+                    ->orWhere('description', 'like', "%{$search}%");
+            });
+        }
+
+        // فلترة حسب الحالة
+        if ($request->filled('status')) {
+            $jobsQuery->where('status', $request->status);
+        }
+
+        // ترتيب وعمل paginate
+        $jobs = $jobsQuery->orderBy('created_at', 'desc')->paginate(5)->withQueryString();
+
 
         return view('pages.dashboard.jobs.jobs', compact('jobs'));
     }
