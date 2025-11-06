@@ -9,4 +9,9 @@ class JobView extends Model
 {
     /** @use HasFactory<\Database\Factories\JobViewFactory> */
     use HasFactory;
+
+    public function job()
+    {
+        return $this->belongsTo(Job::class);
+    }
 }

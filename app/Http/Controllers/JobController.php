@@ -173,11 +173,6 @@ class JobController extends Controller
     public function show($id)
     {
         $job = Job::findOrFail($id);
-        $user = Auth::user();
-
-        if (!$user->company || $job->company_id !== $user->company->id) {
-            abort(403, 'Unauthorized action.');
-        }
 
         return view('pages.dashboard.jobs.show-job', compact('job'));
     }

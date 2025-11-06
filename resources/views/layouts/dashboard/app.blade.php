@@ -45,7 +45,7 @@
 </head>
 
 <body :class="{ 'dark': darkMode }"
-    class="bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-900 dark:via-gray-950 dark:to-gray-900 text-gray-900 dark:text-gray-100 antialiased selection:bg-indigo-200/60 dark:selection:bg-indigo-600/40">
+    class="bg-emerald-50/60 dark:bg-gray-900 text-gray-900 dark:text-gray-100 antialiased selection:bg-emerald-200/60 dark:selection:bg-emerald-600/40">
     <a href="#main"
         class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 bg-white dark:bg-gray-800 text-sm px-3 py-2 rounded shadow">
         Skip to content
@@ -54,24 +54,24 @@
     <div class="min-h-screen flex">
         <!-- Sidebar (Desktop) -->
         <aside
-            class="hidden md:flex flex-col border-r border-gray-200/80 dark:border-gray-800 bg-gradient-to-b from-white/95 via-white/90 to-white/95 dark:from-gray-900/95 dark:via-gray-900/90 dark:to-gray-900/95 backdrop-blur-xl supports-[backdrop-filter]:bg-white/80 dark:supports-[backdrop-filter]:bg-gray-900/50 transition-all duration-300 ease-in-out shadow-lg"
+            class="hidden md:flex flex-col border-r border-emerald-100/80 dark:border-gray-800 bg-white dark:bg-gray-900 transition-all duration-300 ease-in-out shadow-sm"
             :class="sidebarOpen ? 'w-72' : 'w-20'">
 
             <!-- Brand / Collapse -->
             <div
-                class="flex items-center justify-between px-4 h-16 border-b border-gray-200/50 dark:border-gray-800/50">
+                class="flex items-center justify-between px-4 h-16 border-b border-emerald-100/60 dark:border-gray-800/50">
                 <a href="{{ route('dashboard.home') }}"
                     class="flex items-center gap-2 group transition-transform duration-200 hover:scale-105">
                     <span
-                        class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 text-white font-bold shadow-lg shadow-indigo-500/30 transition-all duration-300 group-hover:shadow-xl group-hover:shadow-purple-500/40 group-hover:scale-110">H</span>
+                        class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-600 text-white font-bold shadow-sm">H</span>
                     <span x-show="sidebarOpen" x-transition:enter="transition ease-out duration-200"
                         x-transition:enter-start="opacity-0 -translate-x-2"
                         x-transition:enter-end="opacity-100 translate-x-0"
                         :class="{ 'opacity-0 pointer-events-none': !sidebarOpen }"
-                        class="text-lg font-semibold tracking-tight bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">HireOn</span>
+                        class="text-lg font-semibold tracking-tight text-emerald-800 dark:text-white">HireOn</span>
                 </a>
                 <button @click="toggleSidebar()"
-                    class="p-2 rounded-lg hover:bg-gradient-to-r hover:from-gray-100 hover:to-gray-50 dark:hover:from-gray-800 dark:hover:to-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all duration-200 hover:scale-110"
+                    class="p-2 rounded-lg hover:bg-emerald-50 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all duration-200 hover:scale-110"
                     :aria-expanded="sidebarOpen.toString()" :title="sidebarOpen ? 'Collapse' : 'Expand'">
                     <svg x-show="sidebarOpen" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" aria-hidden="true">
@@ -86,7 +86,7 @@
 
             <!-- Nav -->
             <nav class="px-2 py-4 space-y-1 overflow-y-auto overflow-x-hidden">
-                @php($active = fn($name) => request()->routeIs($name) ? 'bg-indigo-600/10 text-indigo-700 dark:text-indigo-300 ring-1 ring-inset ring-indigo-600/20' : 'hover:bg-gray-100 dark:hover:bg-gray-800')
+                @php($active = fn($name) => request()->routeIs($name) ? 'bg-emerald-600/10 text-emerald-700 dark:text-emerald-300 ring-1 ring-inset ring-emerald-600/20' : 'hover:bg-gray-100 dark:hover:bg-gray-800')
 
                 <!-- Dashboard -->
                 <a href="{{ route('dashboard.home') }}"
@@ -106,13 +106,13 @@
 
                 <!-- Jobs -->
                 <a href="{{ route('dashboard.jobs.index') }}"
-                    class="group relative flex items-center gap-3 mx-2 px-3 py-2.5 rounded-xl transition-all duration-200 {{ $active('dashboard.jobs') }} hover:scale-[1.02]"
+                    class="group relative flex items-center gap-3 mx-2 px-3 py-2.5 rounded-xl transition-all duration-200 {{ $active('dashboard.jobs.*') }} hover:scale-[1.02]"
                     :class="sidebarOpen ? 'justify-start' : 'justify-center'" :title="!sidebarOpen ? 'Jobs' : ''"
                     @if (request()->routeIs('dashboard.jobs')) aria-current="page" @endif>
                     <svg class="h-5 w-5 opacity-80 group-hover:opacity-100 transition-all duration-200 group-hover:scale-110"
                         viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M4 7a2 2 0 012-2h12a2 2 0 012 2v3H4V7zm0 3v7a2 2 0 002 2h12a2 2 0 002-2v-7" />
+                            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0h6" />
                     </svg>
                     <span x-show="sidebarOpen" x-transition:enter="transition ease-out duration-200"
                         x-transition:enter-start="opacity-0 -translate-x-2"
@@ -121,11 +121,11 @@
                 </a>
 
                 <!-- Applications -->
-                <a href="{{ route('dashboard.applications') }}"
-                    class="group relative flex items-center gap-3 mx-2 px-3 py-2.5 rounded-xl transition-all duration-200 {{ $active('dashboard.applications') }} hover:scale-[1.02]"
+                <a href="{{ route('dashboard.applications.index') }}"
+                    class="group relative flex items-center gap-3 mx-2 px-3 py-2.5 rounded-xl transition-all duration-200 {{ $active('dashboard.applications.*') }} hover:scale-[1.02]"
                     :class="sidebarOpen ? 'justify-start' : 'justify-center'"
                     :title="!sidebarOpen ? 'Applications' : ''"
-                    @if (request()->routeIs('dashboard.applications')) aria-current="page" @endif>
+                    @if (request()->routeIs('dashboard.applications.index')) aria-current="page" @endif>
                     <svg class="h-5 w-5 opacity-80 group-hover:opacity-100 transition-all duration-200 group-hover:scale-110"
                         viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -219,7 +219,7 @@
                         <span>Jobs</span>
                     </a>
 
-                    <a href="{{ route('dashboard.applications') }}"
+                    <a href="{{ route('dashboard.applications.index') }}"
                         class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 {{ request()->routeIs('dashboard.applications') ? 'bg-gray-100 dark:bg-gray-800' : '' }}">
                         <svg class="h-5 w-5 opacity-80" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             aria-hidden="true">
@@ -256,11 +256,11 @@
         <div class="flex-1 min-w-0 flex flex-col">
             <!-- Top Bar -->
             <header
-                class="sticky top-0 z-30 bg-gradient-to-r from-white/90 via-white/95 to-white/90 dark:from-gray-900/90 dark:via-gray-900/95 dark:to-gray-900/90 backdrop-blur-xl border-b border-gray-200/60 dark:border-gray-800/60 shadow-sm">
+                class="sticky top-0 z-30 bg-white/90 dark:bg-gray-900/90 backdrop-blur border-b border-emerald-100/60 dark:border-gray-800/60">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
                     <div class="flex items-center gap-2">
                         <button
-                            class="md:hidden p-2 rounded-lg hover:bg-gradient-to-r hover:from-gray-100 hover:to-gray-50 dark:hover:from-gray-800 dark:hover:to-gray-700 transition-all duration-200 hover:scale-110"
+                            class="md:hidden p-2 rounded-lg hover:bg-emerald-50 dark:hover:bg-gray-800 transition-all duration-200 hover:scale-110"
                             @click="mobileMenuOpen = true" aria-label="Open menu">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" aria-hidden="true">
@@ -268,19 +268,15 @@
                                     d="M4 6h16M4 12h16M4 18h16" />
                             </svg>
                         </button>
-                        <h1
-                            class="text-base sm:text-lg font-semibold tracking-tight bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 dark:from-white dark:via-gray-200 dark:to-white bg-clip-text text-transparent">
-                            {{ $pageTitle ?? 'Dashboard' }}</h1>
-                        <nav aria-label="Breadcrumb"
-                            class="hidden sm:block ml-3 text-sm text-gray-500 dark:text-gray-400">
-                            {{ $breadcrumb ?? '' }}
-                        </nav>
+                        <h1 class="text-base sm:text-lg font-semibold tracking-tight text-emerald-800 dark:text-white">{{ $pageTitle ?? 'Dashboard' }}</h1>
                     </div>
 
                     <!-- Actions -->
                     <div class="flex items-center gap-2">
+                        <a href="{{ route('dashboard.jobs.create') }}" class="hidden sm:inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium transition">Post a Job</a>
+
                         <button @click="toggleTheme()"
-                            class="p-2 rounded-lg hover:bg-gradient-to-r hover:from-gray-100 hover:to-gray-50 dark:hover:from-gray-800 dark:hover:to-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-900/0 transition-all duration-200 hover:scale-110 hover:rotate-12"
+                            class="p-2 rounded-lg hover:bg-emerald-50 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 focus:ring-offset-gray-900/0 transition-all duration-200 hover:scale-110 hover:rotate-12"
                             :aria-label="darkMode ? 'Switch to light mode' : 'Switch to dark mode'"
                             :aria-pressed="darkMode.toString()">
                             <svg x-show="!darkMode" x-cloak xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
@@ -300,7 +296,7 @@
                         <!-- Notifications (kept minimal) -->
                         <div class="relative" x-data="{ open: false }" @keydown.escape="open=false">
                             <button @click="open=!open"
-                                class="p-2 rounded-lg hover:bg-gradient-to-r hover:from-gray-100 hover:to-gray-50 dark:hover:from-gray-800 dark:hover:to-gray-700 relative transition-all duration-200 hover:scale-110"
+                                class="p-2 rounded-lg hover:bg-emerald-50 dark:hover:bg-gray-800 relative transition-all duration-200 hover:scale-110"
                                 aria-haspopup="true" :aria-expanded="open.toString()"
                                 aria-label="Open notifications">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24"
@@ -325,10 +321,10 @@
                         <!-- User -->
                         <div class="relative" x-data="{ open: false }" @keydown.escape="open=false">
                             <button @click="open=!open"
-                                class="flex items-center gap-2 pl-2 pr-3 py-1.5 rounded-xl hover:bg-gradient-to-r hover:from-gray-100 hover:to-gray-50 dark:hover:from-gray-800 dark:hover:to-gray-700 transition-all duration-200 hover:scale-105"
+                                class="flex items-center gap-2 pl-2 pr-3 py-1.5 rounded-xl hover:bg-emerald-50 dark:hover:bg-gray-800 transition-all duration-200 hover:scale-105"
                                 aria-haspopup="true" :aria-expanded="open.toString()">
                                 <span
-                                    class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-indigo-500 via-purple-600 to-pink-600 text-white text-sm font-semibold shadow-lg shadow-indigo-500/30 transition-all duration-300 hover:shadow-xl hover:shadow-purple-500/40 hover:scale-110"
+                                    class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-emerald-600 text-white text-sm font-semibold"
                                     aria-hidden="true">
                                     {{ strtoupper(substr(auth()->user()->name ?? 'A', 0, 1)) }}
                                 </span>
@@ -348,13 +344,13 @@
                                 x-transition:leave="transition ease-in duration-150"
                                 x-transition:leave-start="opacity-100 scale-100 translate-y-0"
                                 x-transition:leave-end="opacity-0 scale-95 translate-y-1" @click.outside="open=false"
-                                class="absolute right-0 mt-2 w-52 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl shadow-xl overflow-hidden backdrop-blur-xl">
+                                class="absolute right-0 mt-2 w-52 bg-white dark:bg-gray-900 border border-emerald-100 dark:border-gray-800 rounded-xl shadow-xl overflow-hidden backdrop-blur-xl">
                                 <a href="{{ route('dashboard.profile') }}"
-                                    class="block px-4 py-2 text-sm hover:bg-gradient-to-r hover:from-gray-50 hover:to-gray-100 dark:hover:from-gray-800 dark:hover:to-gray-700 transition-all duration-200">Profile</a>
+                                    class="block px-4 py-2 text-sm hover:bg-emerald-50 dark:hover:bg-gray-800 transition-all duration-200">Profile</a>
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
                                     <button type="submit"
-                                        class="w-full text-left px-4 py-2 text-sm hover:bg-gradient-to-r hover:from-red-50 hover:to-red-100 dark:hover:from-red-900/20 dark:hover:to-red-800/20 transition-all duration-200">Log
+                                        class="w-full text-left px-4 py-2 text-sm hover:bg-red-50 dark:hover:bg-red-900/20 transition-all duration-200">Log
                                         out</button>
                                 </form>
                             </div>
