@@ -319,8 +319,8 @@
                         @if ($users->hasPages())
                             <div
                                 class="px-6 sm:px-8 py-6 border-t border-gray-200 dark:border-gray-700 bg-gradient-to-r from-gray-50 to-white dark:from-gray-800 dark:to-gray-800">
-                                <div class="flex items-center justify-end">
-                                    {{ $users->appends(request()->query())->links() }}
+                                <div class="flex items-center justify-between">
+                                    {{ $users->links() }}
                                 </div>
                             </div>
                         @endif
