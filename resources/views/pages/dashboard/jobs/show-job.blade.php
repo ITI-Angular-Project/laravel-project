@@ -88,11 +88,14 @@
         {{-- Action Buttons --}}
         <div class="flex flex-col sm:flex-row gap-3 mt-12">
             <x-ui.button href="{{ route('dashboard.jobs.edit', $job->id) }}">Edit Job</x-ui.button>
-            <form action="{{ route('dashboard.jobs.destroy', $job->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Are you sure you want to delete this job?');">
-                @csrf
-                @method('DELETE')
-                <x-ui.button type="submit" variant="danger">Delete Job</x-ui.button>
-            </form>
+            <x-ui.confirm-modal :action="route('dashboard.jobs.destroy', $job->id)" method="DELETE"
+                title="Delete Job" :description="__('Deleting this job will remove all associated applications and analytics.')"
+                confirm-text="Delete Job" cancel-text="Cancel">
+                <x-slot:trigger>
+                    <x-ui.button variant="danger">Delete Job</x-ui.button>
+                </x-slot:trigger>
+                <p>Please confirm you want to permanently remove this job posting.</p>
+            </x-ui.confirm-modal>
         </div>
 
     </div>

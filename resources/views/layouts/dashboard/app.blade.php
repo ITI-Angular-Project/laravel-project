@@ -1,3 +1,11 @@
+@php
+    $flashToasts = array_values(array_filter([
+        ['type' => 'success', 'message' => session('success')],
+        ['type' => 'error', 'message' => session('error')],
+        ['type' => 'warning', 'message' => session('warning')],
+        ['type' => 'info', 'message' => session('status')],
+    ], fn($toast) => filled($toast['message'])));
+@endphp
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" x-data="dashboard()" x-init="init()"
     class="scroll-smooth">
@@ -50,6 +58,8 @@
         class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 bg-white dark:bg-gray-800 text-sm px-3 py-2 rounded shadow">
         Skip to content
     </a>
+
+    <x-ui.toast-stack />
 
     <div class="min-h-screen flex">
         <!-- Sidebar (Desktop) -->
@@ -276,7 +286,7 @@
                         <a href="{{ route('dashboard.jobs.create') }}" class="hidden sm:inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium transition">Post a Job</a>
 
                         <button @click="toggleTheme()"
-                            class="p-2 rounded-lg hover:bg-emerald-50 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 focus:ring-offset-gray-900/0 transition-all duration-200 hover:scale-110 hover:rotate-12"
+                            class="p-2 rounded-lg hover:bg-emerald-50 dark:hover:bg-gray-800 active:outline-none active:ring-2 active:ring-emerald-500 active:ring-offset-2 active:ring-offset-gray-900/0 transition-all duration-200 hover:scale-110 hover:rotate-12"
                             :aria-label="darkMode ? 'Switch to light mode' : 'Switch to dark mode'"
                             :aria-pressed="darkMode.toString()">
                             <svg x-show="!darkMode" x-cloak xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
@@ -384,12 +394,29 @@
 
     <script>
         function dashboard() {
+            const flashToasts = @json($flashToasts);
+            const toastStylesMap = {
+                success: 'border-emerald-200/80 dark:border-emerald-800/60 bg-emerald-50/90 dark:bg-emerald-900/40 text-emerald-900 dark:text-emerald-100',
+                error: 'border-rose-200/80 dark:border-rose-800/60 bg-rose-50/90 dark:bg-rose-900/40 text-rose-900 dark:text-rose-100',
+                warning: 'border-amber-200/80 dark:border-amber-800/60 bg-amber-50/90 dark:bg-amber-900/40 text-amber-900 dark:text-amber-100',
+                info: 'border-sky-200/80 dark:border-sky-800/60 bg-sky-50/90 dark:bg-sky-900/40 text-sky-900 dark:text-sky-100',
+            };
+            const toastIcons = {
+                success: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-emerald-500" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>`,
+                error: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-rose-500" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12A9 9 0 113 12a9 9 0 0118 0z" /></svg>`,
+                warning: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-amber-500" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M4.93 19h14.14a2 2 0 001.94-2.5l-4.24-12A2 2 0 0014.93 3H9.07a2 2 0 00-1.83 1.25l-4.24 12A2 2 0 004.93 19z" /></svg>`,
+                info: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-sky-500" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M12 18a9 9 0 110-18 9 9 0 010 18z" /></svg>`,
+            };
+
             return {
                 sidebarOpen: true,
                 mobileMenuOpen: false,
                 darkMode: false,
                 hasStoredTheme: false,
                 mediaQuery: null,
+                toasts: [],
+                toastCounter: 0,
+                seenToastKeys: new Set(),
                 init() {
                     // Sidebar state persistence
                     const savedSidebar = localStorage.getItem('sidebarOpen');
@@ -426,6 +453,17 @@
                     } else if (typeof this.mediaQuery.addListener === 'function') {
                         this.mediaQuery.addListener(syncSystemPreference);
                     }
+
+                    flashToasts.forEach(toast => this.showToast(toast));
+
+                    window.addEventListener('toast', event => {
+                        this.showToast(event.detail || {});
+                    });
+
+                    if (typeof window.$toast !== 'function') {
+                        window.$toast = toast =>
+                            window.dispatchEvent(new CustomEvent('toast', { detail: toast }));
+                    }
                 },
                 toggleTheme() {
                     this.darkMode = !this.darkMode;
@@ -439,7 +477,47 @@
                 applyTheme() {
                     document.documentElement.classList.toggle('dark', this.darkMode);
                     document.documentElement.style.colorScheme = this.darkMode ? 'dark' : 'light';
-                }
+                },
+                showToast(toast) {
+                    if (!toast || !toast.message) return;
+
+                    const raw =
+                        typeof toast.message === 'string' ? toast.message : String(toast.message ?? '');
+                    const message = raw.trim();
+                    if (!message) return;
+
+                    const type = toast.type ?? 'info';
+                    const key = `${type}|${message}`;
+                    if (this.seenToastKeys.has(key)) return;
+
+                    const entry = {
+                        id: ++this.toastCounter,
+                        message,
+                        type,
+                    };
+
+                    this.seenToastKeys.add(key);
+                    this.toasts.push(entry);
+
+                    const duration = Number(toast.duration ?? 5000);
+                    if (!Number.isNaN(duration) && duration > 0) {
+                        setTimeout(() => this.dismissToast(entry.id), duration);
+                    }
+                },
+                dismissToast(id) {
+                    const entry = this.toasts.find(toast => toast.id === id);
+                    if (entry) {
+                        this.seenToastKeys.delete(`${entry.type}|${entry.message}`);
+                    }
+
+                    this.toasts = this.toasts.filter(toast => toast.id !== id);
+                },
+                toastStyles(type) {
+                    return toastStylesMap[type] ?? toastStylesMap.info;
+                },
+                toastIcon(type) {
+                    return toastIcons[type] ?? toastIcons.info;
+                },
             }
         }
     </script>

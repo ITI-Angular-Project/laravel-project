@@ -164,7 +164,7 @@ class JobController extends Controller
             'status' => 'pending',
         ]);
 
-        return redirect()->route('jobs.index')->with('success', 'Job created successfully!');
+        return redirect()->route('dashboard.jobs.index')->with('success', 'Job created successfully!');
     }
 
     /**
@@ -231,7 +231,7 @@ class JobController extends Controller
             'category_id',
         ]));
 
-        return redirect()->route('jobs.index')->with('success', 'Job updated successfully!');
+        return redirect()->route('dashboard.jobs.index')->with('success', 'Job updated successfully!');
     }
 
     /**
@@ -248,6 +248,6 @@ class JobController extends Controller
 
         $job->delete();
 
-        return redirect()->route('jobs.index')->with('success', 'Job deleted successfully!');
+        return redirect()->route('dashboard.jobs.index')->with('success', 'Job deleted successfully!');
     }
 }
