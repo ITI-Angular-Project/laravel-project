@@ -18,13 +18,14 @@
                         class="text-sm font-medium text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors duration-200 !border-l-0 !border-b !border-transparent">
                         {{ __('Home') }}
                     </x-nav-link>
-
-                    @auth
-                        <x-nav-link :href="route('dashboard.home')" :active="request()->routeIs('dashboard')"
-                            class="text-sm font-medium text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors duration-200 !border-l-0 !border-b !border-transparent">
-                            {{ __('Dashboard') }}
-                        </x-nav-link>
-                    @endauth
+                    <x-nav-link :href="route('about')" :active="request()->routeIs('home')"
+                        class="text-sm font-medium text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors duration-200 !border-l-0 !border-b !border-transparent">
+                        {{ __('About') }}
+                    </x-nav-link>
+                    {{-- <x-nav-link :href="route('contact')" :active="request()->routeIs('home')"
+                        class="text-sm font-medium text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors duration-200 !border-l-0 !border-b !border-transparent">
+                        {{ __('Contact') }}
+                    </x-nav-link> --}}
                 </div>
             </div>
 
@@ -70,6 +71,11 @@
                         </x-slot>
 
                         <x-slot name="content">
+                            @canAny(['admin-view', 'employer-view'])
+                            <x-dropdown-link :href="route('dashboard.home')" class="text-gray-700 dark:text-gray-200">
+                                {{ __('Dashboard') }}
+                            </x-dropdown-link>
+                            @endcan
                             <x-dropdown-link :href="route('profile.edit')" class="text-gray-700 dark:text-gray-200">
                                 {{ __('Profile') }}
                             </x-dropdown-link>
