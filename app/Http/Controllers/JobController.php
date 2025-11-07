@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Job;
 use App\Models\Company;
 use App\Models\User;
+use App\Notifications\JobsStatusUpdated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -123,6 +124,7 @@ class JobController extends Controller
      */
     public function create()
     {
+        $this->authorize('create');
         $categories = Category::all();
         return view('pages.dashboard.jobs.create-job', compact('categories'));
     }
@@ -186,6 +188,7 @@ class JobController extends Controller
      */
     public function edit($id)
     {
+        $this->authorize('create');
         $job = Job::findOrFail($id);
         $user = Auth::user();
 
@@ -236,6 +239,38 @@ class JobController extends Controller
         ]));
 
         return redirect()->route('dashboard.jobs.index')->with('success', 'Job updated successfully!');
+    }
+
+    public function approve(Job $job)
+    {
+        $user = User::findOrFail(Auth::id());
+
+        if (!$user || !$user->hasRole(User::ROLE_ADMIN)) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        if ($job->status !== 'approved') {
+            $job->update(['status' => 'approved']);
+            User::findOrFail($job->company->employer_id)->notify(new JobsStatusUpdated($job));
+        }
+
+        return back()->with('success', 'Job approved successfully.');
+    }
+
+    public function reject(Job $job)
+    {
+        $user = User::findOrFail(Auth::id());
+
+        if (!$user || !$user->hasRole(User::ROLE_ADMIN)) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        if ($job->status !== 'rejected') {
+            $job->update(['status' => 'rejected']);
+            User::findOrFail($job->company->employer_id)->notify(new JobsStatusUpdated($job));
+        }
+
+        return back()->with('success', 'Job rejected.');
     }
 
     /**
