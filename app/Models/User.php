@@ -19,10 +19,10 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var list<string>
      */
 
-    public const ROLE_ADMIN     = 'admin';
-    public const ROLE_EMPLOYER  = 'employer';
+    public const ROLE_ADMIN = 'admin';
+    public const ROLE_EMPLOYER = 'employer';
     public const ROLE_CANDIDATE = 'candidate';
-    public const ROLE_DEMO      = 'demo';
+    public const ROLE_DEMO = 'demo';
     protected $fillable = [
         'name',
         'email',
@@ -32,6 +32,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'linkedin_url',
         'resume_path',
     ];
+
 
     /**
      * The attributes that should be hidden for serialization.

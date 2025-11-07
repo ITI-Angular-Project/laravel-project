@@ -10,13 +10,13 @@ class RoleMiddleware
 {
     /**
      * Handle an incoming request.
-     *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
     public function handle(Request $request, Closure $next, ...$roles): Response
     {
         $user = $request->user();
-        if (!$user || !$user->hasRole($roles)) {
+
+        // لو المستخدم مش مسجل دخول أو مش ضمن الأدوار المطلوبة
+        if (!$user || !in_array($user->role, $roles)) {
             abort(403, 'You do not have permission to access this resource.');
         }
 
