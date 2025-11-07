@@ -31,6 +31,12 @@ Route::middleware(['auth', 'verified'])->name('dashboard.')->prefix('dashboard')
     Route::get('/jobs', [JobController::class, 'dashboardIndex'])->name('jobs.index');
 
     Route::resource('jobs', JobController::class)->except('index');
+    Route::patch('jobs/{job}/approve', [JobController::class, 'approve'])
+        ->name('jobs.approve')
+        ->middleware('role:' . User::ROLE_ADMIN);
+    Route::patch('jobs/{job}/reject', [JobController::class, 'reject'])
+        ->name('jobs.reject')
+        ->middleware('role:' . User::ROLE_ADMIN);
 
     // Applications management
     Route::resource('applications', ApplicationController::class)->only(['index','show','update','destroy']);
