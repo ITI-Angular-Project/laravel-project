@@ -6,7 +6,7 @@
             {{-- Top metrics like the reference UI --}}
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
                 <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-5 flex items-center gap-4">
-                    <div class="h-11 w-11 rounded-xl bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300 flex items-center justify-center">
+                    <div class="h-11 w-11 rounded-xl bg-amber-50 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300 flex items-center justify-center">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v8a2 2 0 002 2h10a2 2 0 002-2v-8"/></svg>
                     </div>
                     <div>
@@ -15,7 +15,7 @@
                     </div>
                 </div>
                 <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-5 flex items-center gap-4">
-                    <div class="h-11 w-11 rounded-xl bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300 flex items-center justify-center">
+                    <div class="h-11 w-11 rounded-xl bg-amber-50 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300 flex items-center justify-center">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
                     </div>
                     <div>
@@ -24,7 +24,7 @@
                     </div>
                 </div>
                 <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-5 flex items-center gap-4">
-                    <div class="h-11 w-11 rounded-xl bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300 flex items-center justify-center">
+                    <div class="h-11 w-11 rounded-xl bg-amber-50 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300 flex items-center justify-center">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                     </div>
                     <div>
@@ -33,7 +33,7 @@
                     </div>
                 </div>
                 <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-5 flex items-center gap-4">
-                    <div class="h-11 w-11 rounded-xl bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300 flex items-center justify-center">
+                    <div class="h-11 w-11 rounded-xl bg-amber-50 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300 flex items-center justify-center">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2a4 4 0 014-4h6"/></svg>
                     </div>
                     <div>
@@ -68,13 +68,13 @@
                     <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Posted Jobs</h3>
                     <div class="space-y-2">
                         @forelse($recentJobs as $job)
-                            <div class="flex items-start gap-3 p-2 rounded-xl hover:bg-emerald-50 dark:hover:bg-gray-800 transition">
-                                <div class="h-9 w-9 rounded-xl bg-emerald-50 dark:bg-emerald-900/30 flex items-center justify-center text-emerald-700 dark:text-emerald-300">
+                            <div class="flex items-start gap-3 p-2 rounded-xl hover:bg-amber-50 dark:hover:bg-gray-800 transition">
+                                <div class="h-9 w-9 rounded-xl bg-amber-50 dark:bg-amber-900/30 flex items-center justify-center text-amber-700 dark:text-amber-300">
                                     <span class="text-sm font-semibold text-gray-700 dark:text-gray-300">{{ strtoupper(substr($job->title,0,1)) }}</span>
                                 </div>
                                 <div class="flex-1 min-w-0">
                                     <div class="flex items-center justify-between">
-                                        <a href="{{ route('dashboard.jobs.show', $job->id) }}" class="font-medium text-gray-900 dark:text-gray-100 truncate hover:text-emerald-700">{{ $job->title }}</a>
+                                        <a href="{{ route('dashboard.jobs.show', $job->id) }}" class="font-medium text-gray-900 dark:text-gray-100 truncate hover:text-amber-700">{{ $job->title }}</a>
                                         <span class="text-xs text-gray-500 dark:text-gray-400">{{ $job->created_at?->diffForHumans() }}</span>
                                     </div>
                                     <div class="text-xs text-gray-600 dark:text-gray-400">Applicants: {{ $job->applications_count ?? 0 }}</div>
@@ -121,12 +121,12 @@
                     data: dataPoints,
                     fill: true,
                     backgroundColor: gradient,
-                    borderColor: '#10b981',
+                    borderColor: '#f59e0b',
                     borderWidth: 2,
                     tension: 0.4,
                     pointRadius: 3,
                     pointHoverRadius: 4,
-                    pointBackgroundColor: '#10b981',
+                    pointBackgroundColor: '#f59e0b',
                     pointBorderColor: '#064e3b'
                 }]
             },

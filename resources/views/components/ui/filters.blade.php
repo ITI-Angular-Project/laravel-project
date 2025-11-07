@@ -13,17 +13,17 @@
             <div>
                 <label class="block text-xs font-semibold mb-1 text-gray-700 dark:text-gray-300">{{ $label }}</label>
                 @if($type === 'select')
-                    <select name="{{ $name }}" class="w-full px-3 py-2 rounded-xl border border-emerald-100 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 focus:ring-2 focus:ring-emerald-500/30">
+                    <select name="{{ $name }}" class="w-full px-3 py-2 rounded-xl border border-amber-100 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 focus:ring-2 focus:ring-amber-500/30">
                         @foreach(($f['options'] ?? []) as $optValue => $optLabel)
                             <option value="{{ $optValue }}" @selected($value == $optValue)>{{ $optLabel }}</option>
                         @endforeach
                     </select>
                 @elseif($type === 'number')
-                    <input type="number" name="{{ $name }}" value="{{ $value }}" class="w-full px-3 py-2 rounded-xl border border-emerald-100 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 focus:ring-2 focus:ring-emerald-500/30" />
+                    <input type="number" name="{{ $name }}" value="{{ $value }}" class="w-full px-3 py-2 rounded-xl border border-amber-100 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 focus:ring-2 focus:ring-amber-500/30" />
                 @elseif($type === 'date')
-                    <input type="date" name="{{ $name }}" value="{{ $value }}" class="w-full px-3 py-2 rounded-xl border border-emerald-100 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 focus:ring-2 focus:ring-emerald-500/30" />
+                    <input type="date" name="{{ $name }}" value="{{ $value }}" class="w-full px-3 py-2 rounded-xl border border-amber-100 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 focus:ring-2 focus:ring-amber-500/30" />
                 @else
-                    <input type="text" name="{{ $name }}" value="{{ $value }}" placeholder="{{ $f['placeholder'] ?? '' }}" class="w-full px-3 py-2 rounded-xl border border-emerald-100 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 focus:ring-2 focus:ring-emerald-500/30" />
+                    <input type="text" name="{{ $name }}" value="{{ $value }}" placeholder="{{ $f['placeholder'] ?? '' }}" class="w-full px-3 py-2 rounded-xl border border-amber-100 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 focus:ring-2 focus:ring-amber-500/30" />
                 @endif
             </div>
         @endforeach

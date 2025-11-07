@@ -1,6 +1,6 @@
 @php($isCurrentUser = auth()->id() === $user->id)
 
-@php($iconButton = 'inline-flex h-9 w-9 items-center justify-center rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-500 dark:text-gray-400 hover:text-emerald-500 dark:hover:text-emerald-300 hover:border-emerald-300 dark:hover:border-emerald-600 transition focus:outline-none focus:ring-2 focus:ring-emerald-500/40')
+@php($iconButton = 'inline-flex h-9 w-9 items-center justify-center rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-500 dark:text-gray-400 hover:text-amber-500 dark:hover:text-amber-300 hover:border-amber-300 dark:hover:border-amber-600 transition focus:outline-none focus:ring-2 focus:ring-amber-500/40')
 @php($dangerButton = 'inline-flex h-9 w-9 items-center justify-center rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-rose-500 dark:text-rose-300 hover:text-rose-600 dark:hover:text-rose-200 hover:border-rose-300 dark:hover:border-rose-600 transition focus:outline-none focus:ring-2 focus:ring-rose-500/40')
 
 <div class="flex items-center justify-end gap-2">

@@ -47,7 +47,7 @@
             'label' => 'Title',
             'tdClass' => 'text-gray-800 dark:text-gray-100 font-medium',
             'format' => function ($row, $value) {
-                return '<a href="' . route('dashboard.jobs.show', $row->id) . '" class="text-black dark:text-white hover:text-emerald-500 dark:hover:text-emerald-200 font-semibold transition">' . e($value) . '</a>';
+                return '<a href="' . route('dashboard.jobs.show', $row->id) . '" class="text-black dark:text-white hover:text-amber-500 dark:hover:text-amber-200 font-semibold transition">' . e($value) . '</a>';
             },
         ],
         [
@@ -80,7 +80,7 @@
             'format' => function ($row) {
                 $classes = 'px-3 py-1 rounded-full text-xs font-semibold ';
                 if ($row->status === 'approved') {
-                    $classes .= 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-100';
+                    $classes .= 'bg-amber-100 dark:bg-amber-900 text-amber-800 dark:text-amber-100';
                 } elseif ($row->status === 'pending') {
                     $classes .= 'bg-yellow-100 dark:bg-yellow-800 text-yellow-800 dark:text-yellow-100';
                 } else {

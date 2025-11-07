@@ -52,7 +52,7 @@
                 'tdClass' => 'align-middle',
                 'format' => function ($row, $value) {
                     $map = [
-                        \App\Models\User::ROLE_ADMIN => 'bg-emerald-100/80 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300',
+                        \App\Models\User::ROLE_ADMIN => 'bg-amber-100/80 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300',
                         \App\Models\User::ROLE_EMPLOYER => 'bg-blue-100/80 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300',
                         \App\Models\User::ROLE_CANDIDATE => 'bg-purple-100/80 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300',
                     ];
@@ -80,7 +80,7 @@
                     $linkedin = $row->linkedin_url
                         ? '<a href="' .
                             e($row->linkedin_url) .
-                            '" target="_blank" rel="noopener" class="text-xs text-emerald-600 dark:text-emerald-300 hover:underline">LinkedIn profile</a>'
+                            '" target="_blank" rel="noopener" class="text-xs text-amber-600 dark:text-amber-300 hover:underline">LinkedIn profile</a>'
                         : '<div class="text-xs text-gray-400 dark:text-gray-500">No LinkedIn profile</div>';
 
                     return '<div class="space-y-1">' . $phone . $linkedin . '</div>';

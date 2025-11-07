@@ -22,7 +22,7 @@
         </thead>
         <tbody class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700">
             @forelse($items as $row)
-                <tr class="group hover:bg-emerald-50 dark:hover:bg-gray-800 transition">
+                <tr class="group hover:bg-amber-50 dark:hover:bg-gray-800 transition">
                     @foreach($columns as $col)
                         @php($key = $col['key'])
                         @php($val = is_array($row) ? ($row[$key] ?? '') : (data_get($row, $key)))

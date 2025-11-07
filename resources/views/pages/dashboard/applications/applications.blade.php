@@ -13,14 +13,14 @@
 
         @php($columns = [
             ['key' => 'applicant_name', 'label' => 'Applicant', 'format' => function($row,$v){
-                return '<a href="'.route('dashboard.applications.show', $row->id).'" class="hover:text-emerald-700 dark:hover:text-emerald-300">'.e($row->applicant_name).'</a> <div class="text-xs text-gray-500">'.e($row->applicant_email).'</div>';
+                return '<a href="'.route('dashboard.applications.show', $row->id).'" class="hover:text-amber-700 dark:hover:text-amber-300">'.e($row->applicant_name).'</a> <div class="text-xs text-gray-500">'.e($row->applicant_email).'</div>';
             }],
             ['key' => 'job.title', 'label' => 'Job', 'format' => function($row){
-                return '<a href="'.route('dashboard.jobs.show', $row->job->id).'" class="hover:text-emerald-700 dark:hover:text-emerald-300">'.e($row->job->title).'</a>';
+                return '<a href="'.route('dashboard.jobs.show', $row->job->id).'" class="hover:text-amber-700 dark:hover:text-amber-300">'.e($row->job->title).'</a>';
             }],
             ['key' => 'status', 'label' => 'Status', 'format' => function($row){
                 $classes='px-3 py-1 rounded-full text-xs font-semibold ';
-                if($row->status==='accepted'){$classes.='bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-100';}
+                if($row->status==='accepted'){$classes.='bg-amber-100 dark:bg-amber-900 text-amber-800 dark:text-amber-100';}
                 elseif($row->status==='pending'){$classes.='bg-yellow-100 dark:bg-yellow-800 text-yellow-800 dark:text-yellow-100';}
                 else{$classes.='bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-100';}
                 return '<span class="'.$classes.'">'.e(ucfirst($row->status)).'</span>';
@@ -37,7 +37,7 @@
 
     // CSS classes (disabled buttons look dim and not clickable)
     $baseButton = 'px-3 py-1.5 text-xs rounded-lg text-white transition';
-    $acceptClass = $baseButton . ($isAccepted ? ' bg-emerald-400 cursor-not-allowed opacity-50' : ' bg-emerald-600 hover:bg-emerald-700');
+    $acceptClass = $baseButton . ($isAccepted ? ' bg-amber-400 cursor-not-allowed opacity-50' : ' bg-amber-600 hover:bg-amber-700');
     $declineClass = $baseButton . ($isDeclined ? ' bg-rose-400 cursor-not-allowed opacity-50' : ' bg-rose-600 hover:bg-rose-700');
 
     // HTML output

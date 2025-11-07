@@ -5,13 +5,13 @@
         <!-- Hero -->
         <section class="relative overflow-hidden">
             <div class="absolute inset-0" aria-hidden="true">
-                <div class="h-full w-full bg-[radial-gradient(circle_at_top,_rgba(16,185,129,0.12),_transparent_45%),_radial-gradient(circle_at_bottom,_rgba(59,130,246,0.12),_transparent_35%)] dark:bg-[radial-gradient(circle_at_top,_rgba(16,185,129,0.35),_transparent_45%),_radial-gradient(circle_at_bottom,_rgba(59,130,246,0.25),_transparent_35%)]"></div>
+                <div class="h-full w-full bg-[radial-gradient(circle_at_top,_rgba(245,158,11,0.12),_transparent_45%),_radial-gradient(circle_at_bottom,_rgba(59,130,246,0.12),_transparent_35%)] dark:bg-[radial-gradient(circle_at_top,_rgba(245,158,11,0.35),_transparent_45%),_radial-gradient(circle_at_bottom,_rgba(59,130,246,0.25),_transparent_35%)]"></div>
             </div>
             <div class="relative mx-auto flex max-w-6xl flex-col gap-10 px-4 py-16 sm:px-6 lg:px-8">
                 <div class="grid gap-10 lg:grid-cols-2 lg:items-center">
                     <div class="space-y-6">
                         <span
-                            class="inline-flex items-center gap-2 rounded-full bg-emerald-500/10 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-emerald-600 dark:bg-white/10 dark:text-emerald-200">
+                            class="inline-flex items-center gap-2 rounded-full bg-amber-500/10 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-amber-600 dark:bg-white/10 dark:text-amber-200">
                             Our story
                         </span>
                         <h1 class="text-4xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-5xl">
@@ -69,7 +69,7 @@
         <!-- Team -->
         <section class="mx-auto max-w-6xl space-y-8 px-4 py-12 sm:px-6 lg:px-8">
             <div class="space-y-3 text-center">
-                <p class="text-xs font-semibold uppercase tracking-widest text-emerald-500">Team</p>
+                <p class="text-xs font-semibold uppercase tracking-widest text-amber-500">Team</p>
                 <h2 class="text-3xl font-bold text-slate-900 dark:text-white">Faces behind HireOn</h2>
                 <p class="text-sm text-slate-600 dark:text-slate-300">A remote collective of engineers, researchers, and
                     hiring partners.</p>
@@ -82,7 +82,7 @@
                         'role' => 'Head of Experience',
                         'bio' => 'Full-stack engineer leading our product strategy and mentor program.',
                         'image' => 'about_us/1.jpg',
-                        'accent' => 'from-emerald-400/30 via-emerald-500/10 to-transparent',
+                        'accent' => 'from-amber-400/30 via-amber-500/10 to-transparent',
                     ],
                     [
                         'name' => 'Ahmed Taha',
@@ -132,14 +132,14 @@
         <!-- CTA -->
         <section class="mx-auto max-w-5xl px-4 pb-16 sm:px-6 lg:px-8">
             <div
-                class="rounded-3xl border border-emerald-500/40 bg-gradient-to-r from-emerald-500/15 via-emerald-500/5 to-transparent p-8 text-center shadow-lg dark:border-emerald-500/60 dark:from-emerald-500/20 dark:via-emerald-500/10">
+                class="rounded-3xl border border-amber-500/40 bg-gradient-to-r from-amber-500/15 via-amber-500/5 to-transparent p-8 text-center shadow-lg dark:border-amber-500/60 dark:from-amber-500/20 dark:via-amber-500/10">
                 <h3 class="text-3xl font-bold text-slate-900 dark:text-white">Ready to build your next team?</h3>
                 <p class="mt-3 text-sm text-slate-600 dark:text-slate-300">
                     Whether you need product leaders or entire squads, we’ll help you design a hiring flow that feels
                     effortless.
                 </p>
                 <a href="{{ route('contact.form') }}"
-                    class="mt-6 inline-flex items-center rounded-full bg-emerald-500 px-6 py-3 text-sm font-semibold text-slate-950 transition hover:bg-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-300 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-slate-900">
+                    class="mt-6 inline-flex items-center rounded-full bg-amber-500 px-6 py-3 text-sm font-semibold text-slate-950 transition hover:bg-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-300 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-slate-900">
                     Contact our team
                 </a>
             </div>

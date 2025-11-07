@@ -15,18 +15,18 @@
     ];
 
     $variants = [
-        'primary' => 'bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm',
+        'primary' => 'bg-amber-600 hover:bg-amber-700 text-white shadow-sm',
         'secondary' =>
             'bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200',
         'danger' => 'bg-rose-600 hover:bg-rose-700 text-white shadow-sm',
         'outline' =>
-            'border border-emerald-500 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-50 dark:hover:bg-emerald-900/20',
+            'border border-amber-500 text-amber-700 dark:text-amber-300 hover:bg-amber-50 dark:hover:bg-amber-900/20',
         'subtle' =>
             'bg-white hover:bg-gray-50 dark:bg-gray-900 dark:hover:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-800 dark:text-gray-200',
     ];
 
     $base =
-        'inline-flex items-center gap-2 font-medium transition focus:outline-none focus:ring-2 focus:ring-emerald-500/40';
+        'inline-flex items-center gap-2 font-medium transition focus:outline-none focus:ring-2 focus:ring-amber-500/40';
     $sizeClass = $sizes[$size] ?? $sizes['md'];
     $variantClass = $variants[$variant] ?? $variants['primary'];
     $classes = trim("$base $sizeClass $variantClass");

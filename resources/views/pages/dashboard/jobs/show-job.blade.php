@@ -18,7 +18,7 @@
                 <h1 class="text-4xl font-bold text-gray-800 dark:text-gray-100 tracking-tight">{{ $job->title }}</h1>
                 @php
                     $statusClasses = match ($job->status) {
-                        'approved' => 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-100',
+                        'approved' => 'bg-amber-100 dark:bg-amber-900 text-amber-800 dark:text-amber-100',
                         'pending' => 'bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-100',
                         default => 'bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-100',
                     };

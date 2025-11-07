@@ -22,7 +22,7 @@
             <div>
                 <label for="title" class="block font-semibold mb-2 text-gray-800 dark:text-gray-200">Job Title</label>
                 <input type="text" name="title" id="title"
-                    class="w-full border border-emerald-100 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
+                    class="w-full border border-amber-100 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-amber-500/30"
                     placeholder="e.g. Frontend Developer" value="{{ old('title') }}" required>
             </div>
 
@@ -30,7 +30,7 @@
             <div>
                 <label for="description" class="block font-semibold mb-2 text-gray-800 dark:text-gray-200">Job Description</label>
                 <textarea name="description" id="description" rows="4"
-                    class="w-full border border-emerald-100 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
+                    class="w-full border border-amber-100 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-amber-500/30"
                     placeholder="Describe the job role and main responsibilities..." required>{{ old('description') }}</textarea>
             </div>
 
@@ -38,7 +38,7 @@
             <div>
                 <label for="responsibilities" class="block font-semibold mb-2 text-gray-800 dark:text-gray-200">Responsibilities</label>
                 <textarea name="responsibilities" id="responsibilities" rows="3"
-                    class="w-full border border-emerald-100 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
+                    class="w-full border border-amber-100 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-amber-500/30"
                     placeholder="List key responsibilities">{{ old('responsibilities') }}</textarea>
             </div>
 
@@ -46,7 +46,7 @@
             <div>
                 <label for="qualifications" class="block font-semibold mb-2 text-gray-800 dark:text-gray-200">Qualifications</label>
                 <textarea name="qualifications" id="qualifications" rows="3"
-                    class="w-full border border-emerald-100 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
+                    class="w-full border border-amber-100 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-amber-500/30"
                     placeholder="Required skills or experience">{{ old('qualifications') }}</textarea>
             </div>
 
@@ -54,7 +54,7 @@
             <div>
                 <label for="benefits" class="block font-semibold mb-2 text-gray-800 dark:text-gray-200">Benefits</label>
                 <textarea name="benefits" id="benefits" rows="3"
-                    class="w-full border border-emerald-100 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
+                    class="w-full border border-amber-100 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-amber-500/30"
                     placeholder="Company perks or benefits">{{ old('benefits') }}</textarea>
             </div>
 
@@ -63,13 +63,13 @@
                 <div>
                     <label for="salary_min" class="block font-semibold mb-2 text-gray-800 dark:text-gray-200">Minimum Salary</label>
                     <input type="number" name="salary_min" id="salary_min"
-                        class="w-full border border-emerald-100 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-xl p-3"
+                        class="w-full border border-amber-100 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-xl p-3"
                         placeholder="e.g. 4000" value="{{ old('salary_min') }}">
                 </div>
                 <div>
                     <label for="salary_max" class="block font-semibold mb-2 text-gray-800 dark:text-gray-200">Maximum Salary</label>
                     <input type="number" name="salary_max" id="salary_max"
-                        class="w-full border border-emerald-100 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-xl p-3"
+                        class="w-full border border-amber-100 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-xl p-3"
                         placeholder="e.g. 8000" value="{{ old('salary_max') }}">
                 </div>
             </div>
@@ -78,7 +78,7 @@
             <div>
                 <label for="work_type" class="block font-semibold mb-2 text-gray-800 dark:text-gray-200">Work Type</label>
                 <select name="work_type" id="work_type"
-                    class="w-full border border-emerald-100 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-emerald-500/30" required>
+                    class="w-full border border-amber-100 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-amber-500/30" required>
                     <option value="">-- Select Type --</option>
                     <option value="remote" {{ old('work_type') == 'remote' ? 'selected' : '' }}>Remote</option>
                     <option value="on_site" {{ old('work_type') == 'on_site' ? 'selected' : '' }}>On-site</option>
@@ -90,7 +90,7 @@
             <div>
                 <label for="category_id" class="block font-semibold mb-2 text-gray-800 dark:text-gray-200">Category</label>
                 <select name="category_id" id="category_id"
-                    class="w-full border border-emerald-100 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-emerald-500/30" required>
+                    class="w-full border border-amber-100 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-amber-500/30" required>
                     <option value="">-- Select Category --</option>
                     @foreach ($categories as $category)
                         <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
@@ -104,7 +104,7 @@
             <div>
                 <label for="deadline" class="block font-semibold mb-2 text-gray-800 dark:text-gray-200">Application Deadline</label>
                 <input type="date" name="deadline" id="deadline"
-                    class="w-full border border-emerald-100 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
+                    class="w-full border border-amber-100 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-amber-500/30"
                     value="{{ old('deadline') }}" required>
             </div>
 
@@ -112,7 +112,7 @@
             <div>
                 <label for="technologies_txt" class="block font-semibold mb-2 text-gray-800 dark:text-gray-200">Technologies</label>
                 <input type="text" name="technologies_txt" id="technologies_txt"
-                    class="w-full border border-emerald-100 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
+                    class="w-full border border-amber-100 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-amber-500/30"
                     placeholder="e.g. Laravel, Vue.js, MySQL" value="{{ old('technologies_txt') }}">
             </div>
 

@@ -53,8 +53,8 @@
 
             <div class="relative mx-auto max-w-6xl px-4 py-16 sm:py-20 lg:py-28">
                 <div class="max-w-3xl space-y-6 text-white">
-                    <span class="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-xs uppercase tracking-wide text-emerald-200 backdrop-blur">
-                        <span class="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span class="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-xs uppercase tracking-wide text-amber-200 backdrop-blur">
+                        <span class="h-1.5 w-1.5 rounded-full bg-amber-500 animate-pulse"></span>
                         Hiring made human
                     </span>
                     <h1 class="text-3xl font-bold leading-tight sm:text-5xl lg:text-6xl">
@@ -69,18 +69,18 @@
                                 <span class="font-semibold text-white">Role or keyword</span>
                                 <input type="text" name="keyword" value="{{ request('keyword') }}"
                                     placeholder="e.g. Product Designer"
-                                    class="w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-400/30 dark:border-white/20 dark:bg-white/10 dark:text-white dark:placeholder:text-white/60">
+                                    class="w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-400/30 dark:border-white/20 dark:bg-white/10 dark:text-white dark:placeholder:text-white/60">
                             </label>
                             <label class="flex flex-col gap-2 text-sm text-white/80">
                                 <span class="font-semibold text-white">Location</span>
                                 <input type="text" name="location" value="{{ request('location') }}"
                                     placeholder="City, Country"
-                                    class="w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-400/30 dark:border-white/20 dark:bg-white/10 dark:text-white dark:placeholder:text-white/60">
+                                    class="w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-400/30 dark:border-white/20 dark:bg-white/10 dark:text-white dark:placeholder:text-white/60">
                             </label>
                             <label class="flex flex-col gap-2 text-sm text-white/80">
                                 <span class="font-semibold text-white">Category</span>
                                 <select name="category_id"
-                                    class="w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-slate-900 focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-400/30 dark:border-white/20 dark:bg-white/10 dark:text-white">
+                                    class="w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-slate-900 focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-400/30 dark:border-white/20 dark:bg-white/10 dark:text-white">
                                     <option value="" class="text-gray-900 dark:text-gray-900">All categories</option>
                                     @foreach ($categoryOptions as $category)
                                         <option value="{{ $category->id }}" @selected(request('category_id') == $category->id) class="text-gray-900 dark:text-gray-900">
@@ -90,7 +90,7 @@
                                 </select>
                             </label>
                             <button type="submit"
-                                class="mt-auto inline-flex items-center justify-center rounded-2xl bg-emerald-500 px-4 py-3 text-sm font-semibold text-slate-950 transition hover:bg-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-300 focus:ring-offset-2 focus:ring-offset-slate-100 dark:focus:ring-offset-slate-900">
+                                class="mt-auto inline-flex items-center justify-center rounded-2xl bg-amber-500 px-4 py-3 text-sm font-semibold text-slate-950 transition hover:bg-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-300 focus:ring-offset-2 focus:ring-offset-slate-100 dark:focus:ring-offset-slate-900">
                                 Search jobs
                             </button>
                         </form>
@@ -115,7 +115,7 @@
                 <div class="mt-12 flex items-center gap-3">
                     <template x-for="(slide, index) in slides" :key="index">
                         <span class="h-2 flex-1 rounded-full bg-white/20 transition"
-                            :class="active === index ? 'bg-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.7)]' : ''"></span>
+                            :class="active === index ? 'bg-amber-400 shadow-[0_0_15px_rgba(245,158,11,0.7)]' : ''"></span>
                     </template>
                 </div>
             </div>
@@ -130,7 +130,7 @@
                         <p class="text-sm text-slate-500 dark:text-slate-300">Explore the most active fields and jump straight into matching vacancies.</p>
                     </div>
                     <a href="{{ route('jobs') }}"
-                        class="inline-flex items-center gap-2 text-sm font-semibold text-emerald-600 hover:text-emerald-500 dark:text-emerald-300 dark:hover:text-emerald-200">
+                        class="inline-flex items-center gap-2 text-sm font-semibold text-amber-600 hover:text-amber-500 dark:text-amber-300 dark:hover:text-amber-200">
                         Browse all jobs
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
                             stroke="currentColor">
@@ -143,16 +143,16 @@
                 <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
                     @forelse ($topCategories as $category)
                         <a href="{{ route('jobs', ['category_id' => $category->id]) }}"
-                            class="group relative overflow-hidden rounded-3xl border border-slate-200 bg-white p-6 transition hover:-translate-y-1 hover:border-emerald-400/60 hover:bg-emerald-50 dark:border-white/10 dark:bg-white/5 dark:hover:bg-emerald-500/10">
+                            class="group relative overflow-hidden rounded-3xl border border-slate-200 bg-white p-6 transition hover:-translate-y-1 hover:border-amber-400/60 hover:bg-amber-50 dark:border-white/10 dark:bg-white/5 dark:hover:bg-amber-500/10">
                             <div class="flex h-full flex-col gap-4">
                                 <div class="flex items-center justify-between">
                                     <div class="text-lg font-semibold text-slate-900 dark:text-white">{{ $category->name }}</div>
                                     <span
-                                        class="rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-200">{{ $category->jobs_count ?? 0 }}
+                                        class="rounded-full bg-amber-500/10 px-3 py-1 text-xs font-medium text-amber-700 dark:bg-amber-500/20 dark:text-amber-200">{{ $category->jobs_count ?? 0 }}
                                         roles</span>
                                 </div>
                                 <p class="flex-1 text-sm text-slate-500 dark:text-slate-300">See curated openings tailored to this expertise.</p>
-                                <span class="inline-flex items-center gap-2 text-sm font-semibold text-emerald-600 dark:text-emerald-200">
+                                <span class="inline-flex items-center gap-2 text-sm font-semibold text-amber-600 dark:text-amber-200">
                                     View jobs
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transition group-hover:translate-x-1"
                                         fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -184,7 +184,7 @@
                 <div class="grid gap-6 md:grid-cols-2">
                     @foreach ($featuredJobs as $job)
                         <article
-                            class="group flex h-full flex-col justify-between rounded-3xl border border-slate-200 bg-white p-6 transition hover:-translate-y-1 hover:border-emerald-400/60 hover:bg-emerald-50 dark:border-white/10 dark:bg-white/5 dark:hover:bg-emerald-500/10">
+                            class="group flex h-full flex-col justify-between rounded-3xl border border-slate-200 bg-white p-6 transition hover:-translate-y-1 hover:border-amber-400/60 hover:bg-amber-50 dark:border-white/10 dark:bg-white/5 dark:hover:bg-amber-500/10">
                             <div class="space-y-4">
                                 <div class="flex items-start justify-between gap-4">
                                     <div>
@@ -192,7 +192,7 @@
                                         <p class="text-sm text-slate-500 dark:text-slate-300">{{ optional($job->company)->name ?? 'Unknown company' }}</p>
                                     </div>
                                     <span
-                                        class="rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-semibold text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-200">{{ ucfirst(str_replace('_', ' ', $job->work_type)) }}</span>
+                                        class="rounded-full bg-amber-500/10 px-3 py-1 text-xs font-semibold text-amber-700 dark:bg-amber-500/20 dark:text-amber-200">{{ ucfirst(str_replace('_', ' ', $job->work_type)) }}</span>
                                 </div>
                                 <p class="line-clamp-3 text-sm text-slate-500 dark:text-slate-300">
                                     {{ \Illuminate\Support\Str::limit($job->description, 150) }}
@@ -216,7 +216,7 @@
                                     </span>
                                 @endif
                                 <a href="{{ route('jobs', ['keyword' => $job->title]) }}"
-                                    class="ml-auto inline-flex items-center gap-2 text-sm font-semibold text-emerald-600 dark:text-emerald-200">
+                                    class="ml-auto inline-flex items-center gap-2 text-sm font-semibold text-amber-600 dark:text-amber-200">
                                     View details
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transition group-hover:translate-x-1"
                                         fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -240,7 +240,7 @@
                         <p class="text-sm text-slate-500 dark:text-slate-300">Fresh listings from teams that are actively interviewing right now.</p>
                     </div>
                     <a href="{{ route('jobs') }}"
-                        class="inline-flex items-center gap-2 text-sm font-semibold text-emerald-600 hover:text-emerald-500 dark:text-emerald-300 dark:hover:text-emerald-200">
+                        class="inline-flex items-center gap-2 text-sm font-semibold text-amber-600 hover:text-amber-500 dark:text-amber-300 dark:hover:text-amber-200">
                         See all openings
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
                             stroke="currentColor">
@@ -253,10 +253,10 @@
                 <div class="grid gap-4">
                     @foreach ($latestJobs as $job)
                         <article
-                            class="flex flex-col gap-3 rounded-3xl border border-slate-200 bg-white p-5 transition hover:-translate-y-1 hover:border-emerald-400/60 hover:bg-emerald-50 dark:border-white/10 dark:bg-white/5 dark:hover:bg-emerald-500/10 md:flex-row md:items-center md:justify-between">
+                            class="flex flex-col gap-3 rounded-3xl border border-slate-200 bg-white p-5 transition hover:-translate-y-1 hover:border-amber-400/60 hover:bg-amber-50 dark:border-white/10 dark:bg-white/5 dark:hover:bg-amber-500/10 md:flex-row md:items-center md:justify-between">
                             <div class="space-y-2">
                                 <div class="flex items-center gap-3">
-                                    <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-500/10 text-emerald-600 dark:bg-emerald-500/15 dark:text-emerald-200">
+                                    <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-500/10 text-amber-600 dark:bg-amber-500/15 dark:text-amber-200">
                                         {{ strtoupper(substr($job->title, 0, 1)) }}
                                     </div>
                                     <div>
@@ -275,12 +275,12 @@
                             </div>
                             <div class="flex items-center gap-3">
                                 @if ($job->salary_min && $job->salary_max)
-                                    <span class="text-sm font-semibold text-emerald-600 dark:text-emerald-200">
+                                    <span class="text-sm font-semibold text-amber-600 dark:text-amber-200">
                                         ${{ number_format($job->salary_min, 0) }} – ${{ number_format($job->salary_max, 0) }}
                                     </span>
                                 @endif
                                 <a href="{{ route('jobs', ['keyword' => $job->title]) }}"
-                                    class="inline-flex items-center gap-2 rounded-2xl bg-emerald-500 px-4 py-2 text-sm font-semibold text-slate-950 transition hover:bg-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-300 focus:ring-offset-2 focus:ring-offset-slate-100 dark:focus:ring-offset-slate-900">
+                                    class="inline-flex items-center gap-2 rounded-2xl bg-amber-500 px-4 py-2 text-sm font-semibold text-slate-950 transition hover:bg-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-300 focus:ring-offset-2 focus:ring-offset-slate-100 dark:focus:ring-offset-slate-900">
                                     Apply now
                                 </a>
                             </div>

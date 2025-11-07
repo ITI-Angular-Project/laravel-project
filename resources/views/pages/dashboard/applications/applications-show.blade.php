@@ -33,7 +33,7 @@
                 </div>
                 <div>
                     <div class="text-gray-500">LinkedIn</div>
-                    <div class="font-medium"><a class="text-emerald-700 dark:text-emerald-300 hover:underline" href="{{ $application->linkedin_url }}" target="_blank">{{ $application->linkedin_url ?: '—' }}</a></div>
+                    <div class="font-medium"><a class="text-amber-700 dark:text-amber-300 hover:underline" href="{{ $application->linkedin_url }}" target="_blank">{{ $application->linkedin_url ?: '—' }}</a></div>
                 </div>
                 <div>
                     <div class="text-gray-500">Applied</div>
@@ -41,13 +41,13 @@
                 </div>
                 <div>
                     <div class="text-gray-500">Status</div>
-                    <div class="font-medium w-max text-xs px-3 py-1 rounded-full {{ $application->status === 'accepted' ? 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-100' : 'bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-100' }}">{{ ucfirst($application->status) }}</div>
+                    <div class="font-medium w-max text-xs px-3 py-1 rounded-full {{ $application->status === 'accepted' ? 'bg-amber-100 dark:bg-amber-900 text-amber-800 dark:text-amber-100' : 'bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-100' }}">{{ ucfirst($application->status) }}</div>
                 </div>
             </div>
 
             <div class="mt-6">
                 <div class="text-gray-500">For Job</div>
-                <a href="{{ route('dashboard.jobs.show', $application->job->id) }}" class="font-medium hover:text-emerald-700 dark:hover:text-emerald-300">{{ $application->job->title }}</a>
+                <a href="{{ route('dashboard.jobs.show', $application->job->id) }}" class="font-medium hover:text-amber-700 dark:hover:text-amber-300">{{ $application->job->title }}</a>
             </div>
 
             @if($application->cover_letter)

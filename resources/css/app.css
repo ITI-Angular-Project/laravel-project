@@ -133,4 +133,12 @@
     html {
         font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
     }
+
+    .hireon-logo .hireon-logo-base {
+        fill: #10153a;
+    }
+
+    .dark .hireon-logo .hireon-logo-base {
+        fill: #f8fafc;
+    }
 }

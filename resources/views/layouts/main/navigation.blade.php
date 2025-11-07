@@ -6,7 +6,7 @@
             <div class="flex items-center gap-8">
                 <!-- Logo / Brand -->
                 <a href="{{ route('home') }}" class="flex items-center gap-2 group">
-                    <x-application-logo class="hidden sm:block h-9 w-auto fill-current text-indigo-600 dark:text-indigo-400 transition-colors" />
+                    <x-application-logo class="h-9 w-auto transition-transform duration-200 group-hover:scale-105" />
                     <span class="text-base sm:text-lg font-semibold tracking-tight text-gray-900 dark:text-gray-100">
                         {{ env('APP_NAME') }}
                     </span>

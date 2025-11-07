@@ -4,12 +4,12 @@
     <div class="bg-gradient-to-b from-white via-slate-50 to-white dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
         <section class="relative overflow-hidden">
             <div class="absolute inset-0" aria-hidden="true">
-                <div class="h-full w-full bg-[radial-gradient(circle_at_top,_rgba(59,130,246,0.12),_transparent_45%),_radial-gradient(circle_at_bottom,_rgba(16,185,129,0.12),_transparent_35%)] dark:bg-[radial-gradient(circle_at_top,_rgba(59,130,246,0.25),_transparent_45%),_radial-gradient(circle_at_bottom,_rgba(16,185,129,0.35),_transparent_35%)]"></div>
+                <div class="h-full w-full bg-[radial-gradient(circle_at_top,_rgba(59,130,246,0.12),_transparent_45%),_radial-gradient(circle_at_bottom,_rgba(245,158,11,0.12),_transparent_35%)] dark:bg-[radial-gradient(circle_at_top,_rgba(59,130,246,0.25),_transparent_45%),_radial-gradient(circle_at_bottom,_rgba(245,158,11,0.35),_transparent_35%)]"></div>
             </div>
 
             <div class="relative mx-auto max-w-5xl px-4 py-16 text-center sm:px-6 lg:px-8">
                 <span
-                    class="inline-flex items-center gap-2 rounded-full bg-slate-900/5 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-slate-600 dark:bg-white/10 dark:text-emerald-200">
+                    class="inline-flex items-center gap-2 rounded-full bg-slate-900/5 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-slate-600 dark:bg-white/10 dark:text-amber-200">
                     We're here to help
                 </span>
                 <h1 class="mt-4 text-4xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-5xl">
@@ -19,7 +19,7 @@
                     Reach out for platform support, talent partnerships, or to join the HireOn collective.
                 </p>
                 @if (session('success'))
-                    <p class="mt-4 inline-flex items-center rounded-full bg-emerald-500/10 px-4 py-2 text-sm font-semibold text-emerald-600 dark:text-emerald-200">
+                    <p class="mt-4 inline-flex items-center rounded-full bg-amber-500/10 px-4 py-2 text-sm font-semibold text-amber-600 dark:text-amber-200">
                         {{ session('success') }}
                     </p>
                 @endif
@@ -38,7 +38,7 @@
                         <dl class="mt-6 space-y-4 text-sm text-slate-600 dark:text-slate-300">
                             <div class="flex items-center gap-3">
                                 <span
-                                    class="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-emerald-500/10 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-100">
+                                    class="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-amber-500/10 text-amber-600 dark:bg-amber-500/20 dark:text-amber-100">
                                     📧
                                 </span>
                                 <div>
@@ -48,7 +48,7 @@
                             </div>
                             <div class="flex items-center gap-3">
                                 <span
-                                    class="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-emerald-500/10 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-100">
+                                    class="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-amber-500/10 text-amber-600 dark:bg-amber-500/20 dark:text-amber-100">
                                     📞
                                 </span>
                                 <div>
@@ -58,7 +58,7 @@
                             </div>
                             <div class="flex items-center gap-3">
                                 <span
-                                    class="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-emerald-500/10 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-100">
+                                    class="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-amber-500/10 text-amber-600 dark:bg-amber-500/20 dark:text-amber-100">
                                     🌍
                                 </span>
                                 <div>
@@ -88,7 +88,7 @@
                     <div>
                         <label class="block text-sm font-semibold text-slate-700 dark:text-slate-200">Name</label>
                         <input type="text" name="name" value="{{ old('name') }}" placeholder="Jane Doe"
-                            class="mt-2 w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-400/30 dark:border-white/10 dark:bg-white/10 dark:text-white" />
+                            class="mt-2 w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-400/30 dark:border-white/10 dark:bg-white/10 dark:text-white" />
                         @error('name')
                             <p class="mt-1 text-sm text-rose-500">{{ $message }}</p>
                         @enderror
@@ -96,7 +96,7 @@
                     <div>
                         <label class="block text-sm font-semibold text-slate-700 dark:text-slate-200">Email</label>
                         <input type="email" name="email" value="{{ old('email') }}" placeholder="you@example.com"
-                            class="mt-2 w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-400/30 dark:border-white/10 dark:bg-white/10 dark:text-white" />
+                            class="mt-2 w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-400/30 dark:border-white/10 dark:bg-white/10 dark:text-white" />
                         @error('email')
                             <p class="mt-1 text-sm text-rose-500">{{ $message }}</p>
                         @enderror
@@ -104,13 +104,13 @@
                     <div>
                         <label class="block text-sm font-semibold text-slate-700 dark:text-slate-200">Message</label>
                         <textarea name="message" rows="5" placeholder="Tell us about your hiring goals..."
-                            class="mt-2 w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-400/30 dark:border-white/10 dark:bg-white/10 dark:text-white">{{ old('message') }}</textarea>
+                            class="mt-2 w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-400/30 dark:border-white/10 dark:bg-white/10 dark:text-white">{{ old('message') }}</textarea>
                         @error('message')
                             <p class="mt-1 text-sm text-rose-500">{{ $message }}</p>
                         @enderror
                     </div>
                     <button type="submit"
-                        class="w-full rounded-2xl bg-emerald-500 px-6 py-3 text-sm font-semibold text-slate-950 transition hover:bg-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-300 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-slate-900">
+                        class="w-full rounded-2xl bg-amber-500 px-6 py-3 text-sm font-semibold text-slate-950 transition hover:bg-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-300 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-slate-900">
                         Send message
                     </button>
                 </form>

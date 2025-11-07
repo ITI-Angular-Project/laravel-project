@@ -14,6 +14,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="color-scheme" content="light dark">
+    <link rel="icon" type="image/svg+xml" href="{{ asset('images/hireon-logo.svg') }}">
     <title>{{ $title ?? 'HireOn Dashboard' }}</title>
 
     @vite('resources/css/app.css')
@@ -53,7 +54,7 @@
 </head>
 
 <body :class="{ 'dark': darkMode }"
-    class="bg-emerald-50/60 dark:bg-gray-900 text-gray-900 dark:text-gray-100 antialiased selection:bg-emerald-200/60 dark:selection:bg-emerald-600/40">
+    class="bg-amber-50/60 dark:bg-gray-900 text-gray-900 dark:text-gray-100 antialiased selection:bg-amber-200/60 dark:selection:bg-amber-600/40">
     <a href="#main"
         class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 bg-white dark:bg-gray-800 text-sm px-3 py-2 rounded shadow">
         Skip to content
@@ -64,24 +65,23 @@
     <div class="min-h-screen flex">
         <!-- Sidebar (Desktop) -->
         <aside
-            class="hidden md:flex flex-col border-r border-emerald-100/80 dark:border-gray-800 bg-white dark:bg-gray-900 transition-all duration-300 ease-in-out shadow-sm"
+            class="hidden md:flex flex-col border-r border-amber-100/80 dark:border-gray-800 bg-white dark:bg-gray-900 transition-all duration-300 ease-in-out shadow-sm"
             :class="sidebarOpen ? 'w-72' : 'w-20'">
 
             <!-- Brand / Collapse -->
             <div
-                class="flex items-center justify-between px-4 h-16 border-b border-emerald-100/60 dark:border-gray-800/50">
+                class="flex items-center justify-between px-4 h-16 border-b border-amber-100/60 dark:border-gray-800/50">
                 <a href="{{ route('dashboard.home') }}"
                     class="flex items-center gap-2 group transition-transform duration-200 hover:scale-105">
-                    <span
-                        class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-600 text-white font-bold shadow-sm">H</span>
+                    <x-application-logo class="h-9 w-9 flex-shrink-0" />
                     <span x-show="sidebarOpen" x-transition:enter="transition ease-out duration-200"
                         x-transition:enter-start="opacity-0 -translate-x-2"
                         x-transition:enter-end="opacity-100 translate-x-0"
                         :class="{ 'opacity-0 pointer-events-none': !sidebarOpen }"
-                        class="text-lg font-semibold tracking-tight text-emerald-800 dark:text-white">HireOn</span>
+                        class="text-lg font-semibold tracking-tight text-amber-800 dark:text-white">HireOn</span>
                 </a>
                 <button @click="toggleSidebar()"
-                    class="p-2 rounded-lg hover:bg-emerald-50 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all duration-200 hover:scale-110"
+                    class="p-2 rounded-lg hover:bg-amber-50 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-amber-500 transition-all duration-200 hover:scale-110"
                     :aria-expanded="sidebarOpen.toString()" :title="sidebarOpen ? 'Collapse' : 'Expand'">
                     <svg x-show="sidebarOpen" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" aria-hidden="true">
@@ -96,7 +96,7 @@
 
             <!-- Nav -->
             <nav class="px-2 py-4 space-y-1 overflow-y-auto overflow-x-hidden">
-                @php($active = fn($name) => request()->routeIs($name) ? 'bg-emerald-600/10 text-emerald-700 dark:text-emerald-300 ring-1 ring-inset ring-emerald-600/20' : 'hover:bg-gray-100 dark:hover:bg-gray-800')
+                @php($active = fn($name) => request()->routeIs($name) ? 'bg-amber-600/10 text-amber-700 dark:text-amber-300 ring-1 ring-inset ring-amber-600/20' : 'hover:bg-gray-100 dark:hover:bg-gray-800')
 
                 <!-- Dashboard -->
                 <a href="{{ route('dashboard.home') }}"
@@ -127,7 +127,7 @@
                     <span x-show="sidebarOpen" x-transition:enter="transition ease-out duration-200"
                         x-transition:enter-start="opacity-0 -translate-x-2"
                         x-transition:enter-end="opacity-100 translate-x-0"
-                        :class="{ 'opacity-0 pointer-events-none': !sidebarOpen }">Jobs</span>
+                        :class="{ 'opacity-0 pointer-events-none': !sidebarOpen }">My Jobs</span>
                 </a>
 
                 <!-- Applications -->
@@ -226,7 +226,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M4 7a2 2 0 012-2h12a2 2 0 012 2v3H4V7zm0 3v7a2 2 0 002 2h12a2 2 0 002-2v-7" />
                         </svg>
-                        <span>Jobs</span>
+                        <span>My Jobs</span>
                     </a>
 
                     <a href="{{ route('dashboard.applications.index') }}"
@@ -266,11 +266,11 @@
         <div class="flex-1 min-w-0 flex flex-col">
             <!-- Top Bar -->
             <header
-                class="sticky top-0 z-30 bg-white/90 dark:bg-gray-900/90 backdrop-blur border-b border-emerald-100/60 dark:border-gray-800/60">
+                class="sticky top-0 z-30 bg-white/90 dark:bg-gray-900/90 backdrop-blur border-b border-amber-100/60 dark:border-gray-800/60">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
                     <div class="flex items-center gap-2">
                         <button
-                            class="md:hidden p-2 rounded-lg hover:bg-emerald-50 dark:hover:bg-gray-800 transition-all duration-200 hover:scale-110"
+                            class="md:hidden p-2 rounded-lg hover:bg-amber-50 dark:hover:bg-gray-800 transition-all duration-200 hover:scale-110"
                             @click="mobileMenuOpen = true" aria-label="Open menu">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" aria-hidden="true">
@@ -278,15 +278,15 @@
                                     d="M4 6h16M4 12h16M4 18h16" />
                             </svg>
                         </button>
-                        <h1 class="text-base sm:text-lg font-semibold tracking-tight text-emerald-800 dark:text-white">{{ $pageTitle ?? 'Dashboard' }}</h1>
+                        <h1 class="text-base sm:text-lg font-semibold tracking-tight text-amber-800 dark:text-white">{{ $pageTitle ?? 'Dashboard' }}</h1>
                     </div>
 
                     <!-- Actions -->
                     <div class="flex items-center gap-2">
-                        <a href="{{ route('dashboard.jobs.create') }}" class="hidden sm:inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium transition">Post a Job</a>
+                        <a href="{{ route('dashboard.jobs.create') }}" class="hidden sm:inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-sm font-medium transition">Post a Job</a>
 
                         <button @click="toggleTheme()"
-                            class="p-2 rounded-lg hover:bg-emerald-50 dark:hover:bg-gray-800 active:outline-none active:ring-2 active:ring-emerald-500 active:ring-offset-2 active:ring-offset-gray-900/0 transition-all duration-200 hover:scale-110 hover:rotate-12"
+                            class="p-2 rounded-lg hover:bg-amber-50 dark:hover:bg-gray-800 active:outline-none active:ring-2 active:ring-amber-500 active:ring-offset-2 active:ring-offset-gray-900/0 transition-all duration-200 hover:scale-110 hover:rotate-12"
                             :aria-label="darkMode ? 'Switch to light mode' : 'Switch to dark mode'"
                             :aria-pressed="darkMode.toString()">
                             <svg x-show="!darkMode" x-cloak xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
@@ -306,7 +306,7 @@
                         <!-- Notifications (kept minimal) -->
                         <div class="relative" x-data="{ open: false }" @keydown.escape="open=false">
                             <button @click="open=!open"
-                                class="p-2 rounded-lg hover:bg-emerald-50 dark:hover:bg-gray-800 relative transition-all duration-200 hover:scale-110"
+                                class="p-2 rounded-lg hover:bg-amber-50 dark:hover:bg-gray-800 relative transition-all duration-200 hover:scale-110"
                                 aria-haspopup="true" :aria-expanded="open.toString()"
                                 aria-label="Open notifications">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24"
@@ -331,10 +331,10 @@
                         <!-- User -->
                         <div class="relative" x-data="{ open: false }" @keydown.escape="open=false">
                             <button @click="open=!open"
-                                class="flex items-center gap-2 pl-2 pr-3 py-1.5 rounded-xl hover:bg-emerald-50 dark:hover:bg-gray-800 transition-all duration-200 hover:scale-105"
+                                class="flex items-center gap-2 pl-2 pr-3 py-1.5 rounded-xl hover:bg-amber-50 dark:hover:bg-gray-800 transition-all duration-200 hover:scale-105"
                                 aria-haspopup="true" :aria-expanded="open.toString()">
                                 <span
-                                    class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-emerald-600 text-white text-sm font-semibold"
+                                    class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-amber-600 text-white text-sm font-semibold"
                                     aria-hidden="true">
                                     {{ strtoupper(substr(auth()->user()->name ?? 'A', 0, 1)) }}
                                 </span>
@@ -354,9 +354,11 @@
                                 x-transition:leave="transition ease-in duration-150"
                                 x-transition:leave-start="opacity-100 scale-100 translate-y-0"
                                 x-transition:leave-end="opacity-0 scale-95 translate-y-1" @click.outside="open=false"
-                                class="absolute right-0 mt-2 w-52 bg-white dark:bg-gray-900 border border-emerald-100 dark:border-gray-800 rounded-xl shadow-xl overflow-hidden backdrop-blur-xl">
+                                class="absolute right-0 mt-2 w-52 bg-white dark:bg-gray-900 border border-amber-100 dark:border-gray-800 rounded-xl shadow-xl overflow-hidden backdrop-blur-xl">
+                                <a href="{{ route('home') }}"
+                                class="block px-4 py-2 text-sm hover:bg-amber-50 dark:hover:bg-gray-800 transition-all duration-200">Home</a>
                                 <a href="{{ route('dashboard.profile') }}"
-                                    class="block px-4 py-2 text-sm hover:bg-emerald-50 dark:hover:bg-gray-800 transition-all duration-200">Profile</a>
+                                class="block px-4 py-2 text-sm hover:bg-amber-50 dark:hover:bg-gray-800 transition-all duration-200">Profile</a>
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
                                     <button type="submit"
@@ -396,13 +398,13 @@
         function dashboard() {
             const flashToasts = @json($flashToasts);
             const toastStylesMap = {
-                success: 'border-emerald-200/80 dark:border-emerald-800/60 bg-emerald-50/90 dark:bg-emerald-900/40 text-emerald-900 dark:text-emerald-100',
+                success: 'border-amber-200/80 dark:border-amber-800/60 bg-amber-50/90 dark:bg-amber-900/40 text-amber-900 dark:text-amber-100',
                 error: 'border-rose-200/80 dark:border-rose-800/60 bg-rose-50/90 dark:bg-rose-900/40 text-rose-900 dark:text-rose-100',
                 warning: 'border-amber-200/80 dark:border-amber-800/60 bg-amber-50/90 dark:bg-amber-900/40 text-amber-900 dark:text-amber-100',
                 info: 'border-sky-200/80 dark:border-sky-800/60 bg-sky-50/90 dark:bg-sky-900/40 text-sky-900 dark:text-sky-100',
             };
             const toastIcons = {
-                success: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-emerald-500" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>`,
+                success: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-amber-500" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>`,
                 error: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-rose-500" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12A9 9 0 113 12a9 9 0 0118 0z" /></svg>`,
                 warning: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-amber-500" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M4.93 19h14.14a2 2 0 001.94-2.5l-4.24-12A2 2 0 0014.93 3H9.07a2 2 0 00-1.83 1.25l-4.24 12A2 2 0 004.93 19z" /></svg>`,
                 info: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-sky-500" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M12 18a9 9 0 110-18 9 9 0 010 18z" /></svg>`,

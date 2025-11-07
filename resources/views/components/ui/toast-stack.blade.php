@@ -14,7 +14,7 @@
                 <div class="mt-0.5" x-html="toastIcon(toast.type)" aria-hidden="true"></div>
                 <div class="flex-1 text-sm leading-relaxed text-gray-800 dark:text-gray-100" x-text="toast.message"></div>
                 <button type="button"
-                    class="inline-flex h-8 w-8 items-center justify-center rounded-xl border border-transparent text-gray-400 transition hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-emerald-500/40 dark:text-gray-500 dark:hover:text-gray-300"
+                    class="inline-flex h-8 w-8 items-center justify-center rounded-xl border border-transparent text-gray-400 transition hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-amber-500/40 dark:text-gray-500 dark:hover:text-gray-300"
                     @click="dismissToast(toast.id)" :aria-label="`Dismiss ${toast.type ?? 'notification'}`">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor">
