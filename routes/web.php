@@ -6,6 +6,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ApplicationController;
+use App\Http\Controllers\NotificationController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
@@ -31,6 +32,8 @@ Route::middleware(['auth', 'verified'])->name('dashboard.')->prefix('dashboard')
     Route::get('/jobs', [JobController::class, 'dashboardIndex'])->name('jobs.index');
 
     Route::resource('jobs', JobController::class)->except('index');
+    Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
+    Route::post('/notifications/mark-read', [NotificationController::class, 'markRead'])->name('notifications.mark-read');
     Route::patch('jobs/{job}/approve', [JobController::class, 'approve'])
         ->name('jobs.approve')
         ->middleware('role:' . User::ROLE_ADMIN);

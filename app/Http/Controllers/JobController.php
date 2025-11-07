@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Job;
 use App\Models\Company;
 use App\Models\User;
+use App\Notifications\JobsStatusUpdated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -250,6 +251,7 @@ class JobController extends Controller
 
         if ($job->status !== 'approved') {
             $job->update(['status' => 'approved']);
+            User::findOrFail($job->company->employer_id)->notify(new JobsStatusUpdated($job));
         }
 
         return back()->with('success', 'Job approved successfully.');
@@ -265,6 +267,7 @@ class JobController extends Controller
 
         if ($job->status !== 'rejected') {
             $job->update(['status' => 'rejected']);
+            User::findOrFail($job->company->employer_id)->notify(new JobsStatusUpdated($job));
         }
 
         return back()->with('success', 'Job rejected.');

@@ -1,10 +1,15 @@
 @php
-    $flashToasts = array_values(array_filter([
-        ['type' => 'success', 'message' => session('success')],
-        ['type' => 'error', 'message' => session('error')],
-        ['type' => 'warning', 'message' => session('warning')],
-        ['type' => 'info', 'message' => session('status')],
-    ], fn($toast) => filled($toast['message'])));
+$flashToasts = array_values(
+    array_filter(
+        [
+            ['type' => 'success', 'message' => session('success')],
+            ['type' => 'error', 'message' => session('error')],
+            ['type' => 'warning', 'message' => session('warning')],
+            ['type' => 'info', 'message' => session('status')],
+        ],
+        fn($toast) => filled($toast['message']),
+    ),
+);
 @endphp
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" x-data="dashboard()" x-init="init()"
@@ -14,6 +19,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="color-scheme" content="light dark">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="icon" type="image/svg+xml" href="{{ asset('images/hireon-logo.svg') }}">
     <title>{{ $title ?? 'HireOn Dashboard' }}</title>
 
@@ -125,16 +131,16 @@
                             d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0h6" />
                     </svg>
                     @can('admin-view')
-                    <span x-show="sidebarOpen" x-transition:enter="transition ease-out duration-200"
-                        x-transition:enter-start="opacity-0 -translate-x-2"
-                        x-transition:enter-end="opacity-100 translate-x-0"
-                        :class="{ 'opacity-0 pointer-events-none': !sidebarOpen }">Jobs</span>
-                        @else
                         <span x-show="sidebarOpen" x-transition:enter="transition ease-out duration-200"
-                        x-transition:enter-start="opacity-0 -translate-x-2"
-                        x-transition:enter-end="opacity-100 translate-x-0"
-                        :class="{ 'opacity-0 pointer-events-none': !sidebarOpen }">My Jobs</span>
-                        @endcan
+                            x-transition:enter-start="opacity-0 -translate-x-2"
+                            x-transition:enter-end="opacity-100 translate-x-0"
+                            :class="{ 'opacity-0 pointer-events-none': !sidebarOpen }">Jobs</span>
+                    @else
+                        <span x-show="sidebarOpen" x-transition:enter="transition ease-out duration-200"
+                            x-transition:enter-start="opacity-0 -translate-x-2"
+                            x-transition:enter-end="opacity-100 translate-x-0"
+                            :class="{ 'opacity-0 pointer-events-none': !sidebarOpen }">My Jobs</span>
+                    @endcan
                 </a>
 
                 <!-- Applications -->
@@ -234,9 +240,9 @@
                                 d="M4 7a2 2 0 012-2h12a2 2 0 012 2v3H4V7zm0 3v7a2 2 0 002 2h12a2 2 0 002-2v-7" />
                         </svg>
                         @can('admin-view')
-                        <span>Jobs</span>
+                            <span>Jobs</span>
                         @else
-                        <span>My Jobs</span>
+                            <span>My Jobs</span>
                         @endcan
                     </a>
 
@@ -289,12 +295,15 @@
                                     d="M4 6h16M4 12h16M4 18h16" />
                             </svg>
                         </button>
-                        <h1 class="text-base sm:text-lg font-semibold tracking-tight text-amber-800 dark:text-white">{{ $pageTitle ?? 'Dashboard' }}</h1>
+                        <h1 class="text-base sm:text-lg font-semibold tracking-tight text-amber-800 dark:text-white">
+                            {{ $pageTitle ?? 'Dashboard' }}</h1>
                     </div>
 
                     <!-- Actions -->
                     <div class="flex items-center gap-2">
-                        <a href="{{ route('dashboard.jobs.create') }}" class="hidden sm:inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-sm font-medium transition">Post a Job</a>
+                        <a href="{{ route('dashboard.jobs.create') }}"
+                            class="hidden sm:inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-sm font-medium transition">Post
+                            a Job</a>
 
                         <button @click="toggleTheme()"
                             class="p-2 rounded-lg hover:bg-amber-50 dark:hover:bg-gray-800 active:outline-none active:ring-2 active:ring-amber-500 active:ring-offset-2 active:ring-offset-gray-900/0 transition-all duration-200 hover:scale-110 hover:rotate-12"
@@ -315,8 +324,10 @@
                         </button>
 
                         <!-- Notifications (kept minimal) -->
-                        <div class="relative" x-data="{ open: false }" @keydown.escape="open=false">
-                            <button @click="open=!open"
+                        <div class="relative"
+                            x-data="notificationDropdown({{ auth()->user()?->unreadNotifications()->count() ? 'true' : 'false' }})"
+                            @keydown.escape="open=false">
+                            <button @click="toggle()"
                                 class="p-2 rounded-lg hover:bg-amber-50 dark:hover:bg-gray-800 relative transition-all duration-200 hover:scale-110"
                                 aria-haspopup="true" :aria-expanded="open.toString()"
                                 aria-label="Open notifications">
@@ -325,17 +336,48 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 10-12 0v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
                                 </svg>
-                                <span class="absolute -top-0.5 -right-0.5 h-2.5 w-2.5 rounded-full bg-red-500"></span>
+
+                                {{-- Red dot if unread notifications exist --}}
+                                <span x-show="hasUnread"
+                                    class="absolute -top-0.5 -right-0.5 h-2.5 w-2.5 rounded-full bg-red-500"></span>
                             </button>
+
+                            {{-- Dropdown --}}
                             <div x-cloak x-show="open" x-transition @click.outside="open=false"
-                                class="absolute right-0 mt-2 w-80 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl shadow-xl overflow-hidden">
+                                class="absolute right-0 mt-2 w-80 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl shadow-xl overflow-hidden z-50">
                                 <div
                                     class="px-4 py-2 text-sm font-medium border-b border-gray-200 dark:border-gray-800">
-                                    Notifications</div>
-                                <div class="divide-y divide-gray-200/70 dark:divide-gray-800">
-                                    <span class="block px-4 py-3 text-sm text-gray-600 dark:text-gray-300">No new
-                                        notifications</span>
+                                    Notifications
                                 </div>
+
+                                <div class="divide-y divide-gray-200/70 dark:divide-gray-800 max-h-80 overflow-y-auto">
+                                    @forelse($notifications as $notification)
+                                        <a href="{{ $notification->data['url'] ?? '#' }}"
+                                            class="block px-4 py-3 text-sm hover:bg-gray-50 dark:hover:bg-gray-800">
+                                            <div class="font-semibold text-gray-800 dark:text-gray-200">
+                                                {{ $notification->data['title'] ?? 'Notification' }}
+                                            </div>
+                                            <div class="text-gray-500 dark:text-gray-400 text-xs">
+                                                {{ $notification->data['message'] ?? '' }}
+                                            </div>
+                                            <div class="text-xs text-gray-400 mt-1">
+                                                {{ $notification->created_at->diffForHumans() }}
+                                            </div>
+                                        </a>
+                                    @empty
+                                        <span class="block px-4 py-3 text-sm text-gray-600 dark:text-gray-300">
+                                            No new notifications
+                                        </span>
+                                    @endforelse
+                                </div>
+
+                                @if (auth()->user()?->notifications()->count() > 5)
+                                    <div
+                                        class="text-center py-2 text-xs border-t border-gray-200 dark:border-gray-800">
+                                        <a href="{{ route('dashboard.notifications.index') }}"
+                                            class="text-emerald-600 dark:text-emerald-400 hover:underline">View all</a>
+                                    </div>
+                                @endif
                             </div>
                         </div>
 
@@ -367,9 +409,9 @@
                                 x-transition:leave-end="opacity-0 scale-95 translate-y-1" @click.outside="open=false"
                                 class="absolute right-0 mt-2 w-52 bg-white dark:bg-gray-900 border border-amber-100 dark:border-gray-800 rounded-xl shadow-xl overflow-hidden backdrop-blur-xl">
                                 <a href="{{ route('home') }}"
-                                class="block px-4 py-2 text-sm hover:bg-amber-50 dark:hover:bg-gray-800 transition-all duration-200">Home</a>
+                                    class="block px-4 py-2 text-sm hover:bg-amber-50 dark:hover:bg-gray-800 transition-all duration-200">Home</a>
                                 <a href="{{ route('dashboard.profile') }}"
-                                class="block px-4 py-2 text-sm hover:bg-amber-50 dark:hover:bg-gray-800 transition-all duration-200">Profile</a>
+                                    class="block px-4 py-2 text-sm hover:bg-amber-50 dark:hover:bg-gray-800 transition-all duration-200">Profile</a>
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
                                     <button type="submit"
@@ -475,7 +517,9 @@
 
                     if (typeof window.$toast !== 'function') {
                         window.$toast = toast =>
-                            window.dispatchEvent(new CustomEvent('toast', { detail: toast }));
+                            window.dispatchEvent(new CustomEvent('toast', {
+                                detail: toast
+                            }));
                     }
                 },
                 toggleTheme() {
@@ -530,6 +574,42 @@
                 },
                 toastIcon(type) {
                     return toastIcons[type] ?? toastIcons.info;
+                },
+            }
+        }
+    </script>
+
+    <script>
+        function notificationDropdown(hasUnread) {
+            return {
+                open: false,
+                hasUnread: hasUnread,
+                marking: false,
+                toggle() {
+                    this.open = !this.open;
+                    if (this.open) {
+                        this.markRead();
+                    }
+                },
+                async markRead() {
+                    if (!this.hasUnread || this.marking) {
+                        return;
+                    }
+
+                    this.marking = true;
+
+                    try {
+                        await fetch('{{ route('dashboard.notifications.mark-read') }}', {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                                'Accept': 'application/json',
+                            },
+                        });
+                        this.hasUnread = false;
+                    } catch (error) {
+                        this.marking = false;
+                    }
                 },
             }
         }
