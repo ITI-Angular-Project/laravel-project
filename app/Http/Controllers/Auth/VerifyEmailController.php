@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\RedirectResponse;
@@ -30,12 +31,12 @@ class VerifyEmailController extends Controller
      */
     protected function redirectAfterVerification($request): RedirectResponse
     {
-        // ✅ التوجيه حسب نوع المستخدم
-        if ($request->user()->role === 'employer') {
-            return redirect()->intended(route('dashboard.home') . '?verified=1');
+        $user = $request->user();
+
+        if ($user->role === User::ROLE_EMPLOYER) {
+            return redirect()->route('dashboard.home', ['verified' => 1]);
         }
 
-        // candidate أو أي دور آخر
-        return redirect()->intended(route('home') . '?verified=1');
+        return redirect()->route('home', ['verified' => 1]);
     }
 }

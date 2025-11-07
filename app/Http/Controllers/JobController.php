@@ -124,7 +124,7 @@ class JobController extends Controller
      */
     public function create()
     {
-        $this->authorize('create');
+        $this->authorize('create', Job::class);
         $categories = Category::all();
         return view('pages.dashboard.jobs.create-job', compact('categories'));
     }

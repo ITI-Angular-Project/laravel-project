@@ -23,7 +23,13 @@ class DashboardController extends Controller
 
         // Role checks
         $isAdmin    = $user && $user->hasRole(User::ROLE_ADMIN);
-        $isEmployer = $user && $user->hasRole(User::ROLE_EMPLOYER) && $user->company;
+        $isEmployer = $user && $user->hasRole(User::ROLE_EMPLOYER);
+
+        if ($isEmployer && ! $user->company) {
+            return redirect()
+                ->route('dashboard.company.edit')
+                ->with('warning', 'Please complete your company profile before accessing the dashboard.');
+        }
 
         // Scope ONLY for employers. Admins see all.
         if ($isEmployer) {
