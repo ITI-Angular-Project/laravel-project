@@ -37,7 +37,8 @@ class JobPolicy
      */
     public function update(User $user, Job $job): bool
     {
-        return false;
+        return $user->hasRole([User::ROLE_EMPLOYER, User::ROLE_DEMO])
+            && optional($job->company)->employer_id === $user->id;
     }
 
     /**
@@ -46,7 +47,7 @@ class JobPolicy
     public function delete(User $user, Job $job): bool
     {
 
-        return $user->hasRole(User::ROLE_EMPLOYER) && $user->id === $job->company->employer_id;
+        return $user->hasRole(User::ROLE_EMPLOYER) && optional($job->company)->employer_id === $user->id;
     }
 
     /**

@@ -3,64 +3,71 @@
 namespace App\Http\Controllers;
 
 use App\Models\Company;
-use App\Http\Requests\StoreCompanyRequest;
-use App\Http\Requests\UpdateCompanyRequest;
+use App\Models\User;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\View\View;
 
 class CompanyController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function edit(Request $request): View
     {
-        //
+        $user = $request->user();
+        abort_unless($user && $user->hasRole(User::ROLE_EMPLOYER), 403);
+
+        return view('pages.dashboard.company.edit', [
+            'company' => $user->company,
+        ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function update(Request $request): RedirectResponse
     {
-        //
-    }
+        $user = $request->user();
+        abort_unless($user && $user->hasRole(User::ROLE_EMPLOYER), 403);
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreCompanyRequest $request)
-    {
-        //
-    }
+        $data = $request->validate([
+            'name' => ['required', 'string', 'max:150'],
+            'website' => ['nullable', 'url', 'max:255'],
+            'location' => ['required', 'string', 'max:150'],
+            'about' => ['nullable', 'string'],
+            'logo' => ['nullable', 'image', 'max:2048'],
+            'remove_logo' => ['nullable', 'boolean'],
+        ]);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Company $company)
-    {
-        //
-    }
+        $company = $user->company;
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Company $company)
-    {
-        //
-    }
+        $removeLogo = $request->boolean('remove_logo');
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateCompanyRequest $request, Company $company)
-    {
-        //
-    }
+        if ($removeLogo && $company && $company->logo_path) {
+            Storage::disk('public')->delete($company->logo_path);
+            $data['logo_path'] = null;
+        }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Company $company)
-    {
-        //
+        if ($request->hasFile('logo')) {
+            $logoPath = $request->file('logo')->store('company-logos', 'public');
+            if ($company && $company->logo_path && $company->logo_path !== $logoPath) {
+                Storage::disk('public')->delete($company->logo_path);
+            }
+            $data['logo_path'] = $logoPath;
+        }
+
+        unset($data['logo']);
+        unset($data['remove_logo']);
+
+        if (! array_key_exists('logo_path', $data) && $company) {
+            // keep existing logo path
+        }
+
+        if ($company) {
+            $company->update($data);
+        } else {
+            $data['employer_id'] = $user->id;
+            $company = Company::create($data);
+        }
+
+        return redirect()
+            ->route('dashboard.company.edit')
+            ->with('success', 'Company information saved successfully.');
     }
 }

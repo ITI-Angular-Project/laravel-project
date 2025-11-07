@@ -6,6 +6,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ApplicationController;
+use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\NotificationController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
@@ -40,6 +41,10 @@ Route::middleware(['auth', 'verified'])->name('dashboard.')->prefix('dashboard')
     Route::patch('jobs/{job}/reject', [JobController::class, 'reject'])
         ->name('jobs.reject')
         ->middleware('role:' . User::ROLE_ADMIN);
+    Route::middleware('role:' . User::ROLE_EMPLOYER)->group(function () {
+        Route::get('/company', [CompanyController::class, 'edit'])->name('company.edit');
+        Route::put('/company', [CompanyController::class, 'update'])->name('company.update');
+    });
 
     // Applications management
     Route::resource('applications', ApplicationController::class)->only(['index','show','update','destroy']);
