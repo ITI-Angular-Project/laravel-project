@@ -33,6 +33,10 @@ class JobController extends Controller
             });
         }
 
+        if ($request->filled('work_type')) {
+            $jobs->where('work_type', $request->work_type);
+        }
+
         if ($request->salary_range) {
             if (str_contains($request->salary_range, '+')) {
                 $min = rtrim($request->salary_range, '+');

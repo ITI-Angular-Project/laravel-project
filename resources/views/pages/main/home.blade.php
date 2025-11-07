@@ -30,7 +30,7 @@
         }
 
         .hero-floating {
-            animation: float-slow 8s ease-in-out infinite;
+            animation: float-slow 4s ease-in-out infinite;
         }
     </style>
 
