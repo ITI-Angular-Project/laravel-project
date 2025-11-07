@@ -1,45 +1,44 @@
+@php
+    $navLinks = [
+        ['label' => __('Home'), 'route' => 'home', 'active' => 'home'],
+        ['label' => __('Jobs'), 'route' => 'jobs', 'active' => 'jobs'],
+        ['label' => __('About'), 'route' => 'about', 'active' => 'about'],
+        ['label' => __('Contact'), 'route' => 'contact.form', 'active' => 'contact.*'],
+    ];
+@endphp
+
 <nav x-data="{ open: false }"
-    class="sticky top-0 z-50 border-b border-gray-200/60 dark:border-gray-800 bg-white/90 dark:bg-gray-900/70 backdrop-blur supports-[backdrop-filter]:bg-white/70 dark:supports-[backdrop-filter]:bg-gray-900/60 shadow-sm transition-colors duration-200">
+    class="sticky top-0 z-50 border-b border-transparent bg-white/95 dark:bg-gray-900/85 backdrop-blur supports-[backdrop-filter]:bg-white/75 dark:supports-[backdrop-filter]:bg-gray-900/70 shadow-[0_15px_45px_rgba(15,23,42,0.12)] transition-colors">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex items-center justify-between h-16">
-            <!-- Left: Logo + Primary links -->
+        <div class="flex items-center justify-between h-16 gap-4">
             <div class="flex items-center gap-8">
-                <!-- Logo / Brand -->
-                <a href="{{ route('home') }}" class="flex items-center gap-2 group">
-                    <x-application-logo class="h-9 w-auto transition-transform duration-200 group-hover:scale-105" />
+            <a href="{{ route('home') }}" class="flex items-center gap-2 group" aria-label="{{ __('HireOn home') }}">
+                    <x-application-logo class="h-9 w-auto transition-transform duration-300 group-hover:scale-110" />
                     <span class="text-base sm:text-lg font-semibold tracking-tight text-gray-900 dark:text-gray-100">
                         {{ env('APP_NAME') }}
                     </span>
                 </a>
 
-                <!-- Desktop: Primary navigation -->
-                <div class="hidden sm:flex items-center gap-6">
-                    <x-nav-link :href="route('home')" :active="request()->routeIs('home')"
-                        class="text-sm font-medium text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors duration-200 !border-l-0 !border-b !border-transparent">
-                        {{ __('Home') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('jobs')" :active="request()->routeIs('jobs')"
-                        class="text-sm font-medium text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors duration-200 !border-l-0 !border-b !border-transparent">
-                        {{ __('Jobs') }}
-                    </x-nav-link>
-
-                    <x-nav-link :href="route('about')" :active="request()->routeIs('about')"
-                        class="text-sm font-medium text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors duration-200 !border-l-0 !border-b !border-transparent">
-                        {{ __('About') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('contact.form')" :active="request()->routeIs('contact.form')"
-                        class="text-sm font-medium text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors duration-200 !border-l-0 !border-b !border-transparent">
-                        {{ __('Contact') }}
-                    </x-nav-link>
+                <div class="hidden md:flex items-center gap-2 rounded-full bg-gray-50/70 dark:bg-white/5 px-2 py-1 shadow-inner shadow-gray-200/40 dark:shadow-none">
+                    @foreach ($navLinks as $link)
+                        @php($isActive = request()->routeIs($link['active']))
+                        <a href="{{ route($link['route']) }}"
+                            class="relative px-4 py-2 text-sm font-semibold rounded-full transition duration-200 {{ $isActive ? 'text-amber-700 dark:text-amber-300 bg-white dark:bg-amber-500/10 shadow-sm shadow-amber-100/70 dark:shadow-none' : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-white/60 dark:hover:bg-white/10' }}"
+                            @if ($isActive) aria-current="page" @endif>
+                            {{ $link['label'] }}
+                            @if ($isActive)
+                                <span class="absolute inset-x-3 -bottom-1 h-0.5 rounded-full bg-amber-400"></span>
+                            @endif
+                        </a>
+                    @endforeach
                 </div>
             </div>
 
-            <!-- Right: Auth / User Dropdown (desktop) -->
             <div class="hidden sm:flex items-center gap-4">
                 <button type="button" @click="$store.theme.toggle()"
-                    class="p-2 rounded-lg border border-gray-200/80 dark:border-gray-700 text-gray-600 dark:text-gray-200 bg-white/70 dark:bg-gray-800/70 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-200"
+                    class="p-2 rounded-xl border border-gray-200/80 dark:border-gray-700 text-gray-600 dark:text-gray-200 bg-white/80 dark:bg-gray-800/70 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-200"
                     :aria-pressed="$store.theme.dark.toString()" aria-label="{{ __('Toggle dark mode') }}">
-                    <svg x-show="store.theme.dark" x-cloak xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+                    <svg x-show="$store.theme.dark" x-cloak xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
                         fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round"
                             d="M12 3v2m0 14v2m9-9h-2M5 12H3m15.364-6.364-1.414 1.414M7.05 16.95l-1.414 1.414m0-12.728 1.414 1.414m9.9 9.9 1.414 1.414M12 8a4 4 0 100 8 4 4 0 000-8z" />
@@ -53,80 +52,78 @@
 
                 @guest
                     <a href="{{ route('login') }}"
-                        class="text-sm font-medium text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors duration-200">
+                        class="text-sm font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors duration-200">
                         {{ __('Login') }}
                     </a>
                     <a href="{{ route('register') }}"
-                        class="px-4 py-2 rounded-lg text-sm font-semibold bg-indigo-600 text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-all duration-200">
+                        class="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold bg-amber-600 text-white shadow-[0_10px_25px_rgba(251,191,36,0.45)] hover:bg-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 transition">
                         {{ __('Register') }}
                     </a>
                 @else
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
                             <button
-                                class="inline-flex items-center px-4 py-2 border border-gray-200/80 dark:border-gray-700 text-sm font-medium rounded-lg text-gray-700 dark:text-gray-200 bg-white/70 dark:bg-gray-800/70 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-900 backdrop-blur-sm transition-all duration-200">
-                                <div class="mr-2 truncate max-w-[10rem]">{{ Auth::user()->name }}</div>
-                                <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                                class="inline-flex items-center px-4 py-2 border border-gray-200/80 dark:border-gray-700 text-sm font-medium rounded-xl text-gray-700 dark:text-gray-200 bg-white/80 dark:bg-gray-900/70 hover:bg-gray-100 dark:hover:bg-gray-800 transition">
+                                {{ Auth::user()->name }}
+
+                                <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
                                     fill="currentColor">
                                     <path fill-rule="evenodd"
-                                        d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.27a.75.75 0 01.02-1.06z"
+                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
                                         clip-rule="evenodd" />
                                 </svg>
                             </button>
                         </x-slot>
 
                         <x-slot name="content">
-                            @canAny(['admin-view', 'employer-view'])
-                            <x-dropdown-link :href="route('dashboard.home')" class="text-gray-700 dark:text-gray-200">
-                                {{ __('Dashboard') }}
-                            </x-dropdown-link>
-                            @endcan
-                            <x-dropdown-link :href="route('profile.edit')" class="text-gray-700 dark:text-gray-200">
+                            <x-dropdown-link :href="route('profile.edit')">
                                 {{ __('Profile') }}
                             </x-dropdown-link>
+
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
-                                <x-dropdown-link :href="route('logout')" class="text-gray-700 dark:text-gray-200"
+                                <x-dropdown-link :href="route('logout')"
                                     onclick="event.preventDefault(); this.closest('form').submit();">
                                     {{ __('Log Out') }}
                                 </x-dropdown-link>
                             </form>
                         </x-slot>
                     </x-dropdown>
+
                 @endguest
             </div>
 
-            <!-- Mobile menu button -->
-            <div class="flex items-center sm:hidden">
+            <div class="-mr-2 flex sm:hidden">
                 <button @click="open = !open"
-                    class="inline-flex items-center justify-center p-2 rounded-lg text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none transition-all duration-200"
-                    aria-controls="mobile-menu" :aria-expanded="open.toString()">
-                    <svg class="h-6 w-6" x-show="!open" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M4 6h16M4 12h16M4 18h16" />
-                    </svg>
-                    <svg class="h-6 w-6" x-show="open" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    class="inline-flex items-center justify-center rounded-xl p-2 text-gray-600 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-amber-500 transition hover:bg-gray-100 dark:hover:bg-gray-800"
+                    aria-controls="primary-navigation" :aria-expanded="open.toString()">
+                    <span class="sr-only">Open main menu</span>
+                    <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                        <path :class="{ 'hidden': open, 'inline-flex': !open }" class="inline-flex" stroke-linecap="round"
+                            stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        <path :class="{ 'hidden': !open, 'inline-flex': open }" class="hidden" stroke-linecap="round"
+                            stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                     </svg>
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- Mobile Menu -->
-    <div x-show="open" x-transition.opacity x-cloak id="mobile-menu" class="sm:hidden" @click.away="open = false">
-        <div
-            class="px-4 pt-2 pb-4 space-y-1 bg-white/95 dark:bg-gray-900/95 border-b border-gray-200/60 dark:border-gray-800 backdrop-blur-sm shadow-md">
-            <x-nav-link :href="route('home')" :active="request()->routeIs('home')"
-                class="block w-full text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-all duration-200 !border-l-0 !border-transparent">
-                {{ __('Home') }}
-            </x-nav-link>
+    <div x-cloak x-show="open" class="sm:hidden border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900"
+        id="primary-navigation">
+        <div class="pt-2 pb-3 space-y-1">
+            @foreach ($navLinks as $link)
+                @php($isActive = request()->routeIs($link['active']))
+                <a href="{{ route($link['route']) }}"
+                    class="block px-4 py-2 text-base font-semibold {{ $isActive ? 'text-amber-600 bg-amber-50 dark:text-amber-200 dark:bg-amber-500/10' : 'text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-800' }}">
+                    {{ $link['label'] }}
+                </a>
+            @endforeach
+        </div>
 
+        <div class="pt-4 pb-4 border-t border-gray-200/70 dark:border-gray-800 px-4 space-y-3">
             <button type="button" @click="$store.theme.toggle()"
-                class="flex items-center w-full px-3 py-2 rounded-lg text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-200"
-                :aria-pressed="$store.theme.dark.toString()">
+                class="flex w-full items-center gap-3 rounded-xl border border-gray-200/70 dark:border-gray-700 px-3 py-2 text-sm text-gray-700 dark:text-gray-200">
                 <svg x-show="!$store.theme.dark" x-cloak xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
                     viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -137,7 +134,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round"
                         d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z" />
                 </svg>
-                <span class="ml-3">
+                <span>
                     <span x-show="!$store.theme.dark" x-cloak>{{ __('Dark mode') }}</span>
                     <span x-show="$store.theme.dark" x-cloak>{{ __('Light mode') }}</span>
                 </span>
@@ -174,6 +171,7 @@
                     </x-responsive-nav-link>
                 </form>
             @endguest
+
         </div>
     </div>
 </nav>
