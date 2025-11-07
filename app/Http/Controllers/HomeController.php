@@ -59,17 +59,17 @@ class HomeController extends Controller
             [
                 'title' => 'Find the talent that elevates your vision',
                 'subtitle' => 'Tap into a curated network of professionals ready to move your projects forward.',
-                'image' => 'about_us/1.jpg',
+                'image' => 'about_us/image1.jpeg',
             ],
             [
                 'title' => 'Hire faster with smarter matching',
                 'subtitle' => 'Use data-driven workflows to connect with candidates who truly fit your culture.',
-                'image' => 'about_us/3.jpg',
+                'image' => 'about_us/image2.jpeg',
             ],
             [
                 'title' => 'Grow with confidence in every hire',
                 'subtitle' => 'Scale teams globally with streamlined hiring experiences for recruiters and talent.',
-                'image' => 'about_us/4.jpg',
+                'image' => 'about_us/image3.jpeg',
             ],
         ];
 
