@@ -18,7 +18,7 @@ class CompanyFactory extends Factory
     public function definition(): array
     {
         return [
-            'employer_id' => User::factory()->create(['role' => 'employer'])->id,
+            'employer_id' => User::all()->where('role', 'employer')->random()->id,
             'name' => fake()->company(),
             'website' => fake()->optional()->url(),
             'location' => fake()->city(),

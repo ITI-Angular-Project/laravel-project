@@ -1,0 +1,11 @@
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="HireOn logo">
+    <defs>
+        <linearGradient id="hireon-gradient" x1="150" y1="20" x2="196" y2="200" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#fb923c" />
+            <stop offset="0.6" stop-color="#f97316" />
+            <stop offset="1" stop-color="#ea580c" />
+        </linearGradient>
+    </defs>
+    <path fill="#10153a" d="M36 30H82V95L118 95V30H164V170H118V135L82 135V170H36Z" />
+    <path fill="url(#hireon-gradient)" d="M164 32L196 10V170H164Z" />
+</svg>

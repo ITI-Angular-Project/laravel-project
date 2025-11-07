@@ -5,81 +5,115 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Job;
 use App\Models\Application;
+use App\Models\JobView;
+use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
-    /**
-     * Display dashboard with summary data.
-
     public function index()
     {
-        $user = auth()->user();
+        $user = User::find(Auth::id());
 
-        // آخر 5 وظائف منشورة للشركة
-        $recentJobs = Job::where('company_id', $user->company->id ?? 0)
+        // Base queries
+        $jobQuery          = Job::query();
+        $applicationQuery  = Application::query();
+        $viewsBaseQuery    = JobView::query();
+
+        // Role checks
+        $isAdmin    = $user && $user->hasRole(User::ROLE_ADMIN);
+        $isEmployer = $user && $user->hasRole(User::ROLE_EMPLOYER) && $user->company;
+
+        // Scope ONLY for employers. Admins see all.
+        if ($isEmployer) {
+            $companyId = $user->company_id ?? $user->company->id;
+
+            $jobQuery->where('company_id', $companyId);
+
+            $applicationQuery->whereHas('job', function ($q) use ($companyId) {
+                $q->where('company_id', $companyId);
+            });
+
+            $viewsBaseQuery->whereHas('job', function ($q) use ($companyId) {
+                $q->where('company_id', $companyId);
+            });
+        } elseif (!$isAdmin) {
+            // Anyone else: block or return empty. Choose one:
+            abort(403); // unauthorized
+            // or: $jobQuery->whereRaw('1=0'); $applicationQuery->whereRaw('1=0'); $viewsBaseQuery->whereRaw('1=0');
+        }
+
+        // Time helpers
+        $now           = now();
+        $startOfMonth  = $now->copy()->startOfMonth();
+        $days          = 14;
+        $from          = $now->copy()->subDays($days - 1)->startOfDay();
+
+        // Core stats
+        $totalJobs = (clone $jobQuery)->count();
+        $acceptedJobs = (clone $jobQuery)->where('status', 'approved')->count();
+
+        $applicationsThisMonth = (clone $applicationQuery)
+            ->where('created_at', '>=', $startOfMonth)
+            ->count();
+
+        $acceptedJobsThisMonth = (clone $jobQuery)
+            ->where('status', 'approved')
+            ->where('created_at', '>=', $startOfMonth)
+            ->count();
+
+        // Recent jobs list
+        $recentJobs = (clone $jobQuery)
             ->withCount('applications')
-            ->latest()
-            ->take(5)
-            ->get();
-
-        // آخر أسبوع
-        $oneWeekAgo = Carbon::now()->subWeek();
-
-        // 1️⃣ New Applications: الابلكيشنز الجديدة آخر أسبوع
-        $newApplications = Application::whereHas('job', function ($q) use ($user) {
-            $q->where('company_id', $user->company->id ?? 0);
-        })
-            ->where('created_at', '>=', $oneWeekAgo)
-            ->count();
-
-        // 2️⃣ Closed Jobs: الوظائف المغلقة (rejected)
-        $closedJobs = Job::where('company_id', $user->company->id ?? 0)
-            ->where('status', 'rejected')
-            ->count();
-
-        // 3️⃣ Total Applications: كل الابلكيشنز
-        $totalApplications = Application::whereHas('job', function ($q) use ($user) {
-            $q->where('company_id', $user->company->id ?? 0);
-        })
-            ->count();
-
-        return view('pages.dashboard.home', compact(
-            'recentJobs',
-            'newApplications',
-            'closedJobs',
-            'totalApplications'
-        ));
-    }
-*/
-
-
-    public function index()
-    {
-        // آخر 5 وظائف منشورة
-        $recentJobs = Job::withCount('applications')
             ->latest()
             ->take(7)
             ->get();
 
-        // آخر أسبوع
-        $oneWeekAgo = Carbon::now()->subWeek();
+        // Views chart (last 14 days)
+        $viewsByDay = $viewsBaseQuery
+            ->with('job:id,title')
+            ->where('created_at', '>=', $from)
+            ->get()
+            ->groupBy(fn($v) => Carbon::parse($v->created_at)->format('Y-m-d'));
 
-        // 1️⃣ New Applications: الابلكيشنز الجديدة آخر أسبوع
-        $newApplications = Application::where('created_at', '>=', $oneWeekAgo)->count();
+        $viewsDaily = [];
+        $viewsBreakdown = [];
+        for ($i = 0; $i < $days; $i++) {
+            $date = $now->copy()->subDays($days - 1 - $i)->format('Y-m-d');
+            $dayViews = $viewsByDay[$date] ?? collect();
+            $viewsDaily[$date] = $dayViews->count();
 
-        // 2️⃣ Closed Jobs: الوظائف المغلقة (rejected)
-        $closedJobs = Job::where('status', 'rejected')->count();
+            $viewsBreakdown[$date] = $dayViews->isNotEmpty()
+                ? $dayViews
+                    ->groupBy(fn($view) => optional($view->job)->title ?? 'Unknown Job')
+                    ->map(fn($items) => $items->count())
+                    ->sortDesc()
+                    ->take(5)
+                    ->map(fn($count, $title) => ['title' => $title, 'count' => $count])
+                    ->values()
+                    ->toArray()
+                : [];
+        }
 
-        // 3️⃣ Total Applications: كل الابلكيشنز
-        $totalApplications = Application::count();
+        $viewsChartData   = array_values($viewsDaily);
+        $viewsChartLabels = array_map(fn ($date) => Carbon::parse($date)->format('D'), array_keys($viewsDaily));
+        $viewsChartTotal  = array_sum($viewsDaily);
+        $viewsChartDates  = array_keys($viewsDaily);
 
-        return view('pages.dashboard.home', compact(
-            'recentJobs',
-            'newApplications',
-            'closedJobs',
-            'totalApplications'
-        ));
+        return view('pages.dashboard.home', [
+            'recentJobs'             => $recentJobs,
+            'totalJobs'              => $totalJobs,
+            'acceptedJobs'           => $acceptedJobs,
+            'applicationsThisMonth'  => $applicationsThisMonth,
+            'acceptedJobsThisMonth'  => $acceptedJobsThisMonth,
+            'viewsDaily'             => $viewsDaily,
+            'viewsChartData'         => $viewsChartData,
+            'viewsChartLabels'       => $viewsChartLabels,
+            'viewsChartTotal'        => $viewsChartTotal,
+            'viewsChartDates'        => $viewsChartDates,
+            'viewsChartBreakdown'    => $viewsBreakdown,
+        ]);
     }
 
 

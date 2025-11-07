@@ -18,7 +18,7 @@ class CommentFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => User::factory(),
+            'user_id' => User::all()->random()->id,
             'commentable_type' => fake()->randomElement(['jobs', 'companies']),
             'commentable_id' => fake()->numberBetween(1, 10),
             'body' => fake()->paragraph(),

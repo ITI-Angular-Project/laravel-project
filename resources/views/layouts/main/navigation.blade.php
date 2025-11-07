@@ -6,7 +6,7 @@
             <div class="flex items-center gap-8">
                 <!-- Logo / Brand -->
                 <a href="{{ route('home') }}" class="flex items-center gap-2 group">
-                    <x-application-logo class="hidden sm:block h-9 w-auto fill-current text-indigo-600 dark:text-indigo-400 transition-colors" />
+                    <x-application-logo class="h-9 w-auto transition-transform duration-200 group-hover:scale-105" />
                     <span class="text-base sm:text-lg font-semibold tracking-tight text-gray-900 dark:text-gray-100">
                         {{ env('APP_NAME') }}
                     </span>
@@ -20,17 +20,17 @@
                     </x-nav-link>
                     <x-nav-link :href="route('jobs')" :active="request()->routeIs('jobs')"
                         class="text-sm font-medium text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors duration-200 !border-l-0 !border-b !border-transparent">
-                        {{ __('jobs') }}
+                        {{ __('Jobs') }}
                     </x-nav-link>
-                    
-                    <x-nav-link :href="route('about')" :active="request()->routeIs('home')"
+
+                    <x-nav-link :href="route('about')" :active="request()->routeIs('about')"
                         class="text-sm font-medium text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors duration-200 !border-l-0 !border-b !border-transparent">
                         {{ __('About') }}
                     </x-nav-link>
-                    {{-- <x-nav-link :href="route('contact')" :active="request()->routeIs('home')"
+                    <x-nav-link :href="route('contact.form')" :active="request()->routeIs('contact.form')"
                         class="text-sm font-medium text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors duration-200 !border-l-0 !border-b !border-transparent">
                         {{ __('Contact') }}
-                    </x-nav-link> --}}
+                    </x-nav-link>
                 </div>
             </div>
 

@@ -19,8 +19,8 @@ class ApplicationFactory extends Factory
     public function definition(): array
     {
         return [
-            'job_id' => Job::factory(),
-            'candidate_id' => User::factory()->create(['role' => 'candidate'])->id,
+            'job_id' => Job::all()->random()->id,
+            'candidate_id' => User::all()->where('role', 'candidate')->random()->id,
             'applicant_name' => fake()->name(),
             'applicant_email' => fake()->unique()->safeEmail(),
             'applicant_phone' => fake()->optional()->phoneNumber(),
