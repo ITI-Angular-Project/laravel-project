@@ -26,13 +26,13 @@ class DatabaseSeeder extends Seeder
 
         User::factory(200)->create();
         User::factory()->create([
-            'name' => 'Ahmed Taha',
-            'email' => 'Ahmed185taha@gmail.com',
-            'password' => '123456789',
+            'name' => 'Ahmed Alaa',
+            'email' => 'ahmed.alla56756@gmail.com',
+            'password' => 'password',
             'email_verified_at' => now(),
             'role' => 'admin',
-            'phone' => '01063675209',
-            'linkedin_url' => 'https://www.linkedin.com/in/ahmedtaha09/',
+            'phone' => '01207213250',
+            'linkedin_url' => 'https://www.linkedin.com/in/ahmed-alaa1144/',
         ]);
 
 
