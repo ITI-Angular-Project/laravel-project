@@ -48,15 +48,14 @@
 
             {{-- Work Type --}}
             <div class="mb-4">
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Work Type</label>
-                <select name="work_type"
-                    class="w-full px-4 py-2 rounded-xl border border-amber-100 dark:border-gray-600 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-amber-500/30">
-                    <option value="full_time" @selected(old('work_type', $job->work_type) == 'full_time')>Full Time</option>
-                    <option value="part_time" @selected(old('work_type', $job->work_type) == 'part_time')>Part Time</option>
-                    <option value="contract" @selected(old('work_type', $job->work_type) == 'contract')>Contract</option>
-                    <option value="remote" @selected(old('work_type', $job->work_type) == 'remote')>Remote</option>
-                </select>
-            </div>
+    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Work Type</label>
+    <select name="work_type"
+        class="w-full px-4 py-2 rounded-xl border border-amber-100 dark:border-gray-600 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-amber-500/30">
+        <option value="remote" @selected(old('work_type', $job->work_type) == 'remote')>Remote</option>
+        <option value="on_site" @selected(old('work_type', $job->work_type) == 'on_site')>On Site</option>
+        <option value="hybrid" @selected(old('work_type', $job->work_type) == 'hybrid')>Hybrid</option>
+    </select>
+</div>
 
             {{-- Deadline --}}
             <div class="mb-4">
