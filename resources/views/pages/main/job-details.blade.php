@@ -1,7 +1,7 @@
 @extends('layouts.main.app')
 
 @section('content')
-<div class="container mx-auto py-10 px-4 md:px-0">
+<div class="container mx-auto py-10 px-4 md:px-0 max-w-4xl">
 
     {{-- 🔙 Back Button --}}
     <div class="mb-6">
