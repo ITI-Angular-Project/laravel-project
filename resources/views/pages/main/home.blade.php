@@ -24,9 +24,17 @@
         }
 
         @keyframes float-slow {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-12px); }
-            100% { transform: translateY(0px); }
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-12px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
         }
 
         .hero-floating {
@@ -34,17 +42,16 @@
         }
     </style>
 
-    <div class="bg-gradient-to-b from-white via-slate-50 to-white text-slate-900 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 dark:text-white">
+    <div
+        class="bg-gradient-to-b from-white via-slate-50 to-white text-slate-900 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 dark:text-white">
         <!-- Hero -->
         <section x-data="homeHero({{ $slidesPayload->toJson() }})" x-init="start()" class="relative isolate overflow-hidden">
             <div class="absolute inset-0" aria-hidden="true">
                 <template x-for="(slide, index) in slides" :key="index">
                     <div x-show="active === index" x-transition:enter="transition ease-out duration-700"
-                        x-transition:enter-start="opacity-0 scale-105"
-                        x-transition:enter-end="opacity-100 scale-100"
+                        x-transition:enter-start="opacity-0 scale-105" x-transition:enter-end="opacity-100 scale-100"
                         x-transition:leave="transition ease-in duration-500"
-                        x-transition:leave-start="opacity-100 scale-100"
-                        x-transition:leave-end="opacity-0 scale-95"
+                        x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95"
                         class="absolute inset-0 bg-cover bg-center"
                         :style="`background-image: linear-gradient(120deg, rgba(15,23,42,0.65), rgba(15,23,42,0.85)), url('${slide.image}')`">
                     </div>
@@ -53,7 +60,8 @@
 
             <div class="relative mx-auto max-w-6xl px-4 py-16 sm:py-20 lg:py-28">
                 <div class="max-w-3xl space-y-6 text-white">
-                    <span class="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-xs uppercase tracking-wide text-amber-200 backdrop-blur">
+                    <span
+                        class="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-xs uppercase tracking-wide text-amber-200 backdrop-blur">
                         <span class="h-1.5 w-1.5 rounded-full bg-amber-500 animate-pulse"></span>
                         Hiring made human
                     </span>
@@ -83,7 +91,8 @@
                                     class="w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-slate-900 focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-400/30 dark:border-white/20 dark:bg-white/10 dark:text-white">
                                     <option value="" class="text-gray-900 dark:text-gray-900">All categories</option>
                                     @foreach ($categoryOptions as $category)
-                                        <option value="{{ $category->id }}" @selected(request('category_id') == $category->id) class="text-gray-900 dark:text-gray-900">
+                                        <option value="{{ $category->id }}" @selected(request('category_id') == $category->id)
+                                            class="text-gray-900 dark:text-gray-900">
                                             {{ $category->name }}
                                         </option>
                                     @endforeach
@@ -127,7 +136,8 @@
                 <div class="mb-8 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
                     <div>
                         <h2 class="text-2xl font-semibold text-slate-900 dark:text-white">Discover roles by category</h2>
-                        <p class="text-sm text-slate-500 dark:text-slate-300">Explore the most active fields and jump straight into matching vacancies.</p>
+                        <p class="text-sm text-slate-500 dark:text-slate-300">Explore the most active fields and jump
+                            straight into matching vacancies.</p>
                     </div>
                     <a href="{{ route('jobs') }}"
                         class="inline-flex items-center gap-2 text-sm font-semibold text-amber-600 hover:text-amber-500 dark:text-amber-300 dark:hover:text-amber-200">
@@ -146,16 +156,20 @@
                             class="group relative overflow-hidden rounded-3xl border border-slate-200 bg-white p-6 transition hover:-translate-y-1 hover:border-amber-400/60 hover:bg-amber-50 dark:border-white/10 dark:bg-white/5 dark:hover:bg-amber-500/10">
                             <div class="flex h-full flex-col gap-4">
                                 <div class="flex items-center justify-between">
-                                    <div class="text-lg font-semibold text-slate-900 dark:text-white">{{ $category->name }}</div>
+                                    <div class="text-lg font-semibold text-slate-900 dark:text-white">{{ $category->name }}
+                                    </div>
                                     <span
                                         class="rounded-full bg-amber-500/10 px-3 py-1 text-xs font-medium text-amber-700 dark:bg-amber-500/20 dark:text-amber-200">{{ $category->jobs_count ?? 0 }}
                                         roles</span>
                                 </div>
-                                <p class="flex-1 text-sm text-slate-500 dark:text-slate-300">See curated openings tailored to this expertise.</p>
-                                <span class="inline-flex items-center gap-2 text-sm font-semibold text-amber-600 dark:text-amber-200">
+                                <p class="flex-1 text-sm text-slate-500 dark:text-slate-300">See curated openings tailored
+                                    to this expertise.</p>
+                                <span
+                                    class="inline-flex items-center gap-2 text-sm font-semibold text-amber-600 dark:text-amber-200">
                                     View jobs
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transition group-hover:translate-x-1"
-                                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                        class="h-4 w-4 transition group-hover:translate-x-1" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M13 7l5 5m0 0l-5 5m5-5H6" />
                                     </svg>
@@ -163,7 +177,8 @@
                             </div>
                         </a>
                     @empty
-                        <div class="col-span-full rounded-3xl border border-slate-200 bg-white p-6 text-center text-slate-500 dark:border-white/10 dark:bg-white/5 dark:text-slate-300">
+                        <div
+                            class="col-span-full rounded-3xl border border-slate-200 bg-white p-6 text-center text-slate-500 dark:border-white/10 dark:bg-white/5 dark:text-slate-300">
                             Categories coming soon.
                         </div>
                     @endforelse
@@ -177,7 +192,8 @@
                 <div class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
                     <div>
                         <h2 class="text-2xl font-semibold text-slate-900 dark:text-white">Featured roles</h2>
-                        <p class="text-sm text-slate-500 dark:text-slate-300">Handpicked opportunities with exceptional teams and growth paths.</p>
+                        <p class="text-sm text-slate-500 dark:text-slate-300">Handpicked opportunities with exceptional
+                            teams and growth paths.</p>
                     </div>
                 </div>
 
@@ -188,8 +204,10 @@
                             <div class="space-y-4">
                                 <div class="flex items-start justify-between gap-4">
                                     <div>
-                                        <h3 class="text-xl font-semibold text-slate-900 dark:text-white">{{ $job->title }}</h3>
-                                        <p class="text-sm text-slate-500 dark:text-slate-300">{{ optional($job->company)->name ?? 'Unknown company' }}</p>
+                                        <h3 class="text-xl font-semibold text-slate-900 dark:text-white">
+                                            {{ $job->title }}</h3>
+                                        <p class="text-sm text-slate-500 dark:text-slate-300">
+                                            {{ optional($job->company)->name ?? 'Unknown company' }}</p>
                                     </div>
                                     <span
                                         class="rounded-full bg-amber-500/10 px-3 py-1 text-xs font-semibold text-amber-700 dark:bg-amber-500/20 dark:text-amber-200">{{ ucfirst(str_replace('_', ' ', $job->work_type)) }}</span>
@@ -202,7 +220,8 @@
                             <div class="mt-6 flex flex-wrap items-center gap-3 text-xs text-slate-500 dark:text-slate-300">
                                 @if ($job->salary_min && $job->salary_max)
                                     <span class="rounded-full bg-slate-900/5 px-3 py-1 dark:bg-white/10">
-                                        ${{ number_format($job->salary_min, 0) }} – ${{ number_format($job->salary_max, 0) }}
+                                        ${{ number_format($job->salary_min, 0) }} –
+                                        ${{ number_format($job->salary_max, 0) }}
                                     </span>
                                 @endif
                                 @if ($job->deadline)
@@ -215,15 +234,26 @@
                                         {{ $job->category->name }}
                                     </span>
                                 @endif
-                                <a href="{{ route('jobs', ['keyword' => $job->title]) }}"
+                                <a href="{{ route('job.details', ['id' => $job->id]) }}"
                                     class="ml-auto inline-flex items-center gap-2 text-sm font-semibold text-amber-600 dark:text-amber-200">
                                     View details
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transition group-hover:translate-x-1"
-                                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                        class="h-4 w-4 transition group-hover:translate-x-1" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M13 7l5 5m0 0l-5 5m5-5H6" />
                                     </svg>
                                 </a>
+
+                                <button type="button"
+                                    class="apply-btn inline-flex items-center justify-center rounded-2xl bg-amber-500 px-4 py-2 text-sm font-semibold text-slate-950
+                                    transition hover:bg-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-300
+                                    focus:ring-offset-2 focus:ring-offset-slate-100 dark:focus:ring-offset-slate-900"
+                                    data-job-id="{{ $job->id }}">
+                                    Apply
+                                </button>
+
+
                             </div>
                         </article>
                     @endforeach
@@ -237,7 +267,8 @@
                 <div class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
                     <div>
                         <h2 class="text-2xl font-semibold text-slate-900 dark:text-white">Latest opportunities</h2>
-                        <p class="text-sm text-slate-500 dark:text-slate-300">Fresh listings from teams that are actively interviewing right now.</p>
+                        <p class="text-sm text-slate-500 dark:text-slate-300">Fresh listings from teams that are actively
+                            interviewing right now.</p>
                     </div>
                     <a href="{{ route('jobs') }}"
                         class="inline-flex items-center gap-2 text-sm font-semibold text-amber-600 hover:text-amber-500 dark:text-amber-300 dark:hover:text-amber-200">
@@ -256,27 +287,34 @@
                             class="flex flex-col gap-3 rounded-3xl border border-slate-200 bg-white p-5 transition hover:-translate-y-1 hover:border-amber-400/60 hover:bg-amber-50 dark:border-white/10 dark:bg-white/5 dark:hover:bg-amber-500/10 md:flex-row md:items-center md:justify-between">
                             <div class="space-y-2">
                                 <div class="flex items-center gap-3">
-                                    <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-500/10 text-amber-600 dark:bg-amber-500/15 dark:text-amber-200">
+                                    <div
+                                        class="flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-500/10 text-amber-600 dark:bg-amber-500/15 dark:text-amber-200">
                                         {{ strtoupper(substr($job->title, 0, 1)) }}
                                     </div>
                                     <div>
-                                        <h3 class="text-lg font-semibold text-slate-900 dark:text-white">{{ $job->title }}</h3>
-                                        <p class="text-sm text-slate-500 dark:text-slate-300">{{ optional($job->company)->name ?? 'Unknown company' }} ·
+                                        <h3 class="text-lg font-semibold text-slate-900 dark:text-white">
+                                            {{ $job->title }}</h3>
+                                        <p class="text-sm text-slate-500 dark:text-slate-300">
+                                            {{ optional($job->company)->name ?? 'Unknown company' }} ·
                                             {{ optional($job->company)->location ?? 'Remote friendly' }}</p>
                                     </div>
                                 </div>
                                 <div class="flex flex-wrap gap-2 text-xs text-slate-500 dark:text-slate-300">
-                                    <span class="rounded-full bg-slate-900/5 px-3 py-1 dark:bg-white/10">{{ ucfirst(str_replace('_', ' ', $job->work_type)) }}</span>
+                                    <span
+                                        class="rounded-full bg-slate-900/5 px-3 py-1 dark:bg-white/10">{{ ucfirst(str_replace('_', ' ', $job->work_type)) }}</span>
                                     @if ($job->category)
-                                        <span class="rounded-full bg-slate-900/5 px-3 py-1 dark:bg-white/10">{{ $job->category->name }}</span>
+                                        <span
+                                            class="rounded-full bg-slate-900/5 px-3 py-1 dark:bg-white/10">{{ $job->category->name }}</span>
                                     @endif
-                                    <span class="rounded-full bg-slate-900/5 px-3 py-1 dark:bg-white/10">Posted {{ $job->created_at->diffForHumans() }}</span>
+                                    <span class="rounded-full bg-slate-900/5 px-3 py-1 dark:bg-white/10">Posted
+                                        {{ $job->created_at->diffForHumans() }}</span>
                                 </div>
                             </div>
                             <div class="flex items-center gap-3">
                                 @if ($job->salary_min && $job->salary_max)
                                     <span class="text-sm font-semibold text-amber-600 dark:text-amber-200">
-                                        ${{ number_format($job->salary_min, 0) }} – ${{ number_format($job->salary_max, 0) }}
+                                        ${{ number_format($job->salary_min, 0) }} –
+                                        ${{ number_format($job->salary_max, 0) }}
                                     </span>
                                 @endif
                                 <a href="{{ route('jobs', ['keyword' => $job->title]) }}"
@@ -322,7 +360,10 @@
                         observer.unobserve(entry.target);
                     }
                 });
-            }, { threshold: 0.2, rootMargin: '0px 0px -5% 0px' });
+            }, {
+                threshold: 0.2,
+                rootMargin: '0px 0px -5% 0px'
+            });
 
             document.querySelectorAll('.animate-fade-in-up').forEach(el => observer.observe(el));
         });
