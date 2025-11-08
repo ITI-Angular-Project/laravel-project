@@ -25,12 +25,12 @@ class JobController extends Controller
         }
 
         if ($request->keyword) {
-            $jobs->where('title', 'like', '%'.$request->keyword.'%');
+            $jobs->where('title', 'like', '%' . $request->keyword . '%');
         }
 
         if ($request->location) {
-            $jobs->whereHas('company', function($query) use ($request) {
-                $query->where('location', 'like', '%'.$request->location.'%');
+            $jobs->whereHas('company', function ($query) use ($request) {
+                $query->where('location', 'like', '%' . $request->location . '%');
             });
         }
 
@@ -56,11 +56,9 @@ class JobController extends Controller
                 case '24h':
                     $jobs->where('created_at', '>=', $now->subDay());
                     break;
-
                 case '7d':
                     $jobs->where('created_at', '>=', $now->subDays(7));
                     break;
-
                 case '30d':
                     $jobs->where('created_at', '>=', $now->subDays(30));
                     break;
@@ -91,11 +89,12 @@ class JobController extends Controller
     {
         $user = User::find(Auth::id());
 
-        if($user->hasRole('admin')) {
+        if ($user->hasRole('admin')) {
             $jobsQuery = Job::query();
-        }else {
+        } else {
             if (!$user->company) {
-                return redirect(route('dashboard.home'))->with('error', 'You must create a company profile to view jobs.');
+                return redirect(route('dashboard.home'))
+                    ->with('error', 'You must create a company profile to view jobs.');
             }
             $jobsQuery = Job::where('company_id', $user->company?->id);
         }
@@ -113,7 +112,6 @@ class JobController extends Controller
             $jobsQuery->where('status', $request->status);
         }
 
-        // ترتيب وعمل paginate
         $jobs = $jobsQuery->orderBy('created_at', 'desc')->paginate(5)->withQueryString();
 
         return view('pages.dashboard.jobs.jobs', compact('jobs'));
@@ -178,8 +176,7 @@ class JobController extends Controller
      */
     public function show($id)
     {
-        $job = Job::findOrFail($id);
-
+        $job = Job::with(['company', 'category'])->findOrFail($id);
         return view('pages.dashboard.jobs.show-job', compact('job'));
     }
 
@@ -188,22 +185,20 @@ class JobController extends Controller
      */
     public function edit($id)
     {
-        $this->authorize('create');
         $job = Job::findOrFail($id);
+        $this->authorize('update', $job);
+
         $user = Auth::user();
 
-        // تأكد إن المستخدم صاحب الشركة نفسها
         if (!$user->company || $job->company_id !== $user->company->id) {
             abort(403, 'Unauthorized action.');
         }
 
-        // جلب الشركات والفئات لو محتاجين في الفورم
         $companies = Company::all();
         $categories = Category::all();
 
         return view('pages.dashboard.jobs.edit-job', compact('job', 'companies', 'categories'));
     }
-
 
     /**
      * تحديث بيانات وظيفة موجودة
@@ -289,4 +284,11 @@ class JobController extends Controller
 
         return redirect()->route('dashboard.jobs.index')->with('success', 'Job deleted successfully!');
     }
+    public function details($id)
+    {
+        $job = Job::with(['company', 'category'])->findOrFail($id);
+
+        return view('pages.main.job-details', compact('job'));
+    }
+
 }
