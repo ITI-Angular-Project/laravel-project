@@ -1,129 +1,91 @@
 @extends('layouts.main.app')
 
 @section('content')
-    <div class="container mx-auto py-8">
+<div class="container mx-auto py-10 px-4 md:px-0">
 
-        {{-- 🔙 Back Button --}}
-        <div class="mb-6">
-            <a href="{{ route('jobs') }}" class="text-sm text-amber-600 hover:text-amber-500 font-semibold">
-                ← Back to Jobs
-            </a>
+    {{-- 🔙 Back Button --}}
+    <div class="mb-6">
+        <a href="{{ route('jobs') }}" class="text-sm text-amber-600 hover:text-amber-500 font-semibold flex items-center">
+            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+            </svg>
+            Back to Jobs
+        </a>
+    </div>
+
+    {{-- 🧾 Job Card --}}
+    <div class="bg-white dark:bg-gray-900 rounded-3xl shadow-xl border border-gray-200 dark:border-gray-700 p-8 transition-transform hover:scale-[1.01] duration-300">
+
+        {{-- Title --}}
+        <h1 class="text-4xl md:text-5xl font-bold text-gray-800 dark:text-gray-100 tracking-tight mb-6">
+            {{ $job->title }}
+        </h1>
+
+        {{-- Basic Info Grid --}}
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+            @php
+                $info = [
+                    ['label' => 'Company', 'value' => $job->company->name ?? 'N/A'],
+                    ['label' => 'Category', 'value' => $job->category->name ?? 'N/A'],
+                    ['label' => 'Work Type', 'value' => str_replace('_', ' ', $job->work_type)],
+                    ['label' => 'Deadline', 'value' => \Carbon\Carbon::parse($job->deadline)->format('Y-m-d')],
+                    ['label' => 'Salary', 'value' => $job->salary_min && $job->salary_max ? "$".$job->salary_min." - $".$job->salary_max : "Not specified"],
+                    ['label' => 'Technologies', 'value' => $job->technologies_txt ?? 'Not specified'],
+                ];
+            @endphp
+
+            @foreach($info as $item)
+                <div class="bg-gray-50 dark:bg-gray-800 p-4 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-md transition">
+                    <h3 class="text-xs text-gray-500 uppercase mb-1">{{ $item['label'] }}</h3>
+                    <p class="text-lg font-medium text-gray-900 dark:text-gray-100">{{ $item['value'] }}</p>
+                </div>
+            @endforeach
         </div>
 
-        {{-- 🧾 Job Card --}}
-        <div
-            class="bg-white dark:bg-gray-900 rounded-3xl shadow-xl p-8 border border-gray-200 dark:border-gray-700 transition hover:shadow-2xl">
+        {{-- Job Sections --}}
+        <div class="space-y-10">
+            @php
+                $sections = [
+                    ['title' => 'Description', 'content' => $job->description],
+                    ['title' => 'Responsibilities', 'content' => $job->responsibilities],
+                    ['title' => 'Qualifications', 'content' => $job->qualifications],
+                    ['title' => 'Benefits', 'content' => $job->benefits],
+                ];
+            @endphp
 
-            {{-- Title --}}
-            <h1 class="text-4xl font-bold text-gray-800 dark:text-gray-100 tracking-tight mb-6">{{ $job->title }}</h1>
-
-            {{-- Basic Info --}}
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
-                <div>
-                    <h3 class="text-xs text-gray-500 uppercase mb-1">Company</h3>
-                    <p class="text-lg font-medium text-gray-900 dark:text-gray-100">
-                        {{ $job->company->name ?? 'N/A' }}
-                    </p>
-                </div>
-
-                <div>
-                    <h3 class="text-xs text-gray-500 uppercase mb-1">Category</h3>
-                    <p class="text-lg font-medium text-gray-900 dark:text-gray-100">
-                        {{ $job->category->name ?? 'N/A' }}
-                    </p>
-                </div>
-
-                <div>
-                    <h3 class="text-xs text-gray-500 uppercase mb-1">Work Type</h3>
-                    <p class="text-lg font-medium text-gray-900 dark:text-gray-100">
-                        {{ str_replace('_', ' ', $job->work_type) }}
-                    </p>
-                </div>
-
-                <div>
-                    <h3 class="text-xs text-gray-500 uppercase mb-1">Deadline</h3>
-                    <p class="text-lg font-medium text-gray-900 dark:text-gray-100">
-                        {{ \Carbon\Carbon::parse($job->deadline)->format('Y-m-d') }}
-                    </p>
-                </div>
-
-                <div>
-                    <h3 class="text-xs text-gray-500 uppercase mb-1">Salary</h3>
-                    <p class="text-lg font-medium text-gray-900 dark:text-gray-100">
-                        @if ($job->salary_min && $job->salary_max)
-                            ${{ $job->salary_min }} - ${{ $job->salary_max }}
-                        @else
-                            Not specified
-                        @endif
-                    </p>
-                </div>
-
-                <div>
-                    <h3 class="text-xs text-gray-500 uppercase mb-1">Technologies</h3>
-                    <p class="text-lg font-medium text-gray-900 dark:text-gray-100">
-                        {{ $job->technologies_txt ?? 'Not specified' }}
-                    </p>
-                </div>
-            </div>
-
-            {{-- Job Sections --}}
-            <div class="space-y-8">
-                @if ($job->description)
-                    <section>
-                        <h2 class="text-xl font-semibold mb-2">Description</h2>
-                        <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
-                            {{ $job->description }}
-                        </p>
+            @foreach($sections as $section)
+                @if($section['content'])
+                    <section class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-md transition">
+                        <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-100 mb-3">{{ $section['title'] }}</h2>
+                        <p class="text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-line">{{ $section['content'] }}</p>
                     </section>
                 @endif
+            @endforeach
+        </div>
 
-                @if ($job->responsibilities)
-                    <section>
-                        <h2 class="text-xl font-semibold mb-2">Responsibilities</h2>
-                        <p class="text-gray-700 dark:text-gray-300 whitespace-pre-line leading-relaxed">
-                            {{ $job->responsibilities }}
-                        </p>
-                    </section>
-                @endif
-
-                @if ($job->qualifications)
-                    <section>
-                        <h2 class="text-xl font-semibold mb-2">Qualifications</h2>
-                        <p class="text-gray-700 dark:text-gray-300 whitespace-pre-line leading-relaxed">
-                            {{ $job->qualifications }}
-                        </p>
-                    </section>
-                @endif
-
-                @if ($job->benefits)
-                    <section>
-                        <h2 class="text-xl font-semibold mb-2">Benefits</h2>
-                        <p class="text-gray-700 dark:text-gray-300 whitespace-pre-line leading-relaxed">
-                            {{ $job->benefits }}
-                        </p>
-                    </section>
-                @endif
-            </div>
-
-            {{-- Apply Button --}}
+        {{-- Apply Button --}}
+        <div class="mt-8 flex justify-center">
             @auth
-                <form action="{{ route('apply.job', $job->id) }}" method="POST">
+                <form action="{{ route('apply.job', $job->id) }}" method="POST" class="w-full md:w-auto">
                     @csrf
-                    <button
-                        class="mt-6 inline-flex items-center rounded-xl bg-amber-500 px-6 py-3
-                       font-semibold text-slate-950 hover:bg-amber-400">
+                    <button type="submit"
+                        class="w-full md:w-auto inline-flex items-center justify-center rounded-2xl bg-amber-500 px-8 py-3 text-lg font-semibold text-slate-950
+                        hover:bg-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-300 focus:ring-offset-2 focus:ring-offset-gray-50 dark:focus:ring-offset-gray-900 transition">
                         Apply Now
+                        <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                        </svg>
                     </button>
                 </form>
             @else
                 <a href="{{ route('login') }}"
-                    class="mt-6 inline-flex items-center rounded-xl bg-amber-500 px-6 py-3
-              font-semibold text-slate-950 hover:bg-amber-400">
+                    class="w-full md:w-auto inline-flex items-center justify-center rounded-2xl bg-amber-500 px-8 py-3 text-lg font-semibold text-slate-950
+                    hover:bg-amber-400 transition">
                     Login to Apply
                 </a>
             @endauth
-
-
         </div>
+
     </div>
+</div>
 @endsection
