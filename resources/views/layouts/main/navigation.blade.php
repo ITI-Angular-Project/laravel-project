@@ -76,6 +76,11 @@
                         </x-slot>
 
                         <x-slot name="content">
+                            @canAny(['admin-view', 'demo-view', 'employer-view'])
+                            <x-dropdown-link :href="route('dashboard.home')">
+                                {{ __('Dashboard') }}
+                            </x-dropdown-link>
+                            @endcan
                             <x-dropdown-link :href="route('profile.edit')">
                                 {{ __('Profile') }}
                             </x-dropdown-link>
@@ -140,11 +145,14 @@
                 </span>
             </button>
 
+
             @auth
-                <x-nav-link :href="route('dashboard.home')" :active="request()->routeIs('dashboard')"
-                    class="block w-full text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-all duration-200 !border-l-0 !border-transparent">
-                    {{ __('Dashboard') }}
-                </x-nav-link>
+            @canAny(['admin-view', 'employer-view', 'demo-view'])
+            <x-nav-link :href="route('dashboard.home')" :active="request()->routeIs('dashboard')"
+                class="block w-full text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-all duration-200 !border-l-0 !border-transparent">
+                {{ __('Dashboard') }}
+            </x-nav-link>
+            @endcan
             @endauth
 
             <div class="pt-3 border-t border-gray-200/60 dark:border-gray-800"></div>
