@@ -70,7 +70,7 @@
                     </h1>
                     <p class="text-base text-white/80 sm:text-lg" x-text="slides[active]?.subtitle"></p>
 
-                    <div class="hero-floating rounded-3xl bg-white/80 p-6 shadow-xl backdrop-blur-lg dark:bg-white/10">
+                    <div class="hero-floating rounded-3xl bg-white/10 p-6 shadow-xl backdrop-blur-md dark:bg-white/5">
                         <form action="{{ route('jobs') }}" method="GET"
                             class="grid gap-4 md:grid-cols-[2fr_1.5fr_1.5fr_auto]">
                             <label class="flex flex-col gap-2 text-sm text-white/80">
