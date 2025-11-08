@@ -188,7 +188,7 @@ class JobController extends Controller
      */
     public function edit($id)
     {
-        $this->authorize('create');
+        $this->authorize('create',Job::Class);
         $job = Job::findOrFail($id);
         $user = Auth::user();
 
