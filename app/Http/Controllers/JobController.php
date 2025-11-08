@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Job;
 use App\Models\Company;
+use App\Models\JobView;
 use App\Models\User;
 use App\Notifications\JobsStatusUpdated;
 use Illuminate\Http\Request;
@@ -286,6 +287,15 @@ class JobController extends Controller
     }
     public function details($id)
     {
+        $user = User::find(Auth::id());
+        if($user && $user->hasRole(User::ROLE_CANDIDATE)) {
+            JobView::create([
+                'job_id' => $id,
+                'user_id' => $user->id,
+                'ip_address' => request()->ip(),
+                'user_agent' => request()->header('User-Agent')
+            ]);
+        }
         $job = Job::with(['company', 'category'])->findOrFail($id);
 
         return view('pages.main.job-details', compact('job'));

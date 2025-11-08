@@ -10,6 +10,8 @@ class JobView extends Model
     /** @use HasFactory<\Database\Factories\JobViewFactory> */
     use HasFactory;
 
+    protected $fillable = ['job_id', 'user_id', 'user_agent', 'ip_address'];
+
     public function job()
     {
         return $this->belongsTo(Job::class);
