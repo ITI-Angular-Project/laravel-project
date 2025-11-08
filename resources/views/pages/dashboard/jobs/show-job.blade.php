@@ -1,11 +1,11 @@
-@extends('layouts.main.app')
+@extends('layouts.dashboard.app')
 
 @section('content')
 <div class="container mx-auto py-10 px-4 md:px-0">
 
     {{-- 🔙 Back Button --}}
     <div class="mb-6">
-        <a href="{{ route('jobs') }}" class="text-sm text-amber-600 hover:text-amber-500 font-semibold flex items-center">
+        <a href="{{ route('dashboard.jobs.index') }}" class="text-sm text-amber-600 hover:text-amber-500 font-semibold flex items-center">
             <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
             </svg>
