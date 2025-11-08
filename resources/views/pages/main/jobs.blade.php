@@ -25,7 +25,9 @@
         <!-- Hero + Filters -->
         <section class="relative overflow-hidden">
             <div class="absolute inset-0" aria-hidden="true">
-                <div class="h-full w-full bg-[radial-gradient(circle_at_top,_rgba(245,158,11,0.15),_transparent_45%),_radial-gradient(circle_at_bottom,_rgba(59,130,246,0.15),_transparent_35%)] dark:bg-[radial-gradient(circle_at_top,_rgba(245,158,11,0.45),_transparent_45%),_radial-gradient(circle_at_bottom,_rgba(59,130,246,0.35),_transparent_35%)]"></div>
+                <div
+                    class="h-full w-full bg-[radial-gradient(circle_at_top,_rgba(245,158,11,0.15),_transparent_45%),_radial-gradient(circle_at_bottom,_rgba(59,130,246,0.15),_transparent_35%)] dark:bg-[radial-gradient(circle_at_top,_rgba(245,158,11,0.45),_transparent_45%),_radial-gradient(circle_at_bottom,_rgba(59,130,246,0.35),_transparent_35%)]">
+                </div>
             </div>
 
             <div class="relative mx-auto flex max-w-6xl flex-col gap-10 px-4 py-16 sm:px-6 lg:px-8">
@@ -47,10 +49,12 @@
                     class="hero-floating rounded-3xl border border-white/60 bg-white/85 p-6 shadow-2xl backdrop-blur dark:border-white/10 dark:bg-white/5">
                     <form action="{{ route('jobs') }}" method="GET" class="space-y-5">
                         <div class="grid gap-3 md:grid-cols-[1.4fr_1.2fr_1.2fr_auto]">
+                            <!-- Role or keyword -->
                             <label class="flex flex-col gap-2 text-sm text-slate-600 dark:text-slate-200">
                                 <span class="font-semibold text-slate-900 dark:text-white">Role or keyword</span>
                                 <div class="relative">
-                                    <span class="pointer-events-none absolute inset-y-0 left-3 flex items-center text-slate-400">
+                                    <span
+                                        class="pointer-events-none absolute inset-y-0 left-3 flex items-center text-slate-400">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
                                             viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -63,10 +67,12 @@
                                 </div>
                             </label>
 
+                            <!-- Location -->
                             <label class="flex flex-col gap-2 text-sm text-slate-600 dark:text-slate-200">
                                 <span class="font-semibold text-slate-900 dark:text-white">Location</span>
                                 <div class="relative">
-                                    <span class="pointer-events-none absolute inset-y-0 left-3 flex items-center text-slate-400">
+                                    <span
+                                        class="pointer-events-none absolute inset-y-0 left-3 flex items-center text-slate-400">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
                                             viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -92,6 +98,7 @@
                                 </div>
                             </label>
 
+                            <!-- Category -->
                             <label class="flex flex-col gap-2 text-sm text-slate-600 dark:text-slate-200">
                                 <span class="font-semibold text-slate-900 dark:text-white">Category</span>
                                 <select name="category_id"
@@ -111,8 +118,10 @@
                             </button>
                         </div>
 
+                        <!-- Filters row 2 -->
                         <div class="grid gap-3 md:grid-cols-3">
-                            <label class="flex flex-col gap-1 text-xs font-semibold uppercase tracking-widest text-slate-500 dark:text-slate-400">
+                            <label
+                                class="flex flex-col gap-1 text-xs font-semibold uppercase tracking-widest text-slate-500 dark:text-slate-400">
                                 Date posted
                                 <select name="date_posted"
                                     class="rounded-2xl border border-white/60 bg-white/75 px-4 py-2.5 text-sm text-slate-900 focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-400/30 dark:border-white/20 dark:bg-white/10 dark:text-white">
@@ -123,7 +132,8 @@
                                 </select>
                             </label>
 
-                            <label class="flex flex-col gap-1 text-xs font-semibold uppercase tracking-widest text-slate-500 dark:text-slate-400">
+                            <label
+                                class="flex flex-col gap-1 text-xs font-semibold uppercase tracking-widest text-slate-500 dark:text-slate-400">
                                 Salary range
                                 <select name="salary_range"
                                     class="rounded-2xl border border-white/60 bg-white/75 px-4 py-2.5 text-sm text-slate-900 focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-400/30 dark:border-white/20 dark:bg-white/10 dark:text-white">
@@ -136,7 +146,8 @@
                                 </select>
                             </label>
 
-                            <label class="flex flex-col gap-1 text-xs font-semibold uppercase tracking-widest text-slate-500 dark:text-slate-400">
+                            <label
+                                class="flex flex-col gap-1 text-xs font-semibold uppercase tracking-widest text-slate-500 dark:text-slate-400">
                                 Work style
                                 <select name="work_type"
                                     class="rounded-2xl border border-white/60 bg-white/75 px-4 py-2.5 text-sm text-slate-900 focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-400/30 dark:border-white/20 dark:bg-white/10 dark:text-white">
@@ -172,27 +183,23 @@
                             <div>
                                 <h3
                                     class="text-xl font-semibold text-slate-900 transition group-hover:text-amber-500 dark:text-white">
-                                    {{ $job->title }}
-                                </h3>
+                                    {{ $job->title }}</h3>
                                 <p class="text-sm text-slate-500 dark:text-slate-300">
                                     {{ optional($job->company)->name ?? 'Unknown company' }} ·
-                                    {{ optional($job->company)->location ?? 'Remote friendly' }}
-                                </p>
+                                    {{ optional($job->company)->location ?? 'Remote friendly' }}</p>
                             </div>
                             <span
-                                class="rounded-full bg-amber-500/10 px-3 py-1 text-xs font-semibold text-amber-600 dark:bg-amber-500/20 dark:text-amber-200">
-                                {{ ucfirst(str_replace('_', ' ', $job->work_type ?? 'flexible')) }}
-                            </span>
+                                class="rounded-full bg-amber-500/10 px-3 py-1 text-xs font-semibold text-amber-600 dark:bg-amber-500/20 dark:text-amber-200">{{ ucfirst(str_replace('_', ' ', $job->work_type ?? 'flexible')) }}</span>
                         </div>
 
                         <p class="text-sm text-slate-600 dark:text-slate-300">
-                            {{ \Illuminate\Support\Str::limit($job->description, 150, '…') }}
-                        </p>
+                            {{ \Illuminate\Support\Str::limit($job->description, 150, '…') }}</p>
 
                         <div class="flex flex-wrap gap-3 text-xs text-slate-500 dark:text-slate-300">
-                            <span class="inline-flex items-center gap-2 rounded-full bg-slate-900/5 px-3 py-1 dark:bg-white/10">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
+                            <span
+                                class="inline-flex items-center gap-2 rounded-full bg-slate-900/5 px-3 py-1 dark:bg-white/10">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                 </svg>
@@ -201,8 +208,8 @@
                             @if ($job->deadline)
                                 <span
                                     class="inline-flex items-center gap-2 rounded-full bg-slate-900/5 px-3 py-1 dark:bg-white/10">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-                                        stroke="currentColor">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                                     </svg>
@@ -211,27 +218,49 @@
                             @endif
                             @if ($job->category)
                                 <span
-                                    class="inline-flex items-center gap-2 rounded-full bg-amber-500/10 px-3 py-1 text-amber-600 dark:bg-amber-500/20 dark:text-amber-100">
-                                    {{ $job->category->name }}
-                                </span>
+                                    class="inline-flex items-center gap-2 rounded-full bg-amber-500/10 px-3 py-1 text-amber-600 dark:bg-amber-500/20 dark:text-amber-100">{{ $job->category->name }}</span>
                             @endif
                         </div>
 
-                        <div class="flex flex-wrap items-center gap-3">
+                        <!-- Buttons row fixed -->
+                        <div class="flex flex-wrap items-center gap-3 mt-2">
                             @if ($job->salary_min && $job->salary_max)
-                                <span class="text-sm font-semibold text-amber-600 dark:text-amber-200">
-                                    ${{ number_format($job->salary_min, 0) }} – ${{ number_format($job->salary_max, 0) }}
-                                </span>
+                                <span
+                                    class="text-sm font-semibold text-amber-600 dark:text-amber-200">${{ number_format($job->salary_min, 0) }}
+                                    – ${{ number_format($job->salary_max, 0) }}</span>
                             @endif
+
                             <a href="{{ route('jobs', ['keyword' => $job->title]) }}"
-                                class="ml-auto inline-flex items-center gap-2 rounded-full bg-slate-900/5 px-4 py-2 text-sm font-semibold text-slate-900 transition hover:bg-amber-500/20 hover:text-amber-600 dark:bg-white/10 dark:text-white dark:hover:bg-amber-500/20">
+                                class="inline-flex items-center gap-2 rounded-full bg-slate-900/5 px-4 py-2 text-sm font-semibold text-slate-900 transition hover:bg-amber-500/20 hover:text-amber-600 dark:bg-white/10 dark:text-white dark:hover:bg-amber-500/20">
                                 View similar
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M13 7l5 5m0 0l-5 5m5-5H6" />
                                 </svg>
                             </a>
+
+                            <a href="{{ route('job.details', ['id' => $job->id]) }}"
+                                class="inline-flex items-center gap-2 text-sm font-semibold text-amber-600 dark:text-amber-200">
+                                View details
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                    class="h-4 w-4 transition group-hover:translate-x-1" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                                </svg>
+                            </a>
+
+                            <form action="{{ route('apply.job', $job->id) }}" method="POST" class="inline">
+                                @csrf
+                                <button type="submit"
+                                    class="inline-flex items-center justify-center rounded-2xl bg-amber-500 px-4 py-2 text-sm font-semibold text-slate-950
+        transition hover:bg-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-300
+        focus:ring-offset-2 focus:ring-offset-slate-100 dark:focus:ring-offset-slate-900">
+                                    Apply
+                                </button>
+                            </form>
+
                         </div>
                     </article>
                 @empty
