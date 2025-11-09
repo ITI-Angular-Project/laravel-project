@@ -82,7 +82,7 @@
                                     {{ __('Dashboard') }}
                                 </x-dropdown-link>
                             @endcan
-                            <x-dropdown-link :href="route('dashboard.profile.edit')">
+                            <x-dropdown-link :href="route('profile.edit')">
                                 {{ __('Profile') }}
                             </x-dropdown-link>
 
@@ -170,7 +170,7 @@
                     {{ __('Register') }}
                 </a>
             @else
-                <x-dropdown-link :href="route('dashboard.profile.edit')"
+                <x-dropdown-link :href="route('profile.edit')"
                     class="block w-full px-3 py-2 rounded-lg text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-200">
                     {{ __('Profile') }}
                 </x-dropdown-link>
