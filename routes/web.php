@@ -83,4 +83,16 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+use Illuminate\Support\Facades\Auth;
+
+Route::get('/notifications/mark-all-read', function () {
+    if (Auth::check()) {
+        Auth::user()->unreadNotifications->markAsRead();
+    }
+    return response()->json(['status' => 'ok']);
+})->name('notifications.markAllRead')->middleware('auth');
+
+
+
+
 require __DIR__ . '/auth.php';
