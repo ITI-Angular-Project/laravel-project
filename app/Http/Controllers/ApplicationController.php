@@ -50,7 +50,7 @@ class ApplicationController extends Controller
      */
     public function apply(Job $job)
     {
-        $user = auth()->user();
+        $user = User::findOrFail(Auth::id());
 
         if (!$user) {
             return redirect()->route('login')->with('error', 'Please login first to apply!');
@@ -87,7 +87,7 @@ class ApplicationController extends Controller
      */
     public function submitProfile(Request $request, Job $job)
     {
-        $user = auth()->user();
+        $user = User::findOrFail(Auth::id());
 
         $request->validate([
             'phone' => 'required|string|max:20',
