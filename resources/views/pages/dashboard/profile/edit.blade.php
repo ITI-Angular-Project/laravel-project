@@ -21,7 +21,7 @@
                     Profile Info
                 </div>
                 <div class="max-w-2xl mx-auto">
-                    @include('profile.partials.update-profile-information-form')
+                    @include('pages.dashboard.profile.partials.update-profile-information-form')
                 </div>
             </div>
 
@@ -33,7 +33,7 @@
                     Password
                 </div>
                 <div class="max-w-2xl mx-auto">
-                    @include('profile.partials.update-password-form')
+                    @include('pages.dashboard.profile.partials.update-password-form')
                 </div>
             </div>
 
@@ -45,7 +45,7 @@
                     Danger Zone
                 </div>
                 <div class="max-w-2xl mx-auto">
-                    @include('profile.partials.delete-user-form')
+                    @include('pages.dashboard.profile.partials.delete-user-form')
                 </div>
             </div>
 

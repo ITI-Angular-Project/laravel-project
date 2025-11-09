@@ -17,7 +17,7 @@
     </div>
 
     <x-modal name="confirm-user-deletion" :show="$errors->userDeletion->isNotEmpty()" focusable>
-        <form method="post" action="{{ route('profile.destroy') }}"
+        <form method="post" action="{{ route('dashboard.profile.destroy') }}"
             class="p-6 space-y-6 bg-white dark:bg-gray-800 rounded-2xl shadow-xl">
             @csrf
             @method('delete')

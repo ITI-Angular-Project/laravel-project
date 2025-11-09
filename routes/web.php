@@ -44,7 +44,9 @@ Route::prefix('/dashboard')->controller(DashboardController::class)
         Route::get('', 'index')->name('home');
         Route::get('/jobs', [JobController::class, 'dashboardIndex'])->name('jobs');
         Route::get('/applications', 'applications')->name('applications');
-        Route::get('/profile', 'profile')->name('profile');
+        Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+        Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     });
 
 
@@ -76,11 +78,13 @@ Route::middleware(['auth', 'verified'])->name('dashboard.')->prefix('dashboard')
 });
 
 
-// ✅ User Profile Routes
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
+// // ✅ User Profile Routes
+// Route::middleware('auth')->group(function () {
+//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+// });
+
+
 
 require __DIR__ . '/auth.php';

@@ -26,7 +26,7 @@ class ProfileUpdateRequest extends FormRequest
                 Rule::unique(User::class)->ignore($this->user()->id),
             ],
 
-            'phone' => ['nullable', 'digits_between:8,15'],
+            'phone' => ['nullable', 'string'],
             'linkedin_url' => ['nullable', 'url', 'max:255'],
 
         ];

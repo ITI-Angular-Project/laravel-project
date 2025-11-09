@@ -13,7 +13,7 @@
         @csrf
     </form>
 
-    <form method="post" action="{{ route('profile.update') }}"
+    <form method="post" action="{{ route('dashboard.profile.update') }}"
         class="bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 p-8 rounded-2xl shadow-lg space-y-6 border border-gray-100 dark:border-gray-700">
         @csrf
         @method('patch')
@@ -70,7 +70,7 @@
             </label>
             <input id="phone" name="phone" type="text"
                 class="w-full rounded-xl border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 transition-all duration-200"
-                value="{{ old('phone', $user->phone) }}" required autocomplete="tel">
+                value="{{ old('phone', $user->phone) }}" autocomplete="tel">
             @error('phone')
                 <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
             @enderror
@@ -83,7 +83,7 @@
             </label>
             <input id="linkedin_url" name="linkedin_url" type="text"
                 class="w-full rounded-xl border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 transition-all duration-200"
-                value="{{ old('linkedin_url', $user->linkedin_url) }}" required autocomplete="linkedin">
+                value="{{ old('linkedin_url', $user->linkedin_url) }}" autocomplete="linkedin">
             @error('linkedin_url')
                 <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
             @enderror

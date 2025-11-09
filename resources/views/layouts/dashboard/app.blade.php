@@ -1,15 +1,15 @@
 @php
-$flashToasts = array_values(
-    array_filter(
-        [
-            ['type' => 'success', 'message' => session('success')],
-            ['type' => 'error', 'message' => session('error')],
-            ['type' => 'warning', 'message' => session('warning')],
-            ['type' => 'info', 'message' => session('status')],
-        ],
-        fn($toast) => filled($toast['message']),
-    ),
-);
+    $flashToasts = array_values(
+        array_filter(
+            [
+                ['type' => 'success', 'message' => session('success')],
+                ['type' => 'error', 'message' => session('error')],
+                ['type' => 'warning', 'message' => session('warning')],
+                ['type' => 'info', 'message' => session('status')],
+            ],
+            fn($toast) => filled($toast['message']),
+        ),
+    );
 @endphp
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" x-data="dashboard()" x-init="init()"
@@ -161,7 +161,7 @@ $flashToasts = array_values(
                 </a>
 
                 <!-- Profile -->
-                <a href="{{ route('dashboard.profile') }}"
+                <a href="{{ route('dashboard.profile.edit') }}"
                     class="group relative flex items-center gap-3 mx-2 px-3 py-2.5 rounded-xl transition-all duration-200 {{ $active('dashboard.profile') }} hover:scale-[1.02]"
                     :class="sidebarOpen ? 'justify-start' : 'justify-center'" :title="!sidebarOpen ? 'Profile' : ''"
                     @if (request()->routeIs('dashboard.profile')) aria-current="page" @endif>
@@ -180,8 +180,7 @@ $flashToasts = array_values(
                     <!-- Company -->
                     <a href="{{ route('dashboard.company.edit') }}"
                         class="group relative flex items-center gap-3 mx-2 px-3 py-2.5 rounded-xl transition-all duration-200 {{ $active('dashboard.company.*') }} hover:scale-[1.02]"
-                        :class="sidebarOpen ? 'justify-start' : 'justify-center'"
-                        :title="!sidebarOpen ? 'Company' : ''"
+                        :class="sidebarOpen ? 'justify-start' : 'justify-center'" :title="!sidebarOpen ? 'Company' : ''"
                         @if (request()->routeIs('dashboard.company.*')) aria-current="page" @endif>
                         <svg class="h-5 w-5 opacity-80 group-hover:opacity-100 transition-all duration-200 group-hover:scale-110"
                             viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
@@ -275,7 +274,7 @@ $flashToasts = array_values(
                         <span>Applications</span>
                     </a>
 
-                    <a href="{{ route('dashboard.profile') }}"
+                    <a href="{{ route('dashboard.profile.edit') }}"
                         class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 {{ request()->routeIs('dashboard.profile') ? 'bg-gray-100 dark:bg-gray-800' : '' }}">
                         <svg class="h-5 w-5 opacity-80" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             aria-hidden="true">
@@ -343,9 +342,7 @@ $flashToasts = array_values(
                         </button>
 
                         <!-- Notifications (kept minimal) -->
-                        <div class="relative"
-                            x-data="notificationDropdown({{ auth()->user()?->unreadNotifications()->count() ? 'true' : 'false' }})"
-                            @keydown.escape="open=false">
+                        <div class="relative" x-data="notificationDropdown({{ auth()->user()?->unreadNotifications()->count() ? 'true' : 'false' }})" @keydown.escape="open=false">
                             <button @click="toggle()"
                                 class="p-2 rounded-lg hover:bg-amber-50 dark:hover:bg-gray-800 relative transition-all duration-200 hover:scale-110"
                                 aria-haspopup="true" :aria-expanded="open.toString()"
@@ -429,7 +426,7 @@ $flashToasts = array_values(
                                 class="absolute right-0 mt-2 w-52 bg-white dark:bg-gray-900 border border-amber-100 dark:border-gray-800 rounded-xl shadow-xl overflow-hidden backdrop-blur-xl">
                                 <a href="{{ route('home') }}"
                                     class="block px-4 py-2 text-sm hover:bg-amber-50 dark:hover:bg-gray-800 transition-all duration-200">Home</a>
-                                <a href="{{ route('dashboard.profile') }}"
+                                <a href="{{ route('dashboard.profile.edit') }}"
                                     class="block px-4 py-2 text-sm hover:bg-amber-50 dark:hover:bg-gray-800 transition-all duration-200">Profile</a>
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
