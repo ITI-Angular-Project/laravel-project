@@ -49,6 +49,7 @@
                             d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z" />
                     </svg>
                 </button>
+                <x-notification/>
 
                 @guest
                     <a href="{{ route('login') }}"
