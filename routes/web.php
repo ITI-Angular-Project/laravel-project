@@ -10,6 +10,7 @@ use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ContactController;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 
@@ -85,6 +86,16 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+
+Route::get('/notifications/mark-all-read', function () {
+    if (Auth::check()) {
+        Auth::user()->unreadNotifications->markAsRead();
+    }
+    return response()->json(['status' => 'ok']);
+})->name('notifications.markAllRead')->middleware('auth');
+
+
+ 
 
 
 require __DIR__ . '/auth.php';

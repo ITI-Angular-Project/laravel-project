@@ -7,6 +7,7 @@ use App\Models\Job;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Notifications\ApplicationStatusUpdated;
 
 class ApplicationController extends Controller
 {
@@ -49,7 +50,7 @@ class ApplicationController extends Controller
      */
     public function apply(Job $job)
     {
-        $user = auth()->user();
+        $user = User::findOrFail(Auth::id());
 
         if (!$user) {
             return redirect()->route('login')->with('error', 'Please login first to apply!');
@@ -86,7 +87,7 @@ class ApplicationController extends Controller
      */
     public function submitProfile(Request $request, Job $job)
     {
-        $user = auth()->user();
+        $user = User::findOrFail(Auth::id());
 
         $request->validate([
             'phone' => 'required|string|max:20',
@@ -163,6 +164,12 @@ class ApplicationController extends Controller
         };
 
         $application->update(['status' => $status]);
+
+        // Send notification to the candidate
+        $candidate = $application->candidate ?? $application->user ?? null;
+        if ($candidate) {
+        $candidate->notify(new ApplicationStatusUpdated($application));
+        }
 
         return back()->with('success', 'Application status updated to ' . $status . '.');
     }
