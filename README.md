@@ -1,59 +1,125 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Hireon – Job Listing Management Platform
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Hireon is a Laravel 12 + Tailwind + Vite application that connects candidates, employers, and admins through a role-aware job marketplace. Public visitors can explore curated jobs, candidates can apply with guided profile completion, and employers/admins run analytics-rich dashboards to manage postings, applicants, companies, and notifications.
 
-## About Laravel
+## Project Links
+- Agile board (Jira): https://ahmedalla56756.atlassian.net/jira/software/projects/HIR/boards/100
+- Database ERD: https://dbdiagram.io/d/Job-Listing-Management-66785b045a764b3c7231a5a0
+- Live demo: _to be added soon_
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Tech Stack
+- PHP 8.2, Laravel 12, Laravel Breeze auth scaffolding
+- MySQL (default), SQLite support for local prototyping
+- Queue + notification channels backed by the database driver
+- Tailwind CSS 3, Alpine.js stores (dark mode, UI state), Vite 7
+- PHPUnit / Pest for automated tests, Laravel Pint for linting
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Feature Highlights
+- **Marketing site**: Hero slider, featured/latest jobs, category stats, and company/candidate metrics powered by `HomeController`.
+- **Job marketplace**: Advanced filtering (category, keyword, location, work type, salary buckets, date posted) with job detail pages that track authenticated candidate views.
+- **Candidate applications**: Guided profile completion (phone, resume upload), duplicate application prevention, and seamless submission.
+- **Employer/Admin dashboard**: Role-scoped analytics, CRUD flows for jobs/companies, applicant pipelines, job approval/rejection, and toast-driven feedback.
+- **Notifications**: Queued mail + database notifications for employers (job approvals) and candidates (application decisions), plus in-app notification center with mark-as-read endpoints.
+- **Contact & theme**: SMTP-backed contact form and Alpine-powered dark/light theme toggle stored per user.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Project Structure
+```text
+project-root/
+├── app/
+│   ├── Http/Controllers       # Public, dashboard, auth, notification, contact flows
+│   ├── Http/Middleware        # RoleMiddleware + auth gates
+│   ├── Models                 # Job, Company, Application, JobView, etc.
+│   ├── Notifications          # Queue-aware notification classes
+│   ├── Policies               # JobPolicy rules for employers/demo accounts
+│   └── Providers              # AppServiceProvider registering gates + view composers
+├── config/                    # queue.php defaults to the database driver
+├── database/
+│   ├── factories/             # Rich model factories for seeding
+│   ├── migrations/            # Jobs, apps, comments, queue tables, etc.
+│   └── seeders/               # DatabaseSeeder creates full demo data
+├── public/                    # Entry point + built assets
+├── resources/
+│   ├── css/                   # Tailwind + animation utilities
+│   ├── js/                    # Alpine store & bootstrap.js
+│   └── views/                 # Layouts, components, dashboard & landing pages
+├── routes/                    # web.php + auth.php (Breeze)
+├── storage/                   # Public disk for resumes/logos (symlinked)
+├── tests/                     # Feature + unit tests (Pest/PHPUnit)
+├── composer.json              # PHP deps + helper Composer scripts
+└── package.json               # Vite/Tailwind/Alpine configuration
+```
 
-## Learning Laravel
+## Getting Started
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+### 1. Prerequisites
+- PHP 8.2+, Composer 2.6+
+- Node 18+/20+ with npm
+- MySQL 8 (or MariaDB/SQLite for local dev)
+- Optional Redis; queues default to MySQL tables
+- Mail credentials for SMTP notifications
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 2. Installation
+1. Clone the repository and `cd` into it.
+2. Copy env file: `cp .env.example .env`.
+3. Install backend deps: `composer install`.
+4. Install frontend tooling: `npm install`.
+5. Generate the key: `php artisan key:generate`.
+6. Update `.env` with database, queue, cache/session, and mail credentials. Set `QUEUE_CONNECTION=database` (default) and, if needed, `DB_QUEUE_CONNECTION=mysql`.
+7. Link storage for public assets: `php artisan storage:link`.
+8. Run migrations + seeders:
+   ```bash
+   php artisan migrate
+   php artisan db:seed
+   ```
+   For a clean slate use `php artisan migrate:fresh --seed`.
 
-## Laravel Sponsors
+### 3. Running the App
+- Serve API + frontend separately:
+  ```bash
+  php artisan serve
+  npm run dev
+  ```
+- Or use the Composer helper that also spawns the queue worker:
+  ```bash
+  composer run dev
+  ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### 4. Background Jobs & Notifications
+Notifications implement `ShouldQueue`, so keep a worker online:
+```bash
+php artisan queue:work database --queue=default --tries=3 --timeout=90
+```
+For local debugging you can run `php artisan queue:listen --tries=1`.
 
-### Premium Partners
+### 5. Assets
+- Dev build: `npm run dev`
+- Production build: `npm run build`
+- Preview production bundle locally: `npm run preview`
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### 6. Seeded Accounts & Demo Data
+`database/seeders/DatabaseSeeder.php` provisions hundreds of users/jobs plus a verified admin you can use right away:
 
-## Contributing
+| Role  | Email                       | Password  |
+|-------|-----------------------------|-----------|
+| Admin | ahmed.alla56756@gmail.com   | password  |
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Factories also generate companies, technologies, comments, saved jobs, applications, and job views so every dashboard widget has meaningful analytics immediately.
 
-## Code of Conduct
+### 7. Testing & QA
+- Run backend tests: `php artisan test` (or `composer test`)
+- Static analysis / formatting: `./vendor/bin/pint`
+- Add UI/feature tests as you extend flows (Pest scaffolding included).
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 8. Deployment Checklist
+- Set `APP_ENV=production`, `APP_DEBUG=false`, `APP_URL` to your domain.
+- Cache config/routes: `php artisan config:cache && php artisan route:cache`.
+- Build assets: `npm run build` (commit or deploy artifact).
+- Run migrations with `php artisan migrate --force`.
+- Start queue workers under Supervisor/systemd using `php artisan queue:work database --queue=default --tries=3 --timeout=90`.
+- Schedule tasks if needed via `php artisan schedule:work` or a cron entry.
+- Ensure `php artisan storage:link` ran on the server and `public/` is the web root.
+- Update the README “Live demo” link once the production URL is ready.
 
-## Security Vulnerabilities
+---
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Need help extending the platform (e.g., multi-tenant companies, interview pipeline, analytics exports)? Open an issue or reach out via the Agile board link above.
