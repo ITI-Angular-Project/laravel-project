@@ -99,6 +99,11 @@ Route::get('/notifications/mark-all-read', function () {
 })->name('notifications.markAllRead')->middleware('auth');
 
 
+Route::middleware(['auth'])->group(function () {
+    Route::post('/jobs/{job}/comment', [CommentController::class, 'store'])->name('jobs.comment.store');
+    Route::get('/jobs/{job}/comments', [JobController::class, 'getComments'])->name('jobs.comments');
+    Route::post('/apply/{job}', [ApplicationController::class, 'apply'])->name('apply');
+});
 
 Route::get('/auth/linkedin/redirect', [SocialiteAuthController::class, 'redirect'])->name('auth.linkedin.redirect');
 

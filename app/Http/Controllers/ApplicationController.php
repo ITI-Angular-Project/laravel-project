@@ -53,22 +53,36 @@ class ApplicationController extends Controller
         $user = User::findOrFail(Auth::id());
 
         if (!$user) {
+            if (request()->expectsJson()) {
+                return response()->json(['success' => false, 'message' => 'Please login first to apply!']);
+            }
             return redirect()->route('login')->with('error', 'Please login first to apply!');
         }
 
-        // Check existing application
+        // ✅ تحقق إذا كان المستخدم قد قدم مسبقاً
         if ($this->alreadyApplied($user->id, $job->id)) {
-            return redirect()->back()->with('info', 'You have already applied for this job.');
+            if (request()->expectsJson()) {
+                return response()->json(['success' => false, 'message' => 'You are already applied, wait for approval.']);
+            }
+            return redirect()->back()
+                ->with('info', 'You are already applied, wait for approval.');
         }
 
-        // Check missing profile fields
+        // ✅ تحقق من اكتمال البيانات
         if (!$user->name || !$user->phone || !$user->resume_path) {
+            if (request()->expectsJson()) {
+                return response()->json(['success' => false, 'message' => 'Please complete your profile before applying.']);
+            }
             return redirect()->route('apply.complete-profile', $job->id)
                 ->with('warning', 'Please complete your profile before applying.');
         }
 
+        // ✅ إنشاء الطلب الجديد
         $this->createApplication($user, $job);
 
+        if (request()->expectsJson()) {
+            return response()->json(['success' => true, 'message' => 'Your application has been submitted successfully!']);
+        }
         return redirect()->back()->with('success', 'Your application has been submitted successfully!');
     }
 
@@ -94,7 +108,7 @@ class ApplicationController extends Controller
             'resume' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
         ]);
 
-        // Update missing fields
+        // ✅ تحديث البيانات
         $user->phone = $request->phone;
         $user->save();
 
@@ -104,11 +118,13 @@ class ApplicationController extends Controller
             $user->save();
         }
 
+        // ✅ تحقق إذا كان مقدم بالفعل
         if ($this->alreadyApplied($user->id, $job->id)) {
             return redirect()->route('job.details', $job->id)
-                ->with('info', 'You have already applied for this job.');
+                ->with('info', 'You are already applied, wait for approval.');
         }
 
+        // ✅ إنشاء التقديم
         $this->createApplication($user, $job);
 
         return redirect()->route('job.details', $job->id)
@@ -138,7 +154,7 @@ class ApplicationController extends Controller
             'applicant_name' => $user->name,
             'applicant_email' => $user->email,
             'applicant_phone' => $user->phone,
-            'resume_path' => $user->resume_path, // ✅ صحح الاسم
+            'resume_path' => $user->resume_path,
             'status' => 'submitted',
         ]);
     }
@@ -168,7 +184,7 @@ class ApplicationController extends Controller
         // Send notification to the candidate
         $candidate = $application->candidate ?? $application->user ?? null;
         if ($candidate) {
-        $candidate->notify(new ApplicationStatusUpdated($application));
+            $candidate->notify(new ApplicationStatusUpdated($application));
         }
 
         return back()->with('success', 'Application status updated to ' . $status . '.');

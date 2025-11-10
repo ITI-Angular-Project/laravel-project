@@ -22,6 +22,7 @@
     </style>
 
     <div class="bg-gradient-to-b from-white via-slate-50 to-white dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
+
         <!-- Hero + Filters -->
         <section class="relative overflow-hidden">
             <div class="absolute inset-0" aria-hidden="true">
@@ -49,6 +50,7 @@
                     class="hero-floating rounded-3xl border border-white/60 bg-white/85 p-6 shadow-2xl backdrop-blur dark:border-white/10 dark:bg-white/5">
                     <form action="{{ route('jobs') }}" method="GET" class="space-y-5">
                         <div class="grid gap-3 md:grid-cols-[1.4fr_1.2fr_1.2fr_auto]">
+
                             <!-- Role or keyword -->
                             <label class="flex flex-col gap-2 text-sm text-slate-600 dark:text-slate-200">
                                 <span class="font-semibold text-slate-900 dark:text-white">Role or keyword</span>
@@ -102,12 +104,11 @@
                             <label class="flex flex-col gap-2 text-sm text-slate-600 dark:text-slate-200">
                                 <span class="font-semibold text-slate-900 dark:text-white">Category</span>
                                 <select name="category_id"
-                                    class="w-full rounded-2xl border border-white/60 bg-white/80 px-4 py-3 text-slate-900 focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-400/30 dark:border-white/20 dark:bg-white/10 dark:text-white">
+                                    class="w-full rounded-2xl border border-white/60 bg-white/80 text-slate-900 dark:bg-slate-800 dark:text-white px-4 py-3 focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-400/30">
                                     <option value="">All categories</option>
                                     @foreach ($categories as $category)
                                         <option value="{{ $category->id }}" @selected(request('category_id') == $category->id)>
-                                            {{ $category->name }}
-                                        </option>
+                                            {{ $category->name }}</option>
                                     @endforeach
                                 </select>
                             </label>
@@ -120,11 +121,12 @@
 
                         <!-- Filters row 2 -->
                         <div class="grid gap-3 md:grid-cols-3">
+                            <!-- Date posted -->
                             <label
                                 class="flex flex-col gap-1 text-xs font-semibold uppercase tracking-widest text-slate-500 dark:text-slate-400">
                                 Date posted
                                 <select name="date_posted"
-                                    class="rounded-2xl border border-white/60 bg-white/75 px-4 py-2.5 text-sm text-slate-900 focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-400/30 dark:border-white/20 dark:bg-white/10 dark:text-white">
+                                    class="rounded-2xl border border-white/60 bg-white/75 text-slate-900 dark:bg-slate-800 dark:text-white px-4 py-2.5 focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-400/30">
                                     <option value="">Anytime</option>
                                     <option value="24h" @selected(request('date_posted') === '24h')>Last 24 hours</option>
                                     <option value="7d" @selected(request('date_posted') === '7d')>Last 7 days</option>
@@ -132,25 +134,26 @@
                                 </select>
                             </label>
 
+                            <!-- Salary range -->
                             <label
                                 class="flex flex-col gap-1 text-xs font-semibold uppercase tracking-widest text-slate-500 dark:text-slate-400">
                                 Salary range
                                 <select name="salary_range"
-                                    class="rounded-2xl border border-white/60 bg-white/75 px-4 py-2.5 text-sm text-slate-900 focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-400/30 dark:border-white/20 dark:bg-white/10 dark:text-white">
+                                    class="rounded-2xl border border-white/60 bg-white/75 text-slate-900 dark:bg-slate-800 dark:text-white px-4 py-2.5 focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-400/30">
                                     <option value="">All tiers</option>
                                     @foreach ($salaryRanges as $range)
-                                        <option value="{{ $range }}" @selected(request('salary_range') === $range)>
-                                            {{ $range }}
+                                        <option value="{{ $range }}" @selected(request('salary_range') === $range)>{{ $range }}
                                         </option>
                                     @endforeach
                                 </select>
                             </label>
 
+                            <!-- Work style -->
                             <label
                                 class="flex flex-col gap-1 text-xs font-semibold uppercase tracking-widest text-slate-500 dark:text-slate-400">
                                 Work style
                                 <select name="work_type"
-                                    class="rounded-2xl border border-white/60 bg-white/75 px-4 py-2.5 text-sm text-slate-900 focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-400/30 dark:border-white/20 dark:bg-white/10 dark:text-white">
+                                    class="rounded-2xl border border-white/60 bg-white/75 text-slate-900 dark:bg-slate-800 dark:text-white px-4 py-2.5 focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-400/30">
                                     <option value="">Any</option>
                                     <option value="remote" @selected(request('work_type') === 'remote')>Remote</option>
                                     <option value="on_site" @selected(request('work_type') === 'on_site')>On-site</option>
@@ -183,7 +186,8 @@
                             <div>
                                 <h3
                                     class="text-xl font-semibold text-slate-900 transition group-hover:text-amber-500 dark:text-white">
-                                    {{ $job->title }}</h3>
+                                    <a href="{{ route('job.details', ['id' => $job->id]) }}">{{ $job->title }}</a>
+                                </h3>
                                 <p class="text-sm text-slate-500 dark:text-slate-300">
                                     {{ optional($job->company)->name ?? 'Unknown company' }} ·
                                     {{ optional($job->company)->location ?? 'Remote friendly' }}</p>
@@ -222,7 +226,7 @@
                             @endif
                         </div>
 
-                        <!-- Buttons row fixed -->
+                        <!-- Buttons row -->
                         <div class="flex flex-wrap items-center gap-3 mt-2">
                             @if ($job->salary_min && $job->salary_max)
                                 <span
@@ -240,28 +244,13 @@
                                 </svg>
                             </a>
 
-                            <a href="{{ route('job.details', ['id' => $job->id]) }}"
-                                class="inline-flex items-center gap-2 text-sm font-semibold text-amber-600 dark:text-amber-200">
-                                View details
-                                <svg xmlns="http://www.w3.org/2000/svg"
-                                    class="h-4 w-4 transition group-hover:translate-x-1" fill="none"
-                                    viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                                </svg>
-                            </a>
-
-                            <form action="{{ route('apply.job', $job->id) }}" method="POST" class="inline">
-                                @csrf
-                                <button type="submit"
-                                    class="inline-flex items-center justify-center rounded-2xl bg-amber-500 px-4 py-2 text-sm font-semibold text-slate-950
-        transition hover:bg-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-300
-        focus:ring-offset-2 focus:ring-offset-slate-100 dark:focus:ring-offset-slate-900">
-                                    Apply
-                                </button>
-                            </form>
-
+                            <button type="button"
+                                class="apply-btn inline-flex items-center justify-center rounded-2xl bg-amber-500 px-4 py-2 text-sm font-semibold text-slate-950 transition hover:bg-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-300 focus:ring-offset-2 focus:ring-offset-slate-100 dark:focus:ring-offset-slate-900"
+                                data-job-id="{{ $job->id }}">
+                                Apply
+                            </button>
                         </div>
+
                     </article>
                 @empty
                     <div
@@ -283,4 +272,89 @@
             </div>
         </section>
     </div>
+
+    <script>
+        function homeHero(slides) {
+            return {
+                slides: Array.isArray(slides) && slides.length ? slides : [{
+                    title: 'Discover your next role',
+                    subtitle: 'Explore curated opportunities from leading teams.',
+                    image: "{{ asset('about_us/1.jpg') }}"
+                }],
+                active: 0,
+                timer: null,
+                start() {
+                    this.tick();
+                    this.timer = setInterval(() => this.next(), 6000);
+                },
+                next() {
+                    this.active = (this.active + 1) % this.slides.length;
+                },
+                tick() {
+                    this.active = 0;
+                }
+            }
+        }
+
+        // دالة عرض التوست
+        function showToast(type, message) {
+            const toast = document.createElement('div');
+            toast.textContent = message;
+            toast.className = `fixed bottom-5 right-5 z-50 px-5 py-3 rounded-lg text-white ${
+            type === 'success' ? 'bg-green-500' : 'bg-red-500'
+        } shadow-lg animate-fade-in-up`;
+            document.body.appendChild(toast);
+            setTimeout(() => {
+                toast.classList.add('opacity-0');
+                setTimeout(() => toast.remove(), 500);
+            }, 3000);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Intersection Observer للتأثيرات عند الظهور
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('in-view');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.2,
+                rootMargin: '0px 0px -5% 0px'
+            });
+
+            document.querySelectorAll('.animate-fade-in-up').forEach(el => observer.observe(el));
+
+            // التعامل مع أزرار Apply
+            document.querySelectorAll('.apply-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const jobId = this.getAttribute('data-job-id');
+                    const csrfToken = document.querySelector('meta[name="csrf-token"]')
+                        .getAttribute('content');
+
+                    fetch(`/apply/${jobId}`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': csrfToken,
+                                'Accept': 'application/json'
+                            },
+                            body: JSON.stringify({})
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                showToast('success', data.message || 'Application submitted!');
+                            } else {
+                                showToast('error', data.message || 'Failed to apply.');
+                            }
+                        })
+                        .catch(error => {
+                            showToast('error', 'An error occurred. Please try again.');
+                        });
+                });
+            });
+        });
+    </script>
 @endsection

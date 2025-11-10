@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Comment extends Model
 {
-    /** @use HasFactory<\Database\Factories\CommentFactory> */
     use HasFactory;
 
     protected $fillable = [
@@ -28,6 +27,4 @@ class Comment extends Model
     {
         return $this->morphTo();
     }
-
-    
 }

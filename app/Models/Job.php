@@ -56,7 +56,6 @@ class Job extends Model
     {
         return $this->morphMany(Comment::class, 'commentable');
     }
-
     public function views(): HasMany
     {
         return $this->hasMany(JobView::class);
