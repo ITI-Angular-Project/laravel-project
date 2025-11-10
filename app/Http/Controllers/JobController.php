@@ -177,7 +177,7 @@ class JobController extends Controller
      */
     public function show($id)
     {
-        $job = Job::with(['company', 'category'])->findOrFail($id);
+        $job = Job::with(['company', 'category', 'applications'])->findOrFail($id);
         return view('pages.dashboard.jobs.show-job', compact('job'));
     }
 
