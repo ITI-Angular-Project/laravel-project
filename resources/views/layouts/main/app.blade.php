@@ -9,6 +9,23 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
+    {{-- seo --}}
+    <meta name="description" content="@yield('meta_description', 'Welcome to ' . config('app.name'))">
+    <link rel="canonical" href="{{ url()->current() }}">
+    <meta property="og:title" content="@yield('og_title', trim($__env->yieldContent('title')) ?: config('app.name'))">
+    <meta property="og:description" content="@yield('og_description', trim($__env->yieldContent('meta_description')) ?: ('Welcome to ' . config('app.name')))">
+    <meta property="og:image" content="@yield('og_image', asset('images/app-logo.png'))">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:type" content="@yield('og_type', 'website')">
+    <meta property="og:site_name" content="{{ config('app.name') }}">
+    <meta property="og:locale" content="{{ str_replace('_', '-', app()->getLocale()) }}">
+    <meta property="og:image:width" content="@yield('og_image_width', '1200')">
+    <meta property="og:image:height" content="@yield('og_image_height', '630')">
+    <meta name="twitter:card" content="@yield('twitter_card', 'summary_large_image')">
+    <meta name="twitter:title" content="@yield('twitter_title', trim($__env->yieldContent('og_title')) ?: (trim($__env->yieldContent('title')) ?: config('app.name')))">
+    <meta name="twitter:description" content="@yield('twitter_description', trim($__env->yieldContent('og_description')) ?: (trim($__env->yieldContent('meta_description')) ?: ('Welcome to ' . config('app.name'))))">
+    <meta name="twitter:image" content="@yield('twitter_image', trim($__env->yieldContent('og_image')) ?: asset('images/social/default-og.jpg'))">
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
