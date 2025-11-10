@@ -1,0 +1,35 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\User;
+use Carbon\Carbon;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Laravel\Socialite\Facades\Socialite;
+
+class SocialiteAuthController extends Controller
+{
+    public function redirect(): RedirectResponse
+    {
+        return Socialite::driver('linkedin-openid')->redirect();
+    }
+
+    public function callback(): RedirectResponse
+    {
+        $linkedinUser = Socialite::driver('linkedin-openid')->user();
+
+        $user = User::updateOrCreate([
+            'email' => $linkedinUser->getEmail(),
+        ], [
+            'name' => $linkedinUser->getName(),
+            'linkedin_id' => $linkedinUser->getId(),
+            'avatar' => $linkedinUser->getAvatar(),
+        ]);
+
+        Auth::login($user);
+
+        return redirect(route('home'));
+    }
+}
