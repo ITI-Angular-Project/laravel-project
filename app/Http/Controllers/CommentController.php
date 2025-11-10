@@ -49,4 +49,44 @@ class CommentController extends Controller
             ->route('job.details', $job->id)
             ->with('success', 'Comment added successfully!');
     }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(Comment $comment)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(Comment $comment)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(UpdateCommentRequest $request, Comment $comment)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Comment $comment)
+    {
+        // let employer delete comments
+        $user = auth()->user();
+
+        if (!$user || !$user->hasRole('employer')) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        $comment->delete();
+        return redirect()->back()->with('success', 'Comment deleted successfully!');
+    }
 }

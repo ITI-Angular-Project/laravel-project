@@ -10,6 +10,7 @@ use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\SocialiteAuthController;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -75,6 +76,11 @@ Route::middleware(['auth', 'verified'])->name('dashboard.')->prefix('dashboard')
 
     // ✅ Employers manage applications
     Route::resource('applications', ApplicationController::class)->only(['index', 'show', 'update', 'destroy']);
+
+    // Delete comment route (to fix your error)
+    Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])
+        ->name('comments.destroy')
+        ->middleware('auth');
 });
 
 
@@ -98,5 +104,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/jobs/{job}/comments', [JobController::class, 'getComments'])->name('jobs.comments');
     Route::post('/apply/{job}', [ApplicationController::class, 'apply'])->name('apply');
 });
+
+Route::get('/auth/linkedin/redirect', [SocialiteAuthController::class, 'redirect'])->name('auth.linkedin.redirect');
+
+Route::get('/auth/linkedin/callback', [SocialiteAuthController::class, 'callback']);
+
 
 require __DIR__ . '/auth.php';

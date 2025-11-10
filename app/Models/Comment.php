@@ -4,26 +4,25 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Comment extends Model
 {
     use HasFactory;
 
-    // حدد الحقول اللي هتتخزن
     protected $fillable = [
         'user_id',
-        'commentable_id',
         'commentable_type',
-        'body', // اسم العمود في قاعدة البيانات
+        'commentable_id',
+        'body',
     ];
 
-    // علاقة باليوزر
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    // علاقة polymorphic للجوب أو أي شيء قابل للتعليق
     public function commentable()
     {
         return $this->morphTo();
