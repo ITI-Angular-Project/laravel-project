@@ -1,4 +1,4 @@
-<div x-cloak x-show="toasts.length"
+<div x-data="window.toastManager" x-cloak x-show="toasts.length"
     class="pointer-events-none fixed top-4 right-4 z-[120] flex w-full max-w-sm flex-col gap-3" aria-live="assertive"
     aria-atomic="true">
     <template x-for="toast in toasts" :key="toast.id">

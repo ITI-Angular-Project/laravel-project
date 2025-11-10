@@ -288,7 +288,7 @@ class JobController extends Controller
     public function details($id)
     {
         $user = User::find(Auth::id());
-        if($user && $user->hasRole(User::ROLE_CANDIDATE)) {
+        if ($user && $user->hasRole(User::ROLE_CANDIDATE)) {
             JobView::create([
                 'job_id' => $id,
                 'user_id' => $user->id,
@@ -296,9 +296,35 @@ class JobController extends Controller
                 'user_agent' => request()->header('User-Agent')
             ]);
         }
-        $job = Job::with(['company', 'category'])->findOrFail($id);
+        $job = Job::with(['company', 'category', 'comments.user'])->findOrFail($id);
 
         return view('pages.main.job-details', compact('job'));
     }
+
+    public function getComments(Job $job, Request $request)
+    {
+        $offset = $request->get('offset', 0);
+        $limit = 5;
+
+        // ترتيب تنازلي حسب created_at
+        $commentsQuery = $job->comments()->with('user')->orderBy('created_at', 'desc');
+
+        $comments = $commentsQuery->skip($offset)->take($limit)->get()->map(function ($comment) {
+            return [
+                'user_name' => $comment->user->name ?? 'Anonymous',
+                'body' => $comment->body,
+                'time_diff' => $comment->created_at->diffForHumans(),
+            ];
+        });
+
+        // تحقق إذا فيه المزيد
+        $has_more = $job->comments()->count() > ($offset + $limit);
+
+        return response()->json([
+            'comments' => $comments,
+            'has_more' => $has_more,
+        ]);
+    }
+
 
 }

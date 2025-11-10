@@ -205,7 +205,9 @@
                                 <div class="flex items-start justify-between gap-4">
                                     <div>
                                         <h3 class="text-xl font-semibold text-slate-900 dark:text-white">
-                                            {{ $job->title }}</h3>
+                                            <a href="{{ route('job.details', ['id' => $job->id]) }}"
+                                                class="hover:text-amber-500 transition">{{ $job->title }}</a>
+                                        </h3>
                                         <p class="text-sm text-slate-500 dark:text-slate-300">
                                             {{ optional($job->company)->name ?? 'Unknown company' }}</p>
                                     </div>
@@ -234,17 +236,6 @@
                                         {{ $job->category->name }}
                                     </span>
                                 @endif
-                                <a href="{{ route('job.details', ['id' => $job->id]) }}"
-                                    class="ml-auto inline-flex items-center gap-2 text-sm font-semibold text-amber-600 dark:text-amber-200">
-                                    View details
-                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                        class="h-4 w-4 transition group-hover:translate-x-1" fill="none"
-                                        viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                                    </svg>
-                                </a>
-
                                 <button type="button"
                                     class="apply-btn inline-flex items-center justify-center rounded-2xl bg-amber-500 px-4 py-2 text-sm font-semibold text-slate-950
                                     transition hover:bg-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-300
@@ -293,7 +284,9 @@
                                     </div>
                                     <div>
                                         <h3 class="text-lg font-semibold text-slate-900 dark:text-white">
-                                            {{ $job->title }}</h3>
+                                            <a href="{{ route('job.details', ['id' => $job->id]) }}"
+                                                class="hover:text-amber-500 transition">{{ $job->title }}</a>
+                                        </h3>
                                         <p class="text-sm text-slate-500 dark:text-slate-300">
                                             {{ optional($job->company)->name ?? 'Unknown company' }} ·
                                             {{ optional($job->company)->location ?? 'Remote friendly' }}</p>
@@ -317,16 +310,6 @@
                                         ${{ number_format($job->salary_max, 0) }}
                                     </span>
                                 @endif
-                                <a href="{{ route('job.details', ['id' => $job->id]) }}"
-                                    class="ml-auto inline-flex items-center gap-2 text-sm font-semibold text-amber-600 dark:text-amber-200">
-                                    View details
-                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                        class="h-4 w-4 transition group-hover:translate-x-1" fill="none"
-                                        viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                                    </svg>
-                                </a>
                                 <button type="button"
                                     class="apply-btn inline-flex items-center justify-center rounded-2xl bg-amber-500 px-4 py-2 text-sm font-semibold text-slate-950
                                     transition hover:bg-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-300
@@ -341,6 +324,8 @@
             </div>
         </section>
     </div>
+
+
 
     <script>
         function homeHero(slides) {
@@ -365,7 +350,27 @@
             }
         }
 
+        // دالة عرض التوست
+        function showToast(type, message) {
+            const toast = document.createElement('div');
+            toast.textContent = message;
+            toast.className = `fixed bottom-5 right-5 z-50 px-5 py-3 rounded-lg text-white shadow-lg transition-opacity duration-500 ${
+        type === 'success' ? 'bg-green-500' : 'bg-red-500'
+    } opacity-0`;
+            document.body.appendChild(toast);
+
+            // Force browser to render before إضافة opacity-100
+            requestAnimationFrame(() => toast.classList.add('opacity-100'));
+
+            setTimeout(() => {
+                toast.classList.remove('opacity-100');
+                setTimeout(() => toast.remove(), 500);
+            }, 3000);
+        }
+
+
         document.addEventListener('DOMContentLoaded', () => {
+            // Intersection Observer للتأثيرات عند الظهور
             const observer = new IntersectionObserver(entries => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -379,6 +384,36 @@
             });
 
             document.querySelectorAll('.animate-fade-in-up').forEach(el => observer.observe(el));
+
+            // التعامل مع أزرار Apply
+            document.querySelectorAll('.apply-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const jobId = this.getAttribute('data-job-id');
+                    const csrfToken = document.querySelector('meta[name="csrf-token"]')
+                        .getAttribute('content');
+
+                    fetch(`/apply/${jobId}`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': csrfToken,
+                                'Accept': 'application/json'
+                            },
+                            body: JSON.stringify({})
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                showToast('success', data.message || 'Application submitted!');
+                            } else {
+                                showToast('error', data.message || 'Failed to apply.');
+                            }
+                        })
+                        .catch(error => {
+                            showToast('error', 'An error occurred. Please try again.');
+                        });
+                });
+            });
         });
     </script>
 @endsection

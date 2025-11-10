@@ -9,6 +9,7 @@ use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\CommentController;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -92,6 +93,10 @@ Route::get('/notifications/mark-all-read', function () {
 })->name('notifications.markAllRead')->middleware('auth');
 
 
-
+Route::middleware(['auth'])->group(function () {
+    Route::post('/jobs/{job}/comment', [CommentController::class, 'store'])->name('jobs.comment.store');
+    Route::get('/jobs/{job}/comments', [JobController::class, 'getComments'])->name('jobs.comments');
+    Route::post('/apply/{job}', [ApplicationController::class, 'apply'])->name('apply');
+});
 
 require __DIR__ . '/auth.php';

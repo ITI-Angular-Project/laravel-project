@@ -3,64 +3,50 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
-use App\Http\Requests\StoreCommentRequest;
-use App\Http\Requests\UpdateCommentRequest;
+use App\Models\Job;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * عرض فورم إضافة كومنت
      */
-    public function index()
+    public function create(Job $job)
     {
-        //
+        return view('pages.main.add-comment', compact('job'));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * حفظ الكومنت الجديد
      */
-    public function create()
+    public function store(Request $request, Job $job)
     {
-        //
-    }
+        $request->validate([
+            'body' => 'required|string|max:1000',
+        ]);
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreCommentRequest $request)
-    {
-        //
-    }
+        $comment = Comment::create([
+            'user_id' => Auth::id(),
+            'commentable_id' => $job->id,
+            'commentable_type' => Job::class,
+            'body' => $request->body,
+        ]);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Comment $comment)
-    {
-        //
-    }
+        if ($request->expectsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Comment added successfully!',
+                'comment' => [
+                    'user_name' => Auth::user()->name,
+                    'body' => $comment->body,
+                    'time_diff' => $comment->created_at->diffForHumans(),
+                ],
+            ]);
+        }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Comment $comment)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateCommentRequest $request, Comment $comment)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Comment $comment)
-    {
-        //
+        return redirect()
+            ->route('job.details', $job->id)
+            ->with('success', 'Comment added successfully!');
     }
 }

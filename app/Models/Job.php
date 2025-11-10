@@ -50,11 +50,10 @@ class Job extends Model
         return $this->hasMany(Application::class);
     }
 
-    public function comments(): HasMany
+    public function comments()
     {
-        return $this->hasMany(Comment::class, 'commentable_id')->where('commentable_type', 'jobs');
+        return $this->morphMany(Comment::class, 'commentable');
     }
-
     public function views(): HasMany
     {
         return $this->hasMany(JobView::class);
