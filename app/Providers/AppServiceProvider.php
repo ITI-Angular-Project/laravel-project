@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Database\Eloquent\Relations\Relation;
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -32,5 +34,11 @@ class AppServiceProvider extends ServiceProvider
         Gate::define('employer-view', fn(User $user) => $user->role === User::ROLE_EMPLOYER);
         Gate::define('candidate-view', fn(User $user) => $user->role === User::ROLE_CANDIDATE);
         Gate::define('demo-view', fn(User $user) => $user->role === User::ROLE_DEMO);
+
+        Relation::morphMap([
+            'jobs' => 'App\Models\Job',
+            'companies' => 'App\Models\Company',
+        ]);
+
     }
 }

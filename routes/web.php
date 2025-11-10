@@ -9,6 +9,7 @@ use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\CommentController;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -74,6 +75,11 @@ Route::middleware(['auth', 'verified'])->name('dashboard.')->prefix('dashboard')
 
     // ✅ Employers manage applications
     Route::resource('applications', ApplicationController::class)->only(['index', 'show', 'update', 'destroy']);
+
+    // Delete comment route (to fix your error)
+    Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])
+        ->name('comments.destroy')
+        ->middleware('auth');
 });
 
 

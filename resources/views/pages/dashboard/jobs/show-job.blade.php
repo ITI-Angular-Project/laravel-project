@@ -134,77 +134,118 @@
     </div>
 </div>
 
-{{-- ========== Applications Section ========== --}}
-@if($job->applications->count() > 0)
-    <div class="mt-6">
-        <div class="bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/40 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 rounded-2xl shadow-xl border border-slate-200/60 dark:border-slate-700/50 overflow-hidden hover:shadow-2xl transition-all duration-300">
-            
-            {{-- Header with gradient background --}}
-            <div class="relative bg-amber-600/10 dark:bg-amber-600/10 p-5 overflow-hidden ring-1 ring-inset ring-amber-600/20">
-                {{-- Decorative blurred corner accents --}}
-                <div class="absolute top-0 left-0 w-32 h-32 rounded-full blur-2xl" style="background-color: oklch(75% 0.183 55.934 / 0.5);"></div>
-                <div class="absolute bottom-0 right-0 w-40 h-40 rounded-full blur-3xl" style="background-color: oklch(75% 0.183 55.934 / 0.35);"></div>
+{{-- ========== Applications & Comments Grid ========== --}}
+<div class="grid md:grid-cols-2 gap-6 mt-6">
+    
+    {{-- ========== Applications Section ========== --}}
+    <div>
+        @if($job->applications->count() > 0)
+            <div class="bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/40 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 rounded-2xl shadow-xl border border-slate-200/60 dark:border-slate-700/50 overflow-hidden hover:shadow-2xl transition-all duration-300">
                 
-                <div class="relative z-10">
-                    <h3 class="text-2xl md:text-3xl font-bold text-amber-700 dark:text-amber-300 tracking-tight drop-shadow-sm">
-                        Applications
-                        <span class="ml-2 text-lg font-semibold text-amber-600 dark:text-amber-400">({{ $job->applications->count() }})</span>
-                    </h3>
+                {{-- Header with gradient background --}}
+                <div class="relative bg-amber-600/10 dark:bg-amber-600/10 p-5 overflow-hidden ring-1 ring-inset ring-amber-600/20">
+                    {{-- Decorative blurred corner accents --}}
+                    <div class="absolute top-0 left-0 w-32 h-32 rounded-full blur-2xl" style="background-color: oklch(75% 0.183 55.934 / 0.5);"></div>
+                    <div class="absolute bottom-0 right-0 w-40 h-40 rounded-full blur-3xl" style="background-color: oklch(75% 0.183 55.934 / 0.35);"></div>
+                    
+                    <div class="relative z-10">
+                        <h3 class="text-2xl md:text-3xl font-bold text-amber-700 dark:text-amber-300 tracking-tight drop-shadow-sm">
+                            Applications
+                            <span class="ml-2 text-lg font-semibold text-amber-600 dark:text-amber-400">({{ $job->applications->count() }})</span>
+                        </h3>
+                    </div>
                 </div>
-            </div>
 
-            {{-- Table Content --}}
-            <div class="p-5">
-                <div class="overflow-x-auto rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
-                    <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 text-sm">
-                        <thead class="bg-gray-50 dark:bg-gray-900/50 text-gray-700 dark:text-gray-300">
-                            <tr>
-                                <th class="px-4 py-3 text-left font-semibold">Name</th>
-                                <th class="px-4 py-3 text-left font-semibold">Email</th>
-                                <th class="px-4 py-3 text-left font-semibold">Status</th>
-                                <th class="px-4 py-3 text-left font-semibold">Applied</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
-                            @foreach($job->applications as $app)
-                                <tr class="hover:bg-amber-50 dark:hover:bg-gray-700/50 transition-colors duration-200">
-                                    <td class="px-4 py-3 font-semibold text-gray-900 dark:text-gray-100">
-                                        <a href="{{ route('dashboard.applications.show', $app->id) }}" class="hover:text-amber-600 dark:hover:text-amber-400 transition-colors">
-                                            {{ $app->applicant_name }}
-                                        </a>
-                                    </td>
-                                    <td class="px-4 py-3 text-gray-600 dark:text-gray-300">{{ $app->applicant_email }}</td>
-                                    <td class="px-4 py-3">
-                                        <span class="px-3 py-1 rounded-full text-xs font-semibold
-                                            @if($app->status === 'accepted')
-                                                bg-green-600/10 text-green-700 dark:text-green-300 ring-1 ring-inset ring-green-600/20
-                                            @elseif($app->status === 'rejected')
-                                                bg-red-600/10 text-red-700 dark:text-red-300 ring-1 ring-inset ring-red-600/20
-                                            @else
-                                                bg-yellow-400 text-gray-900 shadow-yellow-400/30
-                                            @endif">
-                                            {{ ucfirst($app->status) }}
-                                        </span>
-                                    </td>
-                                    <td class="px-4 py-3 text-gray-500 dark:text-gray-400">{{ $app->created_at->diffForHumans() }}</td>
+                {{-- Table Content --}}
+                <div class="p-5">
+                    <div class="overflow-x-auto rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+                        <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 text-sm">
+                            <thead class="bg-gray-50 dark:bg-gray-900/50 text-gray-700 dark:text-gray-300">
+                                <tr>
+                                    <th class="px-4 py-3 text-left font-semibold">Name</th>
+                                    <th class="px-4 py-3 text-left font-semibold">Email</th>
+                                    <th class="px-4 py-3 text-left font-semibold">Status</th>
+                                    <th class="px-4 py-3 text-left font-semibold">Applied</th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+                                @foreach($job->applications as $app)
+                                    <tr class="hover:bg-amber-50 dark:hover:bg-gray-700/50 transition-colors duration-200">
+                                        <td class="px-4 py-3 font-semibold text-gray-900 dark:text-gray-100">
+                                            <a href="{{ route('dashboard.applications.show', $app->id) }}" class="hover:text-amber-600 dark:hover:text-amber-400 transition-colors">
+                                                {{ $app->applicant_name }}
+                                            </a>
+                                        </td>
+                                        <td class="px-4 py-3 text-gray-600 dark:text-gray-300">{{ $app->applicant_email }}</td>
+                                        <td class="px-4 py-3">
+                                            <span class="px-3 py-1 rounded-full text-xs font-semibold
+                                                @if($app->status === 'accepted')
+                                                    bg-green-600/10 text-green-700 dark:text-green-300 ring-1 ring-inset ring-green-600/20
+                                                @elseif($app->status === 'rejected')
+                                                    bg-red-600/10 text-red-700 dark:text-red-300 ring-1 ring-inset ring-red-600/20
+                                                @else
+                                                    bg-yellow-400 text-gray-900 shadow-yellow-400/30
+                                                @endif">
+                                                {{ ucfirst($app->status) }}
+                                            </span>
+                                        </td>
+                                        <td class="px-4 py-3 text-gray-500 dark:text-gray-400">{{ $app->created_at->diffForHumans() }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-        </div>
+        @else
+            <div class="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700 text-center">
+                <svg class="w-12 h-12 mx-auto text-gray-400 dark:text-gray-500 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"/>
+                </svg>
+                <p class="text-gray-500 dark:text-gray-400 font-medium">No applications yet for this job.</p>
+            </div>
+        @endif
     </div>
-@else
-    <div class="mt-6">
-        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700 text-center">
-            <svg class="w-12 h-12 mx-auto text-gray-400 dark:text-gray-500 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"/>
-            </svg>
-            <p class="text-gray-500 dark:text-gray-400 font-medium">No applications yet for this job.</p>
-        </div>
+
+    {{-- ========== Comments Section ========== --}}
+    <div>
+        <h3 class="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-4">Comments</h3>
+
+        @if($job->comments->count() > 0)
+            <div class="space-y-4">
+                @foreach($job->comments as $comment)
+                    <div class="p-4 bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm flex justify-between items-start">
+                        <div>
+                            <p class="text-sm text-gray-700 dark:text-gray-300">
+                                <span class="font-semibold text-gray-900 dark:text-gray-100">
+                                    {{ $comment->user?->name ?? 'Unknown User' }}
+                                </span>
+                                <span class="text-gray-400 text-xs ml-2">
+                                    {{ $comment->created_at->diffForHumans() }}
+                                </span>
+                            </p>
+                            <p class="mt-1 text-gray-600 dark:text-gray-400 text-sm">
+                                {{ $comment->body }}
+                            </p>
+                        </div>
+
+                        {{-- delete button --}}
+                        @if(Auth::check() && Auth::user()->hasRole('employer'))
+                            <form action="{{ route('dashboard.comments.destroy', $comment->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this comment?')">
+                                @csrf
+                                @method('DELETE')
+                                <button class='bg-red-600/10 text-red-400 dark:text-red-300 ring-1 ring-inset ring-red-600/20 rounded-full px-4 py-1.5 text-xs font-semibold'>Delete</button>
+                            </form>
+                        @endif
+                    </div>
+                @endforeach
+            </div>
+        @else
+            <p class="text-gray-500 dark:text-gray-400 text-sm">No comments yet.</p>
+        @endif
     </div>
-@endif
+
+</div>
 
 
 {{-- Custom scrollbar styles --}}

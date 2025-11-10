@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+
 
 class Job extends Model
 {
@@ -50,9 +52,9 @@ class Job extends Model
         return $this->hasMany(Application::class);
     }
 
-    public function comments(): HasMany
+    public function comments(): MorphMany
     {
-        return $this->hasMany(Comment::class, 'commentable_id')->where('commentable_type', 'jobs');
+        return $this->morphMany(Comment::class, 'commentable');
     }
 
     public function views(): HasMany

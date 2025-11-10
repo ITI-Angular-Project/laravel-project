@@ -61,6 +61,14 @@ class CommentController extends Controller
      */
     public function destroy(Comment $comment)
     {
-        //
+        // let employer delete comments
+        $user = auth()->user();
+
+        if (!$user || !$user->hasRole('employer')) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        $comment->delete();
+        return redirect()->back()->with('success', 'Comment deleted successfully!');
     }
 }
