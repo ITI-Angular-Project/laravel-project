@@ -52,7 +52,7 @@ Route::prefix('/dashboard')->controller(DashboardController::class)
 
 
 // ✅ Dashboard Shared Auth Routes
-Route::middleware(['auth', 'verified'])->name('dashboard.')->prefix('dashboard')->group(function () {
+Route::middleware(['auth', 'verified', 'role:admin,employer'])->name('dashboard.')->prefix('dashboard')->group(function () {
 
     Route::resource('users', UserController::class);
     Route::get('/jobs', [JobController::class, 'dashboardIndex'])->name('jobs.index');

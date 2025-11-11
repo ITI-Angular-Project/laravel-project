@@ -20,7 +20,7 @@ class SocialiteAuthController extends Controller
     {
         $linkedinUser = Socialite::driver('linkedin-openid')->user();
 
-        $user = User::updateOrCreate([
+        $user = User::firstOrCreate([
             'email' => $linkedinUser->getEmail(),
         ], [
             'name' => $linkedinUser->getName(),
@@ -30,6 +30,6 @@ class SocialiteAuthController extends Controller
 
         Auth::login($user);
 
-        return redirect(route('home'));
+        return redirect()->intended(route('home'));
     }
 }
