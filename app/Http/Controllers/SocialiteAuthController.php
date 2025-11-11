@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use Laravel\Socialite\Facades\Socialite;
 
 class SocialiteAuthController extends Controller
@@ -20,16 +20,18 @@ class SocialiteAuthController extends Controller
     {
         $linkedinUser = Socialite::driver('linkedin-openid')->user();
 
-        $user = User::updateOrCreate([
+        $user = User::firstOrCreate([
             'email' => $linkedinUser->getEmail(),
         ], [
             'name' => $linkedinUser->getName(),
             'linkedin_id' => $linkedinUser->getId(),
             'avatar' => $linkedinUser->getAvatar(),
+            'email_verified_at' => Carbon::now(),
+            'password' => bcrypt(Str::random(16)),
         ]);
 
         Auth::login($user);
 
-        return redirect(route('home'));
+        return redirect()->intended(route('home'));
     }
 }
