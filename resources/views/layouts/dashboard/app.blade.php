@@ -195,6 +195,25 @@ $flashToasts = array_values(
                     </a>
                 @endcan
 
+                @can('admin-view')
+                    <!-- Categories -->
+                    <a href="{{ route('dashboard.categories.index') }}"
+                        class="group relative flex items-center gap-3 mx-2 px-3 py-2.5 rounded-xl transition-all duration-200 {{ $active('dashboard.categories.*') }} hover:scale-[1.02]"
+                        :class="sidebarOpen ? 'justify-start' : 'justify-center'"
+                        :title="!sidebarOpen ? 'Categories' : ''"
+                        @if (request()->routeIs('dashboard.categories.*')) aria-current="page" @endif>
+                        <svg class="h-5 w-5 opacity-80 group-hover:opacity-100 transition-all duration-200 group-hover:scale-110"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 7h16M4 12h16M4 17h16" />
+                        </svg>
+                        <span x-show="sidebarOpen" x-transition:enter="transition ease-out duration-200"
+                            x-transition:enter-start="opacity-0 -translate-x-2"
+                            x-transition:enter-end="opacity-100 translate-x-0"
+                            :class="{ 'opacity-0 pointer-events-none': !sidebarOpen }">Categories</span>
+                    </a>
+                @endcan
+
                 <!-- Users -->
                 <a href="{{ route('dashboard.users.index') }}"
                     class="group relative flex items-center gap-3 mx-2 px-3 py-2.5 rounded-xl transition-all duration-200 {{ $active('dashboard.users.*') }} hover:scale-[1.02]"
@@ -284,6 +303,18 @@ $flashToasts = array_values(
                         </svg>
                         <span>Profile</span>
                     </a>
+
+                    @can('admin-view')
+                        <a href="{{ route('dashboard.categories.index') }}"
+                            class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 {{ request()->routeIs('dashboard.categories.*') ? 'bg-gray-100 dark:bg-gray-800' : '' }}">
+                            <svg class="h-5 w-5 opacity-80" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M4 7h16M4 12h16M4 17h16" />
+                            </svg>
+                            <span>Categories</span>
+                        </a>
+                    @endcan
 
                     <a href="{{ route('dashboard.users.index') }}"
                         class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 {{ request()->routeIs('dashboard.users.*') ? 'bg-gray-100 dark:bg-gray-800' : '' }}">

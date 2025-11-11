@@ -7,6 +7,7 @@ use App\Http\Controllers\JobController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\CommentController;
@@ -72,6 +73,10 @@ Route::middleware(['auth', 'verified', 'role:admin,employer'])->name('dashboard.
     Route::middleware('role:' . User::ROLE_EMPLOYER)->group(function () {
         Route::get('/company', [CompanyController::class, 'edit'])->name('company.edit');
         Route::put('/company', [CompanyController::class, 'update'])->name('company.update');
+    });
+
+    Route::middleware('role:' . User::ROLE_ADMIN)->group(function () {
+        Route::resource('categories', CategoryController::class)->except(['show']);
     });
 
     // ✅ Employers manage applications

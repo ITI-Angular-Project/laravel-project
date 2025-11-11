@@ -3,7 +3,7 @@
 @section('content')
     <div class="container mx-auto ">
 
-        {{-- 🔹 Title + Filters + New Job --}}
+        {{-- dY"1 Title + Filters + New Job --}}
         <div class="flex flex-col gap-4 mb-6">
             <div class="flex items-center justify-between">
                 <h2 class="text-3xl font-bold text-gray-800 dark:text-gray-100 tracking-tight">My Jobs</h2>
@@ -33,14 +33,7 @@
             ]" />
         </div>
 
-        {{-- ✅ Success message --}}
-        @if ($jobs->isEmpty())
-            <div class="text-center text-gray-500 dark:text-gray-400 mt-12">
-                <p class="text-lg">No jobs found yet. Click <span class="font-semibold">“Add New Job”</span> to post your
-                    first one!</p>
-            </div>
-        @else
-            @php(
+        @php(
     $columns = [
         [
             'key' => 'title',
@@ -100,8 +93,7 @@
     ]
 )
 
-            <x-ui.data-table :columns="$columns" :rows="$jobs" :paginator="$jobs" />
-        @endif
+        <x-ui.data-table :columns="$columns" :rows="$jobs" :paginator="$jobs" />
 
     </div>
 @endsection
