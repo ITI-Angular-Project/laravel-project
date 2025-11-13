@@ -38,7 +38,7 @@
                         </div>
                     </div>
                     <div class="rounded-3xl border border-white/60 bg-white/70 p-1 shadow-2xl ring-1 ring-black/5 dark:border-white/10 dark:bg-white/5">
-                        <img src="{{ asset('about_us/1.jpg') }}" alt="Team session"
+                        <img src="{{ asset('about_us/image4.jpeg') }}" alt="Team session"
                             class="h-full w-full rounded-[26px] object-cover">
                     </div>
                 </div>

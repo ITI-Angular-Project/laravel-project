@@ -25,6 +25,15 @@ class ProfileUpdateRequest extends FormRequest
                 'max:255',
                 Rule::unique(User::class)->ignore($this->user()->id),
             ],
+
+            'phone' => ['nullable', 'string', 'max:20'],
+
+            'linkedin_url' => [
+                'nullable',
+                'regex:/^(https?:\/\/)?(www\.)?linkedin\.com\/in\/[A-Za-z0-9_-]+\/?$/'
+            ],
+            'resume_path' => ['nullable', 'file', 'mimes:pdf,doc,docx', 'max:2048'],
+            
         ];
     }
 }
