@@ -85,6 +85,10 @@
                             <x-dropdown-link :href="route('profile.edit')">
                                 {{ __('Profile') }}
                             </x-dropdown-link>
+                            <x-dropdown-link :href="route('candidate.applications')">
+                                {{ __('My Applications') }}
+                            </x-dropdown-link>
+
 
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf

@@ -196,4 +196,19 @@ class ApplicationController extends Controller
         $application->delete();
         return back()->with('success', 'Application deleted.');
     }
+
+    public function myApplications()
+    {
+        $user = auth()->user();
+
+    
+        $applications = Application::with('job')
+            ->where('candidate_id', $user->id)
+            ->latest()
+            ->get();
+
+    
+        return view('pages.main.my-applications', compact('applications'));
+    }
+
 }
