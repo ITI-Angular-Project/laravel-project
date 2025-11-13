@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Category;
 use App\Models\Job;
 use App\Models\Company;
@@ -73,13 +74,19 @@ class HomeController extends Controller
             ],
         ];
 
+        $userAppliedJobs = [];
+        if (Auth::check()) {
+            $userAppliedJobs = Auth::user()->applications()->pluck('job_id')->toArray();
+        }
+
         return view('pages.main.home', compact(
             'featuredJobs',
             'latestJobs',
             'topCategories',
             'categoryOptions',
             'stats',
-            'heroSlides'
+            'heroSlides',
+            'userAppliedJobs'
         ));
     }
 
