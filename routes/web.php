@@ -7,8 +7,11 @@ use App\Http\Controllers\JobController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\SocialiteAuthController;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -52,7 +55,7 @@ Route::prefix('/dashboard')->controller(DashboardController::class)
 
 
 // ✅ Dashboard Shared Auth Routes
-Route::middleware(['auth', 'verified'])->name('dashboard.')->prefix('dashboard')->group(function () {
+Route::middleware(['auth', 'verified', 'role:admin,employer'])->name('dashboard.')->prefix('dashboard')->group(function () {
 
     Route::resource('users', UserController::class);
     Route::get('/jobs', [JobController::class, 'dashboardIndex'])->name('jobs.index');
@@ -74,8 +77,17 @@ Route::middleware(['auth', 'verified'])->name('dashboard.')->prefix('dashboard')
         Route::put('/company', [CompanyController::class, 'update'])->name('company.update');
     });
 
+    Route::middleware('role:' . User::ROLE_ADMIN)->group(function () {
+        Route::resource('categories', CategoryController::class)->except(['show']);
+    });
+
     // ✅ Employers manage applications
     Route::resource('applications', ApplicationController::class)->only(['index', 'show', 'update', 'destroy']);
+
+    // Delete comment route (to fix your error)
+    Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])
+        ->name('comments.destroy')
+        ->middleware('auth');
 });
 
 
@@ -95,7 +107,7 @@ Route::get('/notifications/mark-all-read', function () {
 })->name('notifications.markAllRead')->middleware('auth');
 
 
- 
+
 
 
 require __DIR__ . '/auth.php';

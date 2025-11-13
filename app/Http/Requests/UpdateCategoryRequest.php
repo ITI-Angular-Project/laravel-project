@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateCategoryRequest extends FormRequest
 {
@@ -11,7 +13,7 @@ class UpdateCategoryRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return $this->user()?->hasRole(User::ROLE_ADMIN) ?? false;
     }
 
     /**
@@ -21,8 +23,15 @@ class UpdateCategoryRequest extends FormRequest
      */
     public function rules(): array
     {
+        $categoryId = $this->route('category')?->id;
+
         return [
-            //
+            'name' => [
+                'required',
+                'string',
+                'max:120',
+                Rule::unique('categories', 'name')->ignore($categoryId),
+            ],
         ];
     }
 }

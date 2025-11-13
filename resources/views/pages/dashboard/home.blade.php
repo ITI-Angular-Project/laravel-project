@@ -55,12 +55,32 @@
                         <div class="text-xs text-gray-400 dark:text-gray-500">Total: {{ $viewsChartTotal }}</div>
                     </div>
 
-                    <div class="rounded-xl border border-gray-100 dark:border-gray-700 p-4">
-                        <canvas id="viewsChart" class="w-full h-48"></canvas>
+                    <div
+                        class="relative rounded-xl border border-gray-100 dark:border-gray-700 p-4 overflow-hidden bg-white/60 dark:bg-gray-900/40">
+                        <div class="h-56">
+                            <canvas id="viewsChart" class="w-full h-full" aria-label="Job views chart"></canvas>
+                        </div>
+
                         @if ($viewsChartTotal === 0)
-                            <p class="mt-3 text-center text-xs text-gray-500 dark:text-gray-400">No views recorded for this period yet.</p>
+                            <div
+                                class="absolute inset-0 flex flex-col items-center justify-center gap-3 text-center bg-white/95 dark:bg-gray-900/85 backdrop-blur-sm pointer-events-none">
+                                <div
+                                    class="h-12 w-12 rounded-2xl bg-amber-50 dark:bg-amber-900/30 text-amber-600 dark:text-amber-200 flex items-center justify-center">
+                                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                                    </svg>
+                                </div>
+                                <div class="space-y-1">
+                                    <p class="text-sm font-medium text-gray-700 dark:text-gray-200">No views yet</p>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400">Once candidates start visiting your
+                                        job posts, analytics will appear here automatically.</p>
+                                </div>
+                            </div>
                         @endif
-                </div>
+                    </div>
                 </div>
 
                 {{-- Posted Jobs --}}
@@ -105,6 +125,14 @@
         const labels = @json($viewsChartLabels);
         const rawDates = @json($viewsChartDates);
         const breakdown = @json($viewsChartBreakdown);
+
+        const hasChartData = Array.isArray(dataPoints) && dataPoints.some(value => Number(value) > 0);
+
+        if (!hasChartData) {
+            canvas.setAttribute('aria-hidden', 'true');
+            canvas.classList.add('opacity-0');
+            return;
+        }
 
         const ctx = canvas.getContext('2d');
         const gradientHeight = canvas.height || canvas.clientHeight || 200;
