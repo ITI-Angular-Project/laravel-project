@@ -183,6 +183,51 @@ class DashboardController extends Controller
 
     public function profile()
     {
-        return view('pages.dashboard.profile');
+        $user = Auth::user();
+        return view('pages.dashboard.profile', compact('user'));
     }
+
+    public function updateProfile(Request $request)
+    {
+        $user = Auth::user();
+
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:users,email,' . $user->id,
+            'phone' => 'nullable|string|max:20',
+            'password' => 'nullable|string|min:8|confirmed',
+        ]);
+
+        $user->name = $validated['name'];
+        $user->email = $validated['email'];
+        $user->phone = $validated['phone'] ?? null;
+
+        if (!empty($validated['password'])) {
+        $user->password = bcrypt($validated['password']);
+        }
+
+        $user->save();
+
+        return redirect()->route('dashboard.profile')->with('status', 'profile-updated');
+    }
+
+    public function destroyProfile(Request $request)
+    {
+        $request->validate([
+        'password' => ['required', 'current_password'],
+        ]);
+        $user = Auth::user();
+
+        Auth::logout();
+
+        $user->delete();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/')->with('status', 'Account deleted successfully.');
+}
+
+
+
 }

@@ -49,6 +49,10 @@ Route::prefix('/dashboard')->controller(DashboardController::class)
         Route::get('/jobs', [JobController::class, 'dashboardIndex'])->name('jobs');
         Route::get('/applications', 'applications')->name('applications');
         Route::get('/profile', 'profile')->name('profile');
+        Route::patch('/profile', [DashboardController::class, 'updateProfile'])->name('profile.update');
+        Route::delete('/profile', [DashboardController::class, 'destroyProfile'])->name('profile.destroy');
+
+
     });
 
 
