@@ -99,15 +99,26 @@
 
 
                     {{-- Apply Button (AJAX) --}}
-                    <button id="applyBtn" data-job-id="{{ $job->id }}" type="button"
-                        class="apply-btn inline-flex items-center justify-center rounded-2xl bg-amber-500 px-8 py-3 text-lg font-semibold text-slate-950
-                                   hover:bg-amber-400 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-amber-300 transition-transform duration-200">
-                        Apply Now
-                        <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                        </svg>
-                    </button>
+                    @php
+                        $hasApplied = \App\Models\Application::where('candidate_id', auth()->id())->where('job_id', $job->id)->exists();
+                    @endphp
+                    @if($hasApplied)
+                        <button type="button"
+                            class="inline-flex items-center justify-center rounded-2xl bg-green-500 px-8 py-3 text-lg font-semibold text-white cursor-not-allowed"
+                            disabled>
+                            Applied
+                        </button>
+                    @else
+                        <button id="applyBtn" data-job-id="{{ $job->id }}" type="button"
+                            class="apply-btn inline-flex items-center justify-center rounded-2xl bg-amber-500 px-8 py-3 text-lg font-semibold text-slate-950
+                                       hover:bg-amber-400 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-amber-300 transition-transform duration-200">
+                            Apply Now
+                            <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                            </svg>
+                        </button>
+                    @endif
                 @else
                     <a href="{{ route('login') }}"
                         class="inline-flex items-center justify-center rounded-2xl bg-amber-500 px-8 py-3 text-lg font-semibold text-slate-950
@@ -121,11 +132,12 @@
 
             {{-- Comments Section --}}
             @php
-                $comments = $job->comments()->orderBy('created_at', 'desc')->take(5)->get();
+                $initialComments = $job->comments->sortByDesc('created_at')->take(5);
+                $totalComments = $job->comments->count();
             @endphp
 
             <div id="commentsList">
-                @foreach ($comments as $comment)
+                @foreach ($initialComments as $comment)
                     <div class="border-b border-gray-200 dark:border-gray-700 py-4 comment-item">
                         <p class="text-gray-900 dark:text-gray-100 font-medium">{{ $comment->user->name ?? 'Anonymous' }}
                         </p>
@@ -135,7 +147,7 @@
                 @endforeach
             </div>
 
-            @if ($job->comments()->count() > 5)
+            @if ($totalComments > 5)
                 <div class="mt-4 text-center">
                     <button id="showMoreCommentsBtn"
                         class="px-6 py-3 bg-gray-200 dark:bg-gray-700 rounded-xl hover:bg-gray-300 dark:hover:bg-gray-600 transition">
@@ -143,6 +155,7 @@
                     </button>
                 </div>
             @endif
+
 
 
         </div>
@@ -314,7 +327,7 @@
 
         });
 
-        let commentsOffset = 5;
+        let commentsOffset =  {{ $initialComments->count() }};
         const showMoreBtn = document.getElementById('showMoreCommentsBtn');
         const commentsContainer = document.getElementById('commentsList');
 

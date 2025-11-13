@@ -60,6 +60,12 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasOne(Company::class, 'employer_id');
     }
+
+    public function applications()
+    {
+        return $this->hasMany(Application::class, 'candidate_id');
+    }
+
     public function hasRole(string|array $roles): bool
     {
         if (is_array($roles)) {
