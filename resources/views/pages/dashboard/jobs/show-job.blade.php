@@ -226,7 +226,7 @@
                         </div>
 
                         {{-- delete button --}}
-                        @if(Auth::check() && Auth::user()->hasRole('employer'))
+                        @if(Auth::check() && Auth::user()->hasRole(['employer', 'admin']))
                             <form action="{{ route('dashboard.comments.destroy', $comment->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this comment?')">
                                 @csrf
                                 @method('DELETE')

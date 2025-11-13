@@ -159,8 +159,8 @@
                                     <div class="text-lg font-semibold text-slate-900 dark:text-white">{{ $category->name }}
                                     </div>
                                     <span
-                                        class="rounded-full bg-amber-500/10 px-3 py-1 text-xs font-medium text-amber-700 dark:bg-amber-500/20 dark:text-amber-200">{{ $category->jobs_count ?? 0 }}
-                                        roles</span>
+                                        class="rounded-full bg-amber-500/10 px-3 py-1 text-xs font-medium text-amber-700 dark:bg-amber-500/20 dark:text-amber-200 whitespace-nowrap">{{ $category->jobs_count ?? 0 }}
+                                        Roles</span>
                                 </div>
                                 <p class="flex-1 text-sm text-slate-500 dark:text-slate-300">See curated openings tailored
                                     to this expertise.</p>
