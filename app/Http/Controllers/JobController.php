@@ -83,7 +83,8 @@ class JobController extends Controller
 
         $userAppliedJobs = [];
         if (Auth::check()) {
-            $userAppliedJobs = Auth::user()->applications()->pluck('job_id')->toArray();
+
+            $userAppliedJobs = User::find(Auth::id())->applications()->pluck('job_id')->toArray();
         }
 
         return view('pages.main.jobs', compact('jobs', 'categories', 'salaryRanges', 'userAppliedJobs'));
