@@ -60,7 +60,7 @@ Route::prefix('/dashboard')->controller(DashboardController::class)
 // ✅ Dashboard Shared Auth Routes
 Route::middleware(['auth', 'verified', 'role:admin,employer'])->name('dashboard.')->prefix('dashboard')->group(function () {
 
-    Route::resource('users', UserController::class);
+    Route::resource('users', UserController::class)->middleware('role:admin');
     Route::get('/jobs', [JobController::class, 'dashboardIndex'])->name('jobs.index');
     Route::resource('jobs', JobController::class)->except('index');
 

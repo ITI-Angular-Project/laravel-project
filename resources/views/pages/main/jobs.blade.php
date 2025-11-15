@@ -366,7 +366,7 @@
                                 button.classList.add('bg-green-500', 'cursor-not-allowed');
                                 button.disabled = true;
                             } else {
-                                showToast('error', data.message || 'Failed to apply.');
+                                window.location.href = `/job/${jobId}/complete-profile`;
                             }
                         })
                         .catch(error => {

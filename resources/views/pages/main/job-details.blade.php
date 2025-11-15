@@ -233,7 +233,7 @@
                             if (data.success) {
                                 showToast('success', data.message || 'Application submitted!');
                             } else {
-                                showToast('error', data.message || 'Failed to apply.');
+                                window.location.href = `/job/${jobId}/complete-profile`;
                             }
                         })
                         .catch(error => {

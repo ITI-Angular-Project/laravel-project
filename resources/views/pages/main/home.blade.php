@@ -433,8 +433,12 @@
                         .then(data => {
                             if (data.success) {
                                 showToast('success', data.message || 'Application submitted!');
+                                button.textContent = 'Applied';
+                                button.classList.remove('bg-amber-500', 'hover:bg-amber-400');
+                                button.classList.add('bg-green-500', 'cursor-not-allowed');
+                                button.disabled = true;
                             } else {
-                                showToast('error', data.message || 'Failed to apply.');
+                                window.location.href = `/job/${jobId}/complete-profile`;
                             }
                         })
                         .catch(error => {
