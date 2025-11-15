@@ -136,6 +136,16 @@
                 $totalComments = $job->comments->count();
             @endphp
 
+            {{-- Total Comments Display --}}
+            <div class="text-left mb-6 mt-3">
+                <div class="inline-flex items-center gap-2 bg-gray-50 dark:bg-gray-800 px-4 py-2 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm">
+                    <svg class="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                    </svg>
+                    <span class="text-lg font-semibold text-gray-800 dark:text-gray-100">Comments : ({{$totalComments}})</span>
+                </div>
+            </div>
+
             <div id="commentsList">
                 @foreach ($initialComments as $comment)
                     <div class="border-b border-gray-200 dark:border-gray-700 py-4 comment-item">
@@ -252,22 +262,34 @@
             // إظهار الفورم عند الضغط على زر Add Comment
             addCommentBtn?.addEventListener('click', () => {
                 commentFormContainer.innerHTML = `
-                    <div class="flex flex-col gap-3 w-full bg-gray-50 dark:bg-gray-900 p-4 rounded-2xl shadow-md border border-gray-200 dark:border-gray-700 transition-transform transform hover:scale-[1.01]">
-                    <textarea id="commentInput" placeholder="Write your comment..." rows="4"
-                    class="flex-1 p-4 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100
-                    focus:outline-none focus:ring-2 focus:ring-blue-400 dark:focus:ring-blue-300 resize-none w-full shadow-sm transition-all duration-200"></textarea>
-                    <div class="flex flex-col gap-2 w-full">
-                    <button id="saveCommentBtn"
-                    class="w-full px-6 py-3 bg-blue-600 dark:bg-blue-500 text-white font-semibold rounded-xl shadow hover:bg-blue-500 dark:hover:bg-blue-400
-                    transition-all duration-300 transform hover:scale-80">
-                    Save
-                    </button>
-                    <button id="cancelCommentBtn"
-                    class="w-full px-6 py-3 bg-red-600 dark:bg-red-500 text-white font-semibold rounded-xl shadow hover:bg-red-500 dark:hover:bg-red-400
-                    transition-all duration-300 transform hover:scale-80">
-                    Cancel
-                    </button>
-                    </div>
+                    <div class="flex flex-col gap-4 w-full bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-800 dark:to-gray-900 p-6 rounded-3xl shadow-2xl border border-blue-200 dark:border-gray-600 transition-all duration-300 transform hover:scale-[1.02] hover:shadow-3xl">
+                        <div class="flex items-center gap-2 mb-2">
+                            <svg class="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                            </svg>
+                            <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100">Add Your Comment</h3>
+                        </div>
+                        <textarea id="commentInput" placeholder="Share your thoughts..." rows="4"
+                        class="flex-1 p-4 rounded-2xl border-2 border-blue-300 dark:border-gray-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100
+                        focus:outline-none focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-500 focus:border-blue-500 dark:focus:border-blue-400 resize-none w-full shadow-lg transition-all duration-300 placeholder-gray-500 dark:placeholder-gray-400"></textarea>
+                        <div class="flex flex-row gap-2 w-full">
+                            <button id="saveCommentBtn"
+                            class="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-700 dark:from-blue-500 dark:to-blue-600 text-white font-semibold rounded-2xl shadow-lg hover:from-blue-700 hover:to-blue-800 dark:hover:from-blue-600 dark:hover:to-blue-700
+                            transition-all duration-300 transform hover:scale-105 hover:shadow-xl">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                Save Comment
+                            </button>
+                            <button id="cancelCommentBtn"
+                            class="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-gradient-to-r from-red-500 to-red-600 dark:from-red-400 dark:to-red-500 text-white font-semibold rounded-2xl shadow-lg hover:from-red-600 hover:to-red-700 dark:hover:from-red-500 dark:hover:to-red-600
+                            transition-all duration-300 transform hover:scale-105 hover:shadow-xl">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                                Cancel
+                            </button>
+                        </div>
                     </div>
 `;
 
