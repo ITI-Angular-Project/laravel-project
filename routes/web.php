@@ -123,6 +123,8 @@ Route::middleware(['auth', 'verified', 'role:candidate'])->group(function () {
 });
 
 
+Route::get('/auth/linkedin/redirect', [SocialiteAuthController::class, 'redirect'])->name('auth.linkedin.redirect');
 
+Route::get('/auth/linkedin/callback', [SocialiteAuthController::class, 'callback']);
 
 require __DIR__ . '/auth.php';
