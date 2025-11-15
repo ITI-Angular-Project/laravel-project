@@ -209,7 +209,7 @@
     <div id="comments-container">
         @if($job->comments->count() > 0)
             <div class="space-y-4" id="comments-list">
-                @foreach($job->comments->take(5) as $comment)
+                @foreach($job->comments->sortByDesc('created_at')->take(5) as $comment)
                     <div class="p-4 bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm flex justify-between items-start">
                         <div>
                             <p class="text-sm text-gray-700 dark:text-gray-300">
