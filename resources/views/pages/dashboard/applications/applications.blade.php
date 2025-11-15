@@ -8,7 +8,7 @@
 
         <x-ui.filters :action="route('dashboard.applications.index')" :filters="[
             ['type' => 'text','name'=>'search','label'=>'Search','placeholder'=>'Name or email'],
-            ['type' => 'select','name'=>'status','label'=>'Status','options'=>[''=>'All','pending'=>'Pending','accepted'=>'Accepted','rejected'=>'Rejected']],
+            ['type' => 'select','name'=>'status','label'=>'Status','options'=>[''=>'All','submitted'=>'Submitted','accepted'=>'Accepted','rejected'=>'Rejected']],
         ]" />
 
         @php($columns = [
@@ -21,7 +21,7 @@
             ['key' => 'status', 'label' => 'Status', 'format' => function($row){
                 $classes='px-3 py-1 rounded-full text-xs font-semibold ';
                 if($row->status==='accepted'){$classes.='bg-amber-100 dark:bg-amber-900 text-amber-800 dark:text-amber-100';}
-                elseif($row->status==='pending'){$classes.='bg-yellow-100 dark:bg-yellow-800 text-yellow-800 dark:text-yellow-100';}
+                elseif($row->status==='submitted'){$classes.='bg-yellow-100 dark:bg-yellow-800 text-yellow-800 dark:text-yellow-100';}
                 else{$classes.='bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-100';}
                 return '<span class="'.$classes.'">'.e(ucfirst($row->status)).'</span>';
             }],

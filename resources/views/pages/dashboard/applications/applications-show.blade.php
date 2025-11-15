@@ -50,6 +50,29 @@
                 <a href="{{ route('dashboard.jobs.show', $application->job->id) }}" class="font-medium hover:text-amber-700 dark:hover:text-amber-300">{{ $application->job->title }}</a>
             </div>
 
+            @if($application->resume_path)
+                @php
+                    $resumeUrl = asset('storage/' . ltrim($application->resume_path, '/'));
+                    $isPdf = \Illuminate\Support\Str::endsWith(strtolower($application->resume_path), '.pdf');
+                @endphp
+                <div class="mt-6 space-y-3">
+                    <div class="flex items-center justify-between text-sm">
+                        <span class="text-gray-500">Resume / CV</span>
+                        <a href="{{ $resumeUrl }}" target="_blank" class="inline-flex items-center gap-2 rounded-full border border-amber-200 px-3 py-1 text-xs font-semibold text-amber-700 transition hover:bg-amber-50 dark:border-amber-500/40 dark:text-amber-200 dark:hover:bg-amber-500/10">
+                            View / Download
+                            <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m0 0 5-5m-5 5-5-5" />
+                            </svg>
+                        </a>
+                    </div>
+                    @if($isPdf)
+                        <div class="rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden h-96">
+                            <iframe src="{{ $resumeUrl }}" class="w-full h-full" title="Resume preview"></iframe>
+                        </div>
+                    @endif
+                </div>
+            @endif
+
             @if($application->cover_letter)
             <div class="mt-6">
                 <div class="text-gray-500 mb-2">Cover Letter</div>
