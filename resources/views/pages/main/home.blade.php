@@ -107,25 +107,18 @@
 
                     <div class="flex flex-wrap gap-4 text-sm text-white/80">
                         <div class="flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 backdrop-blur">
-                            <span class="text-lg font-semibold text-white">{{ number_format($stats['jobs']) }}</span>
-                            <span>open roles</span>
+                            <span class="text-lg font-semibold text-white">{{ number_format($stats['approved_jobs']) }}</span>
+                            <span>approved roles</span>
                         </div>
                         <div class="flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 backdrop-blur">
-                            <span class="text-lg font-semibold text-white">{{ number_format($stats['companies']) }}</span>
-                            <span>hiring teams</span>
+                            <span class="text-lg font-semibold text-white">{{ number_format($stats['applications_accepted']) }}</span>
+                            <span>applications submitted</span>
                         </div>
                         <div class="flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 backdrop-blur">
-                            <span class="text-lg font-semibold text-white">{{ number_format($stats['candidates']) }}</span>
-                            <span>verified talents</span>
+                            <span class="text-lg font-semibold text-white">{{ number_format($stats['applications_total']) }}</span>
+                            <span>total applications</span>
                         </div>
                     </div>
-                </div>
-
-                <div class="mt-12 flex items-center gap-3">
-                    <template x-for="(slide, index) in slides" :key="index">
-                        <span class="h-2 flex-1 rounded-full bg-white/20 transition"
-                            :class="active === index ? 'bg-amber-400 shadow-[0_0_15px_rgba(245,158,11,0.7)]' : ''"></span>
-                    </template>
                 </div>
             </div>
         </section>
@@ -159,8 +152,8 @@
                                     <div class="text-lg font-semibold text-slate-900 dark:text-white">{{ $category->name }}
                                     </div>
                                     <span
-                                        class="rounded-full bg-amber-500/10 px-3 py-1 text-xs font-medium text-amber-700 dark:bg-amber-500/20 dark:text-amber-200">{{ $category->jobs_count ?? 0 }}
-                                        roles</span>
+                                        class="rounded-full bg-amber-500/10 px-3 py-1 text-xs font-medium text-amber-700 dark:bg-amber-500/20 dark:text-amber-200 whitespace-nowrap">{{ $category->jobs_count ?? 0 }}
+                                        Roles</span>
                                 </div>
                                 <p class="flex-1 text-sm text-slate-500 dark:text-slate-300">See curated openings tailored
                                     to this expertise.</p>
@@ -219,7 +212,7 @@
                                 </p>
                             </div>
 
-                            <div class="mt-6 flex flex-wrap items-center gap-3 text-xs text-slate-500 dark:text-slate-300">
+                            <div class="mt-6 flex flex-wrap items-center gap-3 justify-between text-xs text-slate-500 dark:text-slate-300">
                                 @if ($job->salary_min && $job->salary_max)
                                     <span class="rounded-full bg-slate-900/5 px-3 py-1 dark:bg-white/10">
                                         ${{ number_format($job->salary_min, 0) }} –
@@ -236,13 +229,32 @@
                                         {{ $job->category->name }}
                                     </span>
                                 @endif
-                                <button type="button"
+                                @if(auth()->check())
+                                    @if(in_array($job->id, $userAppliedJobs))
+                                        <button type="button"
+                                            class="inline-flex items-center justify-center rounded-2xl bg-green-500 px-4 py-2 text-sm font-semibold text-white cursor-not-allowed"
+                                            disabled>
+                                            Applied
+                                        </button>
+                                    @else
+                                    @can('candidate-view')
+                                    <button type="button"
                                     class="apply-btn inline-flex items-center justify-center rounded-2xl bg-amber-500 px-4 py-2 text-sm font-semibold text-slate-950
                                     transition hover:bg-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-300
                                     focus:ring-offset-2 focus:ring-offset-slate-100 dark:focus:ring-offset-slate-900"
                                     data-job-id="{{ $job->id }}">
                                     Apply
                                 </button>
+                                @endcan
+                                    @endif
+                                @else
+                                    <a href="{{ route('login') }}"
+                                        class="inline-flex items-center justify-center rounded-2xl bg-amber-500 px-4 py-2 text-sm font-semibold text-slate-950
+                                        transition hover:bg-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-300
+                                        focus:ring-offset-2 focus:ring-offset-slate-100 dark:focus:ring-offset-slate-900">
+                                        Login to Apply
+                                    </a>
+                                @endif
 
 
                             </div>
@@ -310,19 +322,39 @@
                                         ${{ number_format($job->salary_max, 0) }}
                                     </span>
                                 @endif
-                                <button type="button"
+                                @if(auth()->check())
+                                    @if(in_array($job->id, $userAppliedJobs))
+                                        <button type="button"
+                                            class="inline-flex items-center justify-center rounded-2xl bg-green-500 px-4 py-2 text-sm font-semibold text-white cursor-not-allowed"
+                                            disabled>
+                                            Applied
+                                        </button>
+                                    @else
+                                    @can('candidate-view')
+                                    <button type="button"
                                     class="apply-btn inline-flex items-center justify-center rounded-2xl bg-amber-500 px-4 py-2 text-sm font-semibold text-slate-950
                                     transition hover:bg-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-300
                                     focus:ring-offset-2 focus:ring-offset-slate-100 dark:focus:ring-offset-slate-900"
                                     data-job-id="{{ $job->id }}">
                                     Apply
                                 </button>
+                                @endcan
+                                    @endif
+                                @else
+                                    <a href="{{ route('login') }}"
+                                        class="inline-flex items-center justify-center rounded-2xl bg-amber-500 px-4 py-2 text-sm font-semibold text-slate-950
+                                        transition hover:bg-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-300
+                                        focus:ring-offset-2 focus:ring-offset-slate-100 dark:focus:ring-offset-slate-900">
+                                        Login to Apply
+                                    </a>
+                                @endif
                             </div>
                         </article>
                     @endforeach
                 </div>
             </div>
         </section>
+
     </div>
 
 
@@ -405,8 +437,12 @@
                         .then(data => {
                             if (data.success) {
                                 showToast('success', data.message || 'Application submitted!');
+                                button.textContent = 'Applied';
+                                button.classList.remove('bg-amber-500', 'hover:bg-amber-400');
+                                button.classList.add('bg-green-500', 'cursor-not-allowed');
+                                button.disabled = true;
                             } else {
-                                showToast('error', data.message || 'Failed to apply.');
+                                window.location.href = `/job/${jobId}/complete-profile`;
                             }
                         })
                         .catch(error => {

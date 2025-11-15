@@ -211,7 +211,7 @@
                             x-transition:enter-end="opacity-100 translate-x-0"
                             :class="{ 'opacity-0 pointer-events-none': !sidebarOpen }">Categories</span>
                     </a>
-                @endcan
+
 
                 <!-- Users -->
                 <a href="{{ route('dashboard.users.index') }}"
@@ -228,6 +228,7 @@
                         x-transition:enter-end="opacity-100 translate-x-0"
                         :class="{ 'opacity-0 pointer-events-none': !sidebarOpen }">Users</span>
                 </a>
+                @endcan
 
                 <div class="mx-4 my-3 border-t border-gray-200 dark:border-gray-800"></div>
             </nav>
@@ -350,9 +351,11 @@
 
                     <!-- Actions -->
                     <div class="flex items-center gap-2">
+                        @can('employer-view')
                         <a href="{{ route('dashboard.jobs.create') }}"
-                            class="hidden sm:inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-sm font-medium transition">Post
-                            a Job</a>
+                        class="hidden sm:inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-sm font-medium transition">Post
+                        a Job</a>
+                        @endcan
 
                         <button @click="toggleTheme()"
                             class="p-2 rounded-lg hover:bg-amber-50 dark:hover:bg-gray-800 active:outline-none active:ring-2 active:ring-amber-500 active:ring-offset-2 active:ring-offset-gray-900/0 transition-all duration-200 hover:scale-110 hover:rotate-12"

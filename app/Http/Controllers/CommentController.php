@@ -29,7 +29,7 @@ class CommentController extends Controller
         $comment = Comment::create([
             'user_id' => Auth::id(),
             'commentable_id' => $job->id,
-            'commentable_type' => Job::class,
+            'commentable_type' => 'jobs',
             'body' => $request->body,
         ]);
 

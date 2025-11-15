@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Notifications\JobsStatusUpdated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class JobController extends Controller
 {
@@ -80,7 +81,13 @@ class JobController extends Controller
         }
         $salaryRanges[] = round($maxSalary) . '+';
 
-        return view('pages.main.jobs', compact('jobs', 'categories', 'salaryRanges'));
+        $userAppliedJobs = [];
+        if (Auth::check()) {
+
+            $userAppliedJobs = User::find(Auth::id())->applications()->pluck('job_id')->toArray();
+        }
+
+        return view('pages.main.jobs', compact('jobs', 'categories', 'salaryRanges', 'userAppliedJobs'));
     }
 
     /**
@@ -105,6 +112,13 @@ class JobController extends Controller
             $jobsQuery->where(function ($query) use ($search) {
                 $query->where('title', 'like', "%{$search}%")
                     ->orWhere('description', 'like', "%{$search}%");
+            });
+        }
+
+        if ($request->filled('location')) {
+            $location = $request->location;
+            $jobsQuery->whereHas('company', function ($query) use ($location) {
+                $query->where('location', 'like', "%{$location}%");
             });
         }
 
@@ -306,7 +320,6 @@ class JobController extends Controller
         $offset = $request->get('offset', 0);
         $limit = 5;
 
-        // ترتيب تنازلي حسب created_at
         $commentsQuery = $job->comments()->with('user')->orderBy('created_at', 'desc');
 
         $comments = $commentsQuery->skip($offset)->take($limit)->get()->map(function ($comment) {
@@ -317,8 +330,7 @@ class JobController extends Controller
             ];
         });
 
-        // تحقق إذا فيه المزيد
-        $has_more = $job->comments()->count() > ($offset + $limit);
+        $has_more = $job->comments()->count() > ($offset + $comments->count());
 
         return response()->json([
             'comments' => $comments,

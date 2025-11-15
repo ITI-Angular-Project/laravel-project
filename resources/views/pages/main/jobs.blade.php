@@ -227,14 +227,14 @@
                         </div>
 
                         <!-- Buttons row -->
-                        <div class="flex flex-wrap items-center gap-3 mt-2">
+                        <div class="flex flex-wrap items-center gap-3 mt-2 justify-between">
                             @if ($job->salary_min && $job->salary_max)
                                 <span
                                     class="text-sm font-semibold text-amber-600 dark:text-amber-200">${{ number_format($job->salary_min, 0) }}
                                     - ${{ number_format($job->salary_max, 0) }}</span>
                             @endif
 
-                            <a href="{{ route('jobs', ['keyword' => $job->title]) }}"
+                            <a href="{{ route('jobs', ['category_id' => $job->category->id]) }}"
                                 class="inline-flex items-center gap-2 rounded-full bg-slate-900/5 px-4 py-2 text-sm font-semibold text-slate-900 transition hover:bg-amber-500/20 hover:text-amber-600 dark:bg-white/10 dark:text-white dark:hover:bg-amber-500/20">
                                 View similar
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
@@ -244,11 +244,28 @@
                                 </svg>
                             </a>
 
-                            <button type="button"
-                                class="apply-btn inline-flex items-center justify-center rounded-2xl bg-amber-500 px-4 py-2 text-sm font-semibold text-slate-950 transition hover:bg-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-300 focus:ring-offset-2 focus:ring-offset-slate-100 dark:focus:ring-offset-slate-900"
+                            @if(auth()->check())
+                                @if(in_array($job->id, $userAppliedJobs))
+                                    <button type="button"
+                                        class="inline-flex items-center justify-center rounded-2xl bg-green-500 px-4 py-2 text-sm font-semibold text-white dark:text-slate-950 cursor-not-allowed"
+                                        disabled>
+                                        Applied
+                                    </button>
+                                @else
+                                @can('candidate-view')
+                                <button type="button"
+                                class="apply-btn inline-flex items-center justify-center rounded-2xl bg-amber-500 px-4 py-2 text-sm font-semibold text-white dark:text-slate-950 transition hover:bg-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-300 focus:ring-offset-2 focus:ring-offset-slate-100 dark:focus:ring-offset-slate-900"
                                 data-job-id="{{ $job->id }}">
                                 Apply
                             </button>
+                            @endcan
+                                @endif
+                            @else
+                                <a href="{{ route('login') }}"
+                                    class="inline-flex items-center justify-center rounded-2xl bg-amber-500 px-4 py-2 text-sm font-semibold text-white dark:text-slate-950 transition hover:bg-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-300 focus:ring-offset-2 focus:ring-offset-slate-100 dark:focus:ring-offset-slate-900">
+                                    Login to Apply
+                                </a>
+                            @endif
                         </div>
 
                     </article>
@@ -346,13 +363,21 @@
                         .then(data => {
                             if (data.success) {
                                 showToast('success', data.message || 'Application submitted!');
+                                button.textContent = 'Applied';
+                                button.classList.remove('bg-amber-500', 'hover:bg-amber-400');
+                                button.classList.add('bg-green-500', 'cursor-not-allowed');
+                                button.disabled = true;
                             } else {
+
 
 
                                 showToast('error', data.message ||
                                     'Failed Application submitted! ');
 
 
+
+
+                                window.location.href = `/job/${jobId}/complete-profile`;
 
                             }
                         })

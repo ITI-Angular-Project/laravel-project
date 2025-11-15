@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/jobs', [JobController::class, 'index'])->name('jobs');
 Route::get('/job/{id}', [JobController::class, 'details'])->name('job.details');
+Route::get('/jobs/{job}/comments', [JobController::class, 'getComments'])->name('jobs.comments');
 
 Route::get('about-us', fn() => view('pages.main.about-us'))->name('about');
 Route::get('/contact', [ContactController::class, 'showForm'])->name('contact.form');
@@ -37,6 +38,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::post('/job/{job}/submit-profile', [ApplicationController::class, 'submitProfile'])
         ->name('apply.submit-profile');
+
+    // Route::post('/jobs/{job}/comment', [CommentController::class, 'store'])->name('jobs.comment.store');
 });
 
 
@@ -48,16 +51,17 @@ Route::prefix('/dashboard')->controller(DashboardController::class)
         Route::get('', 'index')->name('home');
         Route::get('/jobs', [JobController::class, 'dashboardIndex'])->name('jobs');
         Route::get('/applications', 'applications')->name('applications');
-        Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-        Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-        Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+        Route::get('/profile', 'profile')->name('profile');
+        Route::patch('/profile', [DashboardController::class, 'updateProfile'])->name('profile.update');
+        Route::delete('/profile', [DashboardController::class, 'destroyProfile'])->name('profile.destroy');
     });
 
 
 // ✅ Dashboard Shared Auth Routes
 Route::middleware(['auth', 'verified', 'role:admin,employer'])->name('dashboard.')->prefix('dashboard')->group(function () {
 
-    Route::resource('users', UserController::class);
+    Route::resource('users', UserController::class)->middleware('role:admin');
     Route::get('/jobs', [JobController::class, 'dashboardIndex'])->name('jobs.index');
     Route::resource('jobs', JobController::class)->except('index');
 
@@ -98,6 +102,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+// Candidate – View My Applications
+Route::middleware(['auth'])->group(function () {
+    Route::get('/my-applications', [ApplicationController::class, 'myApplications'])
+        ->name('candidate.applications');
+});
+
 
 Route::get('/notifications/mark-all-read', function () {
     if (Auth::check()) {
@@ -106,6 +116,11 @@ Route::get('/notifications/mark-all-read', function () {
     return response()->json(['status' => 'ok']);
 })->name('notifications.markAllRead')->middleware('auth');
 
+
+
+Route::middleware(['auth', 'verified', 'role:candidate'])->group(function () {
+    Route::post('/apply/{job}', [ApplicationController::class, 'apply'])->name('apply');
+});
 
 
 

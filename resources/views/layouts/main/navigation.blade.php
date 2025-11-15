@@ -83,9 +83,17 @@
                                     {{ __('Dashboard') }}
                                 </x-dropdown-link>
                             @endcan
-                            <x-dropdown-link :href="route('profile.edit')">
+                            <x-dropdown-link :href="route(
+                                Auth::user()->role === 'candidate' ? 'profile.edit' : 'dashboard.profile'
+                            )">
                                 {{ __('Profile') }}
                             </x-dropdown-link>
+                            @can('candidate-view')
+                            <x-dropdown-link :href="route('candidate.applications')">
+                                {{ __('My Applications') }}
+                            </x-dropdown-link>
+                            @endcan
+
 
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
