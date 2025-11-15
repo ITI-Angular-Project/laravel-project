@@ -115,30 +115,30 @@
     </style>
 
     <div class="py-12 bg-gradient-to-br from-slate-50 via-amber-50/30 to-slate-50 dark:from-slate-950 dark:via-slate-900/95 dark:to-slate-950 relative overflow-hidden min-h-screen">
-        
+
         {{-- Floating decorative shapes spread across entire background --}}
         <div class="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
             {{-- Top left corner --}}
             <div class="floating-shape absolute top-10 left-10 w-80 h-80 bg-amber-400/20 dark:bg-amber-500/30 rounded-full blur-3xl"></div>
-            
+
             {{-- Top right corner --}}
             <div class="floating-shape-reverse absolute top-20 right-20 w-96 h-96 bg-blue-400/15 dark:bg-blue-500/25 rounded-full blur-3xl"></div>
-            
+
             {{-- Bottom left --}}
             <div class="floating-shape absolute bottom-10 left-1/4 w-72 h-72 bg-purple-400/10 dark:bg-purple-500/20 rounded-full blur-2xl"></div>
-            
+
             {{-- Bottom right --}}
             <div class="floating-shape-reverse absolute bottom-20 right-10 w-96 h-96 bg-pink-400/10 dark:bg-pink-500/20 rounded-full blur-3xl"></div>
-            
+
             {{-- Center floating --}}
             <div class="floating-shape-reverse absolute top-1/3 right-1/4 w-64 h-64 bg-indigo-400/10 dark:bg-indigo-500/20 rounded-full blur-2xl"></div>
-            
+
             {{-- Pulsing center accent --}}
             <div class="pulsing-shape absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-amber-400/5 dark:bg-amber-500/15 rounded-full blur-3xl"></div>
         </div>
 
-        <div class="relative max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            
+        <div class="relative max-w-5xl mx-auto sm:px-6 lg:px-8 space-y-6">
+
             {{-- Profile Information Card --}}
             <div class="profile-card rounded-3xl border border-slate-200 bg-white/80 backdrop-blur-sm shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1 dark:border-white/10 dark:bg-white/5 overflow-hidden">
                 <div class="bg-gradient-to-r from-amber-500/10 to-transparent dark:from-amber-500/20 px-6 py-5 border-b border-slate-200 dark:border-white/10">
