@@ -252,11 +252,13 @@
                                         Applied
                                     </button>
                                 @else
-                                    <button type="button"
-                                        class="apply-btn inline-flex items-center justify-center rounded-2xl bg-amber-500 px-4 py-2 text-sm font-semibold text-white dark:text-slate-950 transition hover:bg-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-300 focus:ring-offset-2 focus:ring-offset-slate-100 dark:focus:ring-offset-slate-900"
-                                        data-job-id="{{ $job->id }}">
-                                        Apply
-                                    </button>
+                                @can('candidate-view')
+                                <button type="button"
+                                class="apply-btn inline-flex items-center justify-center rounded-2xl bg-amber-500 px-4 py-2 text-sm font-semibold text-white dark:text-slate-950 transition hover:bg-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-300 focus:ring-offset-2 focus:ring-offset-slate-100 dark:focus:ring-offset-slate-900"
+                                data-job-id="{{ $job->id }}">
+                                Apply
+                            </button>
+                            @endcan
                                 @endif
                             @else
                                 <a href="{{ route('login') }}"

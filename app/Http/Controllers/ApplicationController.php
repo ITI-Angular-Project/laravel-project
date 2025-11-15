@@ -59,6 +59,13 @@ class ApplicationController extends Controller
             return redirect()->route('login')->with('error', 'Please login first to apply!');
         }
 
+        if ($user->hasRole('employer')) {
+            if (request()->expectsJson()) {
+                return response()->json(['success' => false, 'message' => 'Employers or Admins cannot apply for jobs.']);
+            }
+            return redirect()->back()->with('error', 'Employers or Admins cannot apply for jobs.');
+        }
+
         // ✅ تحقق إذا كان المستخدم قد قدم مسبقاً
         if ($this->alreadyApplied($user->id, $job->id)) {
             if (request()->expectsJson()) {
@@ -122,6 +129,11 @@ class ApplicationController extends Controller
         if ($this->alreadyApplied($user->id, $job->id)) {
             return redirect()->route('job.details', $job->id)
                 ->with('info', 'You are already applied, wait for approval.');
+        }
+
+        if ($user->hasRole(['employer', 'admin'])) {
+            return redirect()->route('job.details', $job->id)
+                ->with('error', 'Employers or Admins cannot apply for jobs.');
         }
 
         // ✅ إنشاء التقديم
