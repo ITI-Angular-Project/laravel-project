@@ -83,7 +83,8 @@ class JobController extends Controller
 
         $userAppliedJobs = [];
         if (Auth::check()) {
-            $userAppliedJobs = Auth::user()->applications()->pluck('job_id')->toArray();
+
+            $userAppliedJobs = User::find(Auth::id())->applications()->pluck('job_id')->toArray();
         }
 
         return view('pages.main.jobs', compact('jobs', 'categories', 'salaryRanges', 'userAppliedJobs'));
@@ -111,6 +112,13 @@ class JobController extends Controller
             $jobsQuery->where(function ($query) use ($search) {
                 $query->where('title', 'like', "%{$search}%")
                     ->orWhere('description', 'like', "%{$search}%");
+            });
+        }
+
+        if ($request->filled('location')) {
+            $location = $request->location;
+            $jobsQuery->whereHas('company', function ($query) use ($location) {
+                $query->where('location', 'like', "%{$location}%");
             });
         }
 

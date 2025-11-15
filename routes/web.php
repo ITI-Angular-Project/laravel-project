@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/jobs', [JobController::class, 'index'])->name('jobs');
 Route::get('/job/{id}', [JobController::class, 'details'])->name('job.details');
+Route::get('/jobs/{job}/comments', [JobController::class, 'getComments'])->name('jobs.comments');
 
 Route::get('about-us', fn() => view('pages.main.about-us'))->name('about');
 Route::get('/contact', [ContactController::class, 'showForm'])->name('contact.form');
@@ -98,7 +99,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    
+
 });
 
 // Candidate – View My Applications
@@ -115,9 +116,8 @@ Route::get('/notifications/mark-all-read', function () {
 })->name('notifications.markAllRead')->middleware('auth');
 
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'verified', 'role:candidate'])->group(function () {
     Route::post('/jobs/{job}/comment', [CommentController::class, 'store'])->name('jobs.comment.store');
-    Route::get('/jobs/{job}/comments', [JobController::class, 'getComments'])->name('jobs.comments');
     Route::post('/apply/{job}', [ApplicationController::class, 'apply'])->name('apply');
 });
 

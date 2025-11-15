@@ -7,12 +7,13 @@
         <div class="flex flex-col gap-4 mb-6">
             <div class="flex items-center justify-between">
                 <h2 class="text-3xl font-bold text-gray-800 dark:text-gray-100 tracking-tight">My Jobs</h2>
+                @can('employer-view')
                 <x-ui.button href="{{ route('dashboard.jobs.create') }}" size="md">New Job</x-ui.button>
+                @endcan
             </div>
 
             <x-ui.filters :action="route('dashboard.jobs.index')" :filters="[
                 ['type' => 'text', 'name' => 'search', 'label' => 'Keywords', 'placeholder' => 'Title or description'],
-                ['type' => 'text', 'name' => 'location', 'label' => 'Location'],
                 [
                     'type' => 'select',
                     'name' => 'status',

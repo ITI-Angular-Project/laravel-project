@@ -199,15 +199,15 @@ class ApplicationController extends Controller
 
     public function myApplications()
     {
-        $user = auth()->user();
+        $user = User::find(Auth::id());
 
-    
+
         $applications = Application::with('job')
             ->where('candidate_id', $user->id)
             ->latest()
             ->get();
 
-    
+
         return view('pages.main.my-applications', compact('applications'));
     }
 

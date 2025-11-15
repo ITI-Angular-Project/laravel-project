@@ -275,7 +275,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const loadMoreBtn = document.getElementById('load-more-comments');
     const commentsList = document.getElementById('comments-list');
     const jobId = {{ $job->id }};
-    const canDeleteComments = {{ Auth::check() && Auth::user()->hasRole('employer') ? 'true' : 'false' }};
+    const canDeleteComments = {{ Auth::check() && Auth::user()->hasRole(['employer', 'admin']) ? 'true' : 'false' }};
 
     if (loadMoreBtn) {
         loadMoreBtn.addEventListener('click', function() {
