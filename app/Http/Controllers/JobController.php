@@ -115,6 +115,13 @@ class JobController extends Controller
             });
         }
 
+        if ($request->filled('location')) {
+            $location = $request->location;
+            $jobsQuery->whereHas('company', function ($query) use ($location) {
+                $query->where('location', 'like', "%{$location}%");
+            });
+        }
+
         // فلترة حسب الحالة
         if ($request->filled('status')) {
             $jobsQuery->where('status', $request->status);

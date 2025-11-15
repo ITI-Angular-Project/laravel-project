@@ -107,25 +107,18 @@
 
                     <div class="flex flex-wrap gap-4 text-sm text-white/80">
                         <div class="flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 backdrop-blur">
-                            <span class="text-lg font-semibold text-white">{{ number_format($stats['jobs']) }}</span>
-                            <span>open roles</span>
+                            <span class="text-lg font-semibold text-white">{{ number_format($stats['approved_jobs']) }}</span>
+                            <span>approved roles</span>
                         </div>
                         <div class="flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 backdrop-blur">
-                            <span class="text-lg font-semibold text-white">{{ number_format($stats['companies']) }}</span>
-                            <span>hiring teams</span>
+                            <span class="text-lg font-semibold text-white">{{ number_format($stats['applications_accepted']) }}</span>
+                            <span>applications submitted</span>
                         </div>
                         <div class="flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 backdrop-blur">
-                            <span class="text-lg font-semibold text-white">{{ number_format($stats['candidates']) }}</span>
-                            <span>verified talents</span>
+                            <span class="text-lg font-semibold text-white">{{ number_format($stats['applications_total']) }}</span>
+                            <span>total applications</span>
                         </div>
                     </div>
-                </div>
-
-                <div class="mt-12 flex items-center gap-3">
-                    <template x-for="(slide, index) in slides" :key="index">
-                        <span class="h-2 flex-1 rounded-full bg-white/20 transition"
-                            :class="active === index ? 'bg-amber-400 shadow-[0_0_15px_rgba(245,158,11,0.7)]' : ''"></span>
-                    </template>
                 </div>
             </div>
         </section>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Application;
 use App\Models\Category;
 use App\Models\Job;
 use App\Models\Company;
@@ -51,9 +52,9 @@ class HomeController extends Controller
         $categoryOptions = Category::orderBy('name')->get(['id', 'name']);
 
         $stats = [
-            'jobs' => (clone $approvedJobsQuery)->count(),
-            'companies' => Company::count(),
-            'candidates' => User::where('role', User::ROLE_CANDIDATE)->count(),
+            'approved_jobs' => (clone $approvedJobsQuery)->count(),
+            'applications_accepted' => Application::where('status', 'accepted')->count(),
+            'applications_total' => Application::count(),
         ];
 
         $heroSlides = [
@@ -76,7 +77,7 @@ class HomeController extends Controller
 
         $userAppliedJobs = [];
         if (Auth::check()) {
-            $userAppliedJobs = Auth::user()->applications()->pluck('job_id')->toArray();
+            $userAppliedJobs = User::find(Auth::id())->applications()->pluck('job_id')->toArray();
         }
 
         return view('pages.main.home', compact(
