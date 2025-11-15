@@ -38,6 +38,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::post('/job/{job}/submit-profile', [ApplicationController::class, 'submitProfile'])
         ->name('apply.submit-profile');
+
+    // Route::post('/jobs/{job}/comment', [CommentController::class, 'store'])->name('jobs.comment.store');
 });
 
 
@@ -117,7 +119,6 @@ Route::get('/notifications/mark-all-read', function () {
 
 
 Route::middleware(['auth', 'verified', 'role:candidate'])->group(function () {
-    Route::post('/jobs/{job}/comment', [CommentController::class, 'store'])->name('jobs.comment.store');
     Route::post('/apply/{job}', [ApplicationController::class, 'apply'])->name('apply');
 });
 
