@@ -102,21 +102,23 @@
                         $hasApplied = \App\Models\Application::where('candidate_id', auth()->id())->where('job_id', $job->id)->exists();
                     @endphp
                     @if($hasApplied)
-                        <button type="button"
-                            class="inline-flex items-center justify-center rounded-2xl bg-green-500 px-8 py-3 text-lg font-semibold text-white cursor-not-allowed"
-                            disabled>
-                            Applied
-                        </button>
+                    <button type="button"
+                    class="inline-flex items-center justify-center rounded-2xl bg-green-500 px-8 py-3 text-lg font-semibold text-white cursor-not-allowed"
+                    disabled>
+                    Applied
+                </button>
                     @else
-                        <button id="applyBtn" data-job-id="{{ $job->id }}" type="button"
-                            class="apply-btn inline-flex items-center justify-center rounded-2xl bg-amber-500 px-8 py-3 text-lg font-semibold text-slate-950
-                                       hover:bg-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-300 transition-all duration-200">
-                            Apply Now
-                            <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                            </svg>
-                        </button>
+                    @can('candidate-view')
+                    <button id="applyBtn" data-job-id="{{ $job->id }}" type="button"
+                        class="apply-btn inline-flex items-center justify-center rounded-2xl bg-amber-500 px-8 py-3 text-lg font-semibold text-slate-950
+                        hover:bg-amber-400 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-amber-300 transition-transform duration-200">
+                        Apply Now
+                        <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                        </svg>
+                    </button>
+                    @endcan
                     @endif
                 @else
                     <a href="{{ route('login') }}"
