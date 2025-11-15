@@ -231,7 +231,7 @@
                             @if ($job->salary_min && $job->salary_max)
                                 <span
                                     class="text-sm font-semibold text-amber-600 dark:text-amber-200">${{ number_format($job->salary_min, 0) }}
-                                    – ${{ number_format($job->salary_max, 0) }}</span>
+                                    - ${{ number_format($job->salary_max, 0) }}</span>
                             @endif
 
                             <a href="{{ route('jobs', ['keyword' => $job->title]) }}"
@@ -307,7 +307,7 @@
             setTimeout(() => {
                 toast.classList.add('opacity-0');
                 setTimeout(() => toast.remove(), 500);
-            }, 3000);
+            }, 6000);
         }
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -347,7 +347,13 @@
                             if (data.success) {
                                 showToast('success', data.message || 'Application submitted!');
                             } else {
-                                showToast('error', data.message || 'Failed to apply.');
+
+
+                                showToast('error', data.message ||
+                                    'Failed Application submitted! ');
+
+
+
                             }
                         })
                         .catch(error => {

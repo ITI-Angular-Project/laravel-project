@@ -57,7 +57,7 @@ class ApplicationController extends Controller
                 return response()->json(['success' => false, 'message' => 'Please login first to apply!']);
             }
             return redirect()->route('login')->with('error', 'Please login first to apply!');
-        }
+    }
 
         // ✅ تحقق إذا كان المستخدم قد قدم مسبقاً
         if ($this->alreadyApplied($user->id, $job->id)) {

@@ -14,7 +14,7 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $user = User::find(Auth::id());
+        $user = User::find(Auth::id());      
 
         // Base queries
         $jobQuery          = Job::query();
