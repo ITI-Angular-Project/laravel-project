@@ -39,7 +39,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/job/{job}/submit-profile', [ApplicationController::class, 'submitProfile'])
         ->name('apply.submit-profile');
 
-    // Route::post('/jobs/{job}/comment', [CommentController::class, 'store'])->name('jobs.comment.store');
+    Route::post('/jobs/{job}/comment', [CommentController::class, 'store'])->name('jobs.comment.store');
 });
 
 
