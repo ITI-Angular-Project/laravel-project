@@ -40,13 +40,8 @@
         {{-- Notification List --}}
         <div class="max-h-64 overflow-y-auto">
             @php
-                $notifications = auth()->user()->notifications;
-                $loginTime = session('login_time');
-                if (!$loginTime) {
-                    session(['login_time' => now()]);
-                    $loginTime = now();
-                }
-                $recentNotifications = $notifications->filter(fn($n) => $n->created_at > $loginTime);
+                $recentNotifications = auth()->user()->unreadNotifications;
+
             @endphp
 
             @if($recentNotifications->count() > 0)
