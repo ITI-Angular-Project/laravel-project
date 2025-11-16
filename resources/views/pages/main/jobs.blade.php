@@ -181,12 +181,12 @@
             <div class="grid gap-5 lg:grid-cols-2">
                 @forelse ($jobs as $job)
                     <article
-                        class="group flex flex-col gap-4 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:border-amber-400/60 hover:shadow-xl dark:border-white/10 dark:bg-white/5">
+                        class="group flex flex-col gap-4 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:border-amber-400/60 hover:bg-amber-50 hover:shadow-xl dark:border-white/10 dark:bg-white/5 dark:hover:bg-amber-500/10">
                         <div class="flex flex-wrap items-start justify-between gap-3">
                             <div>
                                 <h3
-                                    class="text-xl font-semibold text-slate-900 transition group-hover:text-amber-500 dark:text-white">
-                                    <a href="{{ route('job.details', ['id' => $job->id]) }}">{{ $job->title }}</a>
+                                    class="text-xl font-semibold text-slate-900 transition dark:text-white">
+                                    <a class="hover:text-amber-500 transition-all duration-300" href="{{ route('job.details', ['id' => $job->id]) }}">{{ $job->title }}</a>
                                 </h3>
                                 <p class="text-sm text-slate-500 dark:text-slate-300">
                                     {{ optional($job->company)->name ?? 'Unknown company' }} ·
