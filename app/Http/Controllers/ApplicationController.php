@@ -112,7 +112,7 @@ class ApplicationController extends Controller
 
         $request->validate([
             'phone' => 'required|string|max:20',
-            'resume' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
+            'resume' => 'required|file|mimes:pdf,doc,docx|max:2048',
         ]);
 
         // ✅ Update the data
@@ -222,5 +222,4 @@ class ApplicationController extends Controller
 
         return view('pages.main.my-applications', compact('applications'));
     }
-
 }

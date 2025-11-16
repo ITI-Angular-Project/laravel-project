@@ -5,7 +5,7 @@ Hireon is a Laravel 12 + Tailwind + Vite application that connects candidates, e
 ## Project Links
 - Agile board (Jira): https://ahmedalla56756.atlassian.net/jira/software/projects/HIR/boards/100
 - Database ERD: https://dbdiagram.io/d/Job-Listing-Management-66785b045a764b3c7231a5a0
-- Live demo: _to be added soon_
+- Live demo: https://hireon.jobs.mrbotusa.com/
 
 ## Tech Stack
 - PHP 8.2, Laravel 12, Laravel Breeze auth scaffolding
