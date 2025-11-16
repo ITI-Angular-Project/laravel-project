@@ -1,7 +1,7 @@
 @php
     $navLinks = [
         ['label' => __('Home'), 'route' => 'home', 'active' => 'home'],
-        ['label' => __('Jobs'), 'route' => 'jobs', 'active' => 'jobs'],
+        ['label' => __('Jobs'),'route' => 'jobs','active' => ['jobs', 'job.*', 'jobs.*', 'apply.*'],],
         ['label' => __('About'), 'route' => 'about', 'active' => 'about'],
         ['label' => __('Contact'), 'route' => 'contact.form', 'active' => 'contact.*'],
     ];
@@ -21,7 +21,7 @@
 
                 <div class="hidden md:flex items-center gap-2 rounded-full bg-gray-50/70 dark:bg-white/5 px-2 py-1 shadow-inner shadow-gray-200/40 dark:shadow-none">
                     @foreach ($navLinks as $link)
-                        @php($isActive = request()->routeIs($link['active']))
+                        @php($isActive = request()->routeIs(...\Illuminate\Support\Arr::wrap($link['active'])))
                         <a href="{{ route($link['route']) }}"
                             class="relative px-4 py-2 text-sm font-semibold rounded-full transition duration-200 {{ $isActive ? 'text-amber-700 dark:text-amber-300 bg-white dark:bg-amber-500/10 shadow-sm shadow-amber-100/70 dark:shadow-none' : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-white/60 dark:hover:bg-white/10' }}"
                             @if ($isActive) aria-current="page" @endif>
@@ -127,7 +127,7 @@
         id="primary-navigation">
         <div class="pt-2 pb-3 space-y-1">
             @foreach ($navLinks as $link)
-                @php($isActive = request()->routeIs($link['active']))
+                @php($isActive = request()->routeIs(...\Illuminate\Support\Arr::wrap($link['active'])))
                 <a href="{{ route($link['route']) }}"
                     class="block px-4 py-2 text-base font-semibold {{ $isActive ? 'text-amber-600 bg-amber-50 dark:text-amber-200 dark:bg-amber-500/10' : 'text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-800' }}">
                     {{ $link['label'] }}
