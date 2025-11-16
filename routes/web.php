@@ -51,11 +51,10 @@ Route::prefix('/dashboard')->controller(DashboardController::class)
         Route::get('', 'index')->name('home');
         Route::get('/jobs', [JobController::class, 'dashboardIndex'])->name('jobs');
         Route::get('/applications', 'applications')->name('applications');
+
         Route::get('/profile', 'profile')->name('profile');
         Route::patch('/profile', [DashboardController::class, 'updateProfile'])->name('profile.update');
         Route::delete('/profile', [DashboardController::class, 'destroyProfile'])->name('profile.destroy');
-
-
     });
 
 
@@ -96,12 +95,11 @@ Route::middleware(['auth', 'verified', 'role:admin,employer'])->name('dashboard.
 });
 
 
-// ✅ User Profile Routes
+// // ✅ User Profile Routes
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
 });
 
 // Candidate – View My Applications
@@ -109,6 +107,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/my-applications', [ApplicationController::class, 'myApplications'])
         ->name('candidate.applications');
 });
+
 
 Route::get('/notifications/mark-all-read', function () {
     if (Auth::check()) {
@@ -118,13 +117,14 @@ Route::get('/notifications/mark-all-read', function () {
 })->name('notifications.markAllRead')->middleware('auth');
 
 
+
 Route::middleware(['auth', 'verified', 'role:candidate'])->group(function () {
     Route::post('/apply/{job}', [ApplicationController::class, 'apply'])->name('apply');
 });
 
+
 Route::get('/auth/linkedin/redirect', [SocialiteAuthController::class, 'redirect'])->name('auth.linkedin.redirect');
 
 Route::get('/auth/linkedin/callback', [SocialiteAuthController::class, 'callback']);
-
 
 require __DIR__ . '/auth.php';

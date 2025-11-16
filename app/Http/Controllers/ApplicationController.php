@@ -57,7 +57,7 @@ class ApplicationController extends Controller
                 return response()->json(['success' => false, 'message' => 'Please login first to apply!']);
             }
             return redirect()->route('login')->with('error', 'Please login first to apply!');
-        }
+    }
 
         if ($user->hasRole('employer')) {
             if (request()->expectsJson()) {

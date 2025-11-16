@@ -12,14 +12,15 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-16 gap-4">
             <div class="flex items-center gap-8">
-            <a href="{{ route('home') }}" class="flex items-center gap-2 group" aria-label="{{ __('HireOn home') }}">
+                <a href="{{ route('home') }}" class="flex items-center gap-2 group" aria-label="{{ __('HireOn home') }}">
                     <x-application-logo class="h-9 w-auto transition-transform duration-300 group-hover:scale-110" />
                     <span class="text-base sm:text-lg font-semibold tracking-tight text-gray-900 dark:text-gray-100">
                         {{ env('APP_NAME') }}
                     </span>
                 </a>
 
-                <div class="hidden md:flex items-center gap-2 rounded-full bg-gray-50/70 dark:bg-white/5 px-2 py-1 shadow-inner shadow-gray-200/40 dark:shadow-none">
+                <div
+                    class="hidden md:flex items-center gap-2 rounded-full bg-gray-50/70 dark:bg-white/5 px-2 py-1 shadow-inner shadow-gray-200/40 dark:shadow-none">
                     @foreach ($navLinks as $link)
                         @php($isActive = request()->routeIs(...\Illuminate\Support\Arr::wrap($link['active'])))
                         <a href="{{ route($link['route']) }}"
@@ -43,8 +44,8 @@
                         <path stroke-linecap="round" stroke-linejoin="round"
                             d="M12 3v2m0 14v2m9-9h-2M5 12H3m15.364-6.364-1.414 1.414M7.05 16.95l-1.414 1.414m0-12.728 1.414 1.414m9.9 9.9 1.414 1.414M12 8a4 4 0 100 8 4 4 0 000-8z" />
                     </svg>
-                    <svg x-show="!$store.theme.dark" x-cloak xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
-                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <svg x-show="!$store.theme.dark" x-cloak xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+                        fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round"
                             d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z" />
                     </svg>
@@ -78,9 +79,9 @@
 
                         <x-slot name="content">
                             @canAny(['admin-view', 'demo-view', 'employer-view'])
-                            <x-dropdown-link :href="route('dashboard.home')">
-                                {{ __('Dashboard') }}
-                            </x-dropdown-link>
+                                <x-dropdown-link :href="route('dashboard.home')">
+                                    {{ __('Dashboard') }}
+                                </x-dropdown-link>
                             @endcan
                             <x-dropdown-link :href="route(
                                 Auth::user()->role === 'candidate' ? 'profile.edit' : 'dashboard.profile'
@@ -113,8 +114,9 @@
                     aria-controls="primary-navigation" :aria-expanded="open.toString()">
                     <span class="sr-only">Open main menu</span>
                     <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                        <path :class="{ 'hidden': open, 'inline-flex': !open }" class="inline-flex" stroke-linecap="round"
-                            stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        <path :class="{ 'hidden': open, 'inline-flex': !open }" class="inline-flex"
+                            stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16" />
                         <path :class="{ 'hidden': !open, 'inline-flex': open }" class="hidden" stroke-linecap="round"
                             stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                     </svg>
@@ -123,7 +125,8 @@
         </div>
     </div>
 
-    <div x-cloak x-show="open" class="sm:hidden border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900"
+    <div x-cloak x-show="open"
+        class="sm:hidden border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900"
         id="primary-navigation">
         <div class="pt-2 pb-3 space-y-1">
             @foreach ($navLinks as $link)
@@ -138,13 +141,13 @@
         <div class="pt-4 pb-4 border-t border-gray-200/70 dark:border-gray-800 px-4 space-y-3">
             <button type="button" @click="$store.theme.toggle()"
                 class="flex w-full items-center gap-3 rounded-xl border border-gray-200/70 dark:border-gray-700 px-3 py-2 text-sm text-gray-700 dark:text-gray-200">
-                <svg x-show="!$store.theme.dark" x-cloak xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
-                    viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <svg x-show="!$store.theme.dark" x-cloak xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+                    fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round"
                         d="M12 3v2m0 14v2m9-9h-2M5 12H3m15.364-6.364-1.414 1.414M7.05 16.95l-1.414 1.414m0-12.728 1.414 1.414m9.9 9.9 1.414 1.414M12 8a4 4 0 100 8 4 4 0 000-8z" />
                 </svg>
-                <svg x-show="$store.theme.dark" x-cloak xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
-                    viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <svg x-show="$store.theme.dark" x-cloak xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+                    fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round"
                         d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z" />
                 </svg>
@@ -156,12 +159,12 @@
 
 
             @auth
-            @canAny(['admin-view', 'employer-view', 'demo-view'])
-            <x-nav-link :href="route('dashboard.home')" :active="request()->routeIs('dashboard')"
-                class="block w-full text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-all duration-200 !border-l-0 !border-transparent">
-                {{ __('Dashboard') }}
-            </x-nav-link>
-            @endcan
+                @canAny(['admin-view', 'employer-view', 'demo-view'])
+                    <x-nav-link :href="route('dashboard.home')" :active="request()->routeIs('dashboard')"
+                        class="block w-full text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-all duration-200 !border-l-0 !border-transparent">
+                        {{ __('Dashboard') }}
+                    </x-nav-link>
+                @endcan
             @endauth
 
             <div class="pt-3 border-t border-gray-200/60 dark:border-gray-800"></div>

@@ -337,5 +337,4 @@ class JobController extends Controller
             'has_more' => $has_more,
         ]);
     }
-
 }
