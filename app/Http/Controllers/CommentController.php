@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 class CommentController extends Controller
 {
     /**
-     * عرض فورم إضافة كومنت
+     * Display form to add a comment
      */
     public function create(Job $job)
     {
@@ -18,7 +18,7 @@ class CommentController extends Controller
     }
 
     /**
-     * حفظ الكومنت الجديد
+     * Save the new comment
      */
     public function store(Request $request, Job $job)
     {

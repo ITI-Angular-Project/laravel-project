@@ -382,7 +382,7 @@
             }
         }
 
-        // دالة عرض التوست
+        // Function to show toast
         function showToast(type, message) {
             const toast = document.createElement('div');
             toast.textContent = message;
@@ -391,7 +391,7 @@
     } opacity-0`;
             document.body.appendChild(toast);
 
-            // Force browser to render before إضافة opacity-100
+            // Force browser to render before adding opacity-100
             requestAnimationFrame(() => toast.classList.add('opacity-100'));
 
             setTimeout(() => {
@@ -402,7 +402,7 @@
 
 
         document.addEventListener('DOMContentLoaded', () => {
-            // Intersection Observer للتأثيرات عند الظهور
+            // Intersection Observer for effects on appearance
             const observer = new IntersectionObserver(entries => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -417,7 +417,7 @@
 
             document.querySelectorAll('.animate-fade-in-up').forEach(el => observer.observe(el));
 
-            // التعامل مع أزرار Apply
+            // Handle Apply buttons
             document.querySelectorAll('.apply-btn').forEach(button => {
                 button.addEventListener('click', function() {
                     const jobId = this.getAttribute('data-job-id');

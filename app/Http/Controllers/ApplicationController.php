@@ -66,7 +66,7 @@ class ApplicationController extends Controller
             return redirect()->back()->with('error', 'Employers or Admins cannot apply for jobs.');
         }
 
-        // ✅ تحقق إذا كان المستخدم قد قدم مسبقاً
+        // ✅ Check if user has already applied
         if ($this->alreadyApplied($user->id, $job->id)) {
             if (request()->expectsJson()) {
                 return response()->json(['success' => false, 'message' => 'You are already applied, wait for approval.']);
@@ -75,7 +75,7 @@ class ApplicationController extends Controller
                 ->with('info', 'You are already applied, wait for approval.');
         }
 
-        // ✅ تحقق من اكتمال البيانات
+        // ✅ Check if data is complete
         if (!$user->name || !$user->phone || !$user->resume_path) {
             if (request()->expectsJson()) {
                 return response()->json(['success' => false, 'message' => 'Please complete your profile before applying.']);
@@ -84,7 +84,7 @@ class ApplicationController extends Controller
                 ->with('warning', 'Please complete your profile before applying.');
         }
 
-        // ✅ إنشاء الطلب الجديد
+        // ✅ Create the new application
         $this->createApplication($user, $job);
 
         if (request()->expectsJson()) {
@@ -115,7 +115,7 @@ class ApplicationController extends Controller
             'resume' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
         ]);
 
-        // ✅ تحديث البيانات
+        // ✅ Update the data
         $user->phone = $request->phone;
         $user->save();
 
@@ -125,7 +125,7 @@ class ApplicationController extends Controller
             $user->save();
         }
 
-        // ✅ تحقق إذا كان مقدم بالفعل
+        // ✅ Check if already applied
         if ($this->alreadyApplied($user->id, $job->id)) {
             return redirect()->route('job.details', $job->id)
                 ->with('info', 'You are already applied, wait for approval.');
@@ -136,7 +136,7 @@ class ApplicationController extends Controller
                 ->with('error', 'Employers or Admins cannot apply for jobs.');
         }
 
-        // ✅ إنشاء التقديم
+        // ✅ Create the application
         $this->createApplication($user, $job);
 
         return redirect()->route('job.details', $job->id)
