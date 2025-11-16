@@ -3,12 +3,12 @@
 @section('content')
 <div class="container mx-auto py-8">
 
-    {{-- 🔙 زر العودة --}}
+    {{-- 🔙 Back Button --}}
     <div class="mb-6">
         <x-ui.button href="{{ route('dashboard.jobs.index') }}" variant="secondary" size="sm">← Back to My Jobs</x-ui.button>
     </div>
 
-    {{-- ✏️ تعديل الوظيفة --}}
+    {{-- ✏️ Edit Job --}}
     <div class="bg-white dark:bg-gray-800 rounded-3xl shadow-xl p-8 border border-gray-200 dark:border-gray-700">
 
         <h1 class="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-6">Edit Job</h1>

@@ -204,7 +204,7 @@
             }
         }
 
-        // دالة عرض التوست
+        // Function to show toast
         function showToast(type, message) {
             const toast = document.createElement('div');
             toast.textContent = message;
@@ -218,7 +218,7 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            // Intersection Observer للتأثيرات عند الظهور
+            // Intersection Observer for effects on appearance
             const observer = new IntersectionObserver(entries => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -233,7 +233,7 @@
 
             document.querySelectorAll('.animate-fade-in-up').forEach(el => observer.observe(el));
 
-            // التعامل مع أزرار Apply
+            // Handle Apply buttons
             document.querySelectorAll('.apply-btn').forEach(button => {
                 button.addEventListener('click', function() {
                     const jobId = this.getAttribute('data-job-id');
@@ -270,7 +270,7 @@
             const commentFormContainer = document.getElementById('commentFormContainer');
             const commentsContainer = document.querySelector('#comments-list');
 
-            // إظهار الفورم عند الضغط على زر Add Comment
+            // Show form when clicking Add Comment button
             addCommentBtn?.addEventListener('click', () => {
                 commentFormContainer.innerHTML = `
                     <div class="flex flex-col gap-4 w-full bg-white dark:bg-gray-800 p-4 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm transition-all duration-200">
@@ -302,12 +302,12 @@
                     </div>
 `;
 
-                // إضافة وظيفة إغلاق الفورم عند الضغط على Cancel
+                // Add function to close form when clicking Cancel
                 document.getElementById('cancelCommentBtn')?.addEventListener('click', () => {
                     commentFormContainer.innerHTML = '';
                 });
 
-                // إضافة وظيفة إغلاق الفورم عند الضغط على Escape
+                // Add function to close form when pressing Escape
                 document.addEventListener('keydown', function(e) {
                     if (e.key === 'Escape') {
                         commentFormContainer.innerHTML = '';
@@ -316,7 +316,7 @@
 
                 document.getElementById('commentInput').focus();
 
-                // إضافة حدث الزر Save
+                // Add event for Save button
                 document.getElementById('saveCommentBtn').addEventListener('click', () => {
                     const body = document.getElementById('commentInput').value.trim();
                     if (!body) {
@@ -347,7 +347,7 @@
                         .then(res => res.json())
                         .then(data => {
                             if (data.success) {
-                                // إضافة الكومنت فوراً للـ DOM
+                                // Add comment immediately to DOM
                                 const commentDiv = document.createElement('div');
                                 commentDiv.className =
                                     'p-4 bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm flex justify-between items-start';
@@ -368,7 +368,7 @@
                         `;
                                 commentsContainer.prepend(commentDiv);
 
-                                // إعادة تعيين الفورم
+                                // Reset the form
                                 commentFormContainer.innerHTML = '';
                                 showToast('success', 'Comment added successfully!');
                             } else {

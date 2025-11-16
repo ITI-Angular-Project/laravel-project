@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\DB;
 class JobController extends Controller
 {
     /**
-     * عرض الوظائف في الموقع الرئيسي
+     * Display jobs on the main website
      */
     public function index(Request $request)
     {
@@ -91,7 +91,7 @@ class JobController extends Controller
     }
 
     /**
-     * عرض كل الوظائف الخاصة بالمستخدم الحالي (صاحب الشركة)
+     * Display all jobs for the current user (company owner)
      */
     public function dashboardIndex(Request $request)
     {
@@ -122,7 +122,7 @@ class JobController extends Controller
             });
         }
 
-        // فلترة حسب الحالة
+        // Filter by status
         if ($request->filled('status')) {
             $jobsQuery->where('status', $request->status);
         }
@@ -133,7 +133,7 @@ class JobController extends Controller
     }
 
     /**
-     * عرض صفحة إنشاء وظيفة جديدة
+     * Display page to create a new job
      */
     public function create()
     {
@@ -143,7 +143,7 @@ class JobController extends Controller
     }
 
     /**
-     * تخزين وظيفة جديدة في قاعدة البيانات
+     * Store a new job in the database
      */
     public function store(Request $request)
     {
@@ -187,7 +187,7 @@ class JobController extends Controller
     }
 
     /**
-     * عرض تفاصيل وظيفة معينة
+     * Display details of a specific job
      */
     public function show($id)
     {
@@ -196,7 +196,7 @@ class JobController extends Controller
     }
 
     /**
-     * عرض صفحة تعديل وظيفة
+     * Display page to edit a job
      */
     public function edit($id)
     {
@@ -216,7 +216,7 @@ class JobController extends Controller
     }
 
     /**
-     * تحديث بيانات وظيفة موجودة
+     * Update data of an existing job
      */
     public function update(Request $request, $id)
     {
@@ -284,7 +284,7 @@ class JobController extends Controller
     }
 
     /**
-     * حذف وظيفة
+     * Delete a job
      */
     public function destroy($id)
     {

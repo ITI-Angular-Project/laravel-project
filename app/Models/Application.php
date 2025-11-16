@@ -22,7 +22,7 @@ class Application extends Model
     ];
 
     /**
-     * العلاقة بين الابلكيشن والوظيفة
+     * Relationship between Application and Job
      */
     public function job()
     {
